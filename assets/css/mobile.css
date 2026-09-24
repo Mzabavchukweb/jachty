@@ -13,7 +13,7 @@
 @media(max-width:640px){
   /* skala: mniejsze nagłówki i odstępy */
   :root{--t1:1.125rem;--t2:1.25rem;--t3:1.5rem;--t4:1.875rem;--t5:2.25rem;--t6:2.5rem;
-        --s4:28px;--s5:36px;--s6:44px;--s7:56px}
+        --s4:30px;--s5:42px;--s6:60px;--s7:76px}
   .hero .display{font-size:2.75rem!important;line-height:1.02}
   .h1,.phead__h{font-size:2.25rem!important;line-height:1.08}
   .h2{font-size:1.875rem!important;line-height:1.1}
@@ -75,4 +75,52 @@
     position:absolute!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:100%!important;object-fit:cover}
   .cmob__ph{padding-top:0!important;height:60px!important}
   .cen__ph{padding-top:0!important;height:48px!important}
+}
+
+/* ===== rytm: sekcje oddychają na każdym ekranie ===== */
+/* komputer */
+@media(min-width:1024px){
+  .sec,.team-sec,.band{padding-block:144px!important}
+  .sec--tight,.psec,.pcta{padding-block:120px!important}
+  .psec.fleet{padding-top:88px!important}
+  .phead{padding-bottom:88px!important}
+  .phead.konh{padding-bottom:0!important}
+  .kond{padding-top:96px!important}
+  .fleet{padding-bottom:144px!important}
+  .psec__h{margin-bottom:40px!important}
+  .psec__h:not(:first-child){margin-top:120px!important}
+  .cmp__head{margin-bottom:56px!important}
+  .fl{column-gap:88px!important}
+  .fli{padding-block:44px 52px!important}
+  .foot{padding-top:120px!important}
+}
+/* tablet */
+@media(min-width:641px) and (max-width:1023px){
+  .sec,.team-sec,.band{padding-block:112px!important}
+  .sec--tight,.psec,.pcta{padding-block:96px!important}
+  .psec.fleet{padding-top:72px!important}
+  .phead{padding-bottom:72px!important}
+  .phead.konh{padding-bottom:0!important}
+  .fli{padding-block:36px 44px!important}
+}
+/* telefon */
+@media(max-width:640px){
+  .sec,.team-sec,.band{padding-block:88px!important}
+  .sec--tight,.psec,.pcta{padding-block:76px!important}
+  .psec.fleet{padding-top:56px!important}
+  .phead{padding-top:36px!important;padding-bottom:56px!important}
+  .phead:not(.konh):has(>.deco){padding-bottom:calc(56px + 150px)!important}
+  .phead.konh{padding-bottom:0!important}
+  .kond{padding-top:64px!important}
+  .fleet{padding-bottom:88px!important}
+  .psec__h{margin-bottom:28px!important}
+  .psec__h:not(:first-child){margin-top:76px!important}
+  .cmp__head{margin-bottom:36px!important}
+  /* karta jachtu: więcej powietrza w środku i między kartami */
+  .fli{padding-block:32px 40px!important;row-gap:16px!important}
+  .fli__name{padding-bottom:14px!important}
+  .fli__spec{padding-block:14px!important;gap:12px 16px!important}
+  .meas{padding-block:14px 6px!important}
+  .fli__buy{margin-top:14px!important;padding-top:18px!important}
+  .foot{padding-top:80px!important}
 }

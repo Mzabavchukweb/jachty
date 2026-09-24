@@ -310,6 +310,8 @@ Na telefonie grafika w nagłówku stoi pod tekstem. Róża wiatrów w pasie „W
 
 **Wersje plików** — CSS i JS mają w adresie skrót zawartości (`?v=…`), dopisywany przez generator. Po każdej zmianie przeglądarka i GitHub Pages pobierają nową wersję zamiast starej z pamięci podręcznej.
 
+**Oddech sekcji (24.09.2026)** — osobna warstwa rytmu na końcu `assets/css/mobile.css`. Odstępy między sekcjami: komputer 120–144 px, tablet 96–112 px, telefon 76–88 px. Większe odstępy między nagłówkiem a treścią i wewnątrz kart jachtów. Na telefonie czcionki zostają mniejsze, rosną tylko odstępy.
+
 **Pas „Wybrałeś termin?"** nad stopką ma od dołu cienką jasną linię (`rgba(252,249,244,.5)`), bo oba bloki są ciemne i zlewały się w jeden.
 
 **Cennik na telefonie**: szeroka tabela (13 kolumn) zamienia się w listę rozwijanych pozycji (`<details>`) — nazwa jachtu i „od … zł / doba", po rozwinięciu wszystkie okresy, kaucja i sprzątanie.
