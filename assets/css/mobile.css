@@ -58,3 +58,21 @@
   .mnav__cta .btn{min-height:48px;font-size:.9375rem;padding-inline:10px;white-space:nowrap}
   .mnav__meta{font-size:.8125rem;line-height:1.5}
 }
+
+/* Starsze przeglądarki (np. Safari na iOS 14 i starszym) nie znają aspect-ratio — ramki zdjęć miałyby 0 px
+   wysokości i zdjęcia by znikały. Tu proporcje trzyma margines w procentach, a zdjęcie wypełnia ramkę. */
+@supports not (aspect-ratio:1/1){
+  .gal__main,.gal__thumbs button,.cmp__ph,.sale__ph,.gfeat__ph,.art__img,.cen__ph,.cmob__ph,.port__big,.port__ph,.guide__ph,.video{
+    position:relative!important;height:0!important;min-height:0!important;overflow:hidden!important}
+  .gal__main,.gal__thumbs button,.port__ph,.guide__ph{padding-top:66.667%!important}
+  .cmp__ph,.sale__ph,.gfeat__ph,.cen__ph,.cmob__ph,.port__big{padding-top:75%!important}
+  .art__img,.video{padding-top:56.25%!important}
+  .gal__main picture,.gal__main img,.gal__thumbs picture,.gal__thumbs img,.cmp__ph picture,.cmp__ph img,.sale__ph picture,.sale__ph img,
+  .gfeat__ph picture,.gfeat__ph img,.art__img picture,.art__img img,.cen__ph picture,.cen__ph img,.cmob__ph picture,.cmob__ph img,
+  .port__big picture,.port__big img,.port__ph picture,.port__ph img,.guide__ph picture,.guide__ph img,.video>*,
+  .fli__ph picture,.fli__ph img{position:absolute!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:100%!important;object-fit:cover}
+  .fli__ph{position:relative!important}
+  @media(max-width:640px){.fli__ph{height:0!important;min-height:0!important;padding-top:62.5%!important}}
+  .cmob__ph{padding-top:0!important;height:60px!important}
+  .cen__ph{padding-top:0!important;height:48px!important}
+}

@@ -247,7 +247,7 @@ body.lb-open .callfab,body.lb-open .mobilebar{display:none!important}
 }
 @media(prefers-reduced-motion:reduce){.lb{transition:none}}
 </style>
-<link rel="stylesheet" href="assets/css/mobile.css?v=6f2df0c5">
+<link rel="stylesheet" href="assets/css/mobile.css?v=06d27185">
 </head>
 <body>
 <a class="skip" href="#main">Przejdź do treści</a>
@@ -502,7 +502,7 @@ addEventListener('load',()=>{const w=document.querySelector('.lb__warm');thumbs.
 const lb=document.getElementById('lb'),stage=document.getElementById('lb-stage'),lbN=document.getElementById('lb-n'),lbCap=document.getElementById('lb-cap');
 let lbLast=null;
 function lbShow(i){cur=(i+thumbs.length)%thumbs.length;const p=bigPic(cur,'100vw');p.querySelector('img').alt=cap(thumbs[cur]);
-  stage.replaceChildren(p);lbN.textContent=(cur+1)+' / '+thumbs.length;lbCap.textContent=cap(thumbs[cur]);showMain(cur)}
+  stage.innerHTML='';stage.appendChild(p);lbN.textContent=(cur+1)+' / '+thumbs.length;lbCap.textContent=cap(thumbs[cur]);showMain(cur)}
 function lbOpen(i,from){lbLast=from||document.activeElement;lb.hidden=false;document.body.classList.add('lb-open');lbShow(i);
   requestAnimationFrame(()=>lb.classList.add('is-open'));lb.querySelector('.lb__x').focus();icons()}
 function lbClose(){lb.classList.remove('is-open');document.body.classList.remove('lb-open');lb.hidden=true;lbLast&&lbLast.focus()}
