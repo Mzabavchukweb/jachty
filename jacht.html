@@ -8,6 +8,7 @@
 <link rel="icon" href="assets/img/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" type="image/avif" imagesrcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" imagesizes="(min-width:1024px) 66vw, 100vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/css/system.css">
 <link rel="stylesheet" href="assets/css/head-dark.css">
 <style>
@@ -139,55 +140,57 @@
 .mobilebar .btn{margin-left:auto}
 @media(max-width:1023px){.mobilebar{display:flex}body{padding-bottom:88px}}
 
-/* podobne — porównanie kolumnami; oglądana jednostka jako pełny blok ink */
-.cmp__head{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s4);margin-bottom:var(--s5)}
-.cmp__head .lead{margin-top:var(--s2);max-width:52ch}
-.cmp{overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;
-  margin-inline:calc(-1*var(--bleed));padding-inline:var(--bleed)}
-.cmp::-webkit-scrollbar{display:none}
-.cmp:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
-.cmp__t{border-collapse:separate;border-spacing:0;width:100%}
-.cmp__t th,.cmp__t td{vertical-align:top;text-align:left;width:270px;min-width:270px;
-  padding:0 var(--s3);border-left:1px solid var(--line)}
-.cmp__t th:first-child,.cmp__t td:first-child{border-left:0}
-
-.cmp__y{padding-top:0;scroll-snap-align:start}
-.cmp__flag{display:block;font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;
-  font-weight:600;color:var(--deep);padding-bottom:var(--s2)}
-.cmp__flag--ghost{color:var(--ink-80);font-weight:400}
-.cmp__ph{aspect-ratio:4/3;overflow:hidden;background:var(--paper)}
-.cmp__ph img{width:100%;height:100%;object-fit:cover}
-.cmp__name{display:block;font-family:var(--f-display);font-weight:400;font-size:var(--t3);
-  line-height:1;letter-spacing:-.012em;color:var(--ink);padding:var(--s3) 0 var(--s3)}
-.cmp__name em{display:block;font-style:italic;color:var(--deep);margin-top:4px}
-
-.cmp__t tbody td{padding-top:var(--s2);padding-bottom:var(--s2);border-top:1px solid var(--line)}
-.cmp__k{display:block;font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);margin-bottom:2px}
-.cmp__v{font-weight:500;font-size:var(--t1);line-height:1.2}
-.cmp__price .cmp__v{font-family:var(--f-display);font-weight:400;font-size:var(--t4);letter-spacing:-.012em;line-height:1;display:block;margin-top:4px}
-.cmp__price .per{font-size:var(--t-1);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-80)}
-.cmp__t tfoot td{padding-top:var(--s3);padding-bottom:var(--s3);border-top:1px solid var(--line)}
+/* porównanie: zwykła tabela — nazwy parametrów raz, po lewej; oglądany model wyróżniony, ale nie przytłacza */
+.cmp__head{margin-bottom:var(--s4)}
+.cmp__head .lead{margin-top:var(--s2);max-width:56ch}
+.cmp__pick{display:none}
+.cmp{background:#fff;border:1px solid rgba(48,64,68,.14)}
+.cmp__t{border-collapse:collapse;width:100%;table-layout:fixed}
+.cmp__t th,.cmp__t td{text-align:left;vertical-align:middle;padding:14px 20px;border-top:1px solid rgba(48,64,68,.12)}
+.cmp__t thead th,.cmp__t thead td{border-top:0;vertical-align:bottom;padding-top:20px;padding-bottom:16px}
+.cmp__corner{width:18%}
+.cmp__t tbody th{font-size:.8125rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:var(--ink-80)}
+.cmp__t tbody td{font-size:1.0625rem;color:var(--ink)}
+.cmp__t tbody td b{font-weight:600}
+.cmp__flag{display:block;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--deep);margin-bottom:10px}
+.cmp__flag--type{color:var(--ink-80);font-weight:500}
+.cmp__ph{margin:0;aspect-ratio:4/3;overflow:hidden;background:var(--sand)}
+.cmp__ph picture{display:block;height:100%}.cmp__ph img{width:100%;height:100%;object-fit:cover}
+.cmp__name{display:block;margin-top:12px;font-family:var(--f-display);font-weight:500;font-size:1.5rem;line-height:1.1;color:var(--ink)}
+.cmp__price td b{font-family:var(--f-display);font-weight:500;font-size:1.5rem;letter-spacing:-.01em}
+.cmp__price .per{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-80)}
+.cmp__t tfoot td{padding-top:16px;padding-bottom:20px;vertical-align:top}
 .cmp__t tfoot .btn{width:100%}
-.cmp__more{display:block;margin-top:var(--s2);color:var(--ink);font-weight:500}
-.cmp__here{font-size:var(--t-1);letter-spacing:.1em;text-transform:uppercase;color:rgba(252,249,244,.72)}
-
-/* blok ink — jedyny mocny akcent sekcji */
-.cmp__t .is-current{background:var(--ink);border-left-color:var(--ink)}
-.cmp__y.is-current{padding-top:var(--s3)}
-.cmp__y.is-current .cmp__flag{color:var(--sand)}
-.cmp__y.is-current .cmp__name{color:var(--paper)}
-.cmp__y.is-current .cmp__name em{color:var(--sand)}
-.cmp__t .is-current .cmp__k{color:rgba(252,249,244,.66)}
-.cmp__t .is-current .cmp__v{color:var(--paper)}
-.cmp__t .is-current .per{color:rgba(252,249,244,.66)}
-.cmp__t tbody .is-current,.cmp__t tfoot .is-current{border-top-color:rgba(252,249,244,.22)}
-.cmp__note{margin-top:var(--s3);font-size:var(--t-1);color:var(--ink-80)}
-
+.cmp__more{display:inline-block;margin-top:10px;color:var(--ink);font-weight:500;font-size:.9375rem}
+.cmp__here{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-80)}
+/* oglądany model: jasne tło kolumny i linia u góry */
+.cmp__t .is-current{background:rgba(241,230,214,.55)}
+.cmp__t thead .is-current{box-shadow:inset 0 3px 0 var(--ink)}
+.cmp__note{margin-top:var(--s3);font-size:.8125rem;color:var(--ink-80)}
+.cmp__price td b.cmp__ask{font-family:var(--f-sans);font-size:1rem;font-weight:500;letter-spacing:0;color:var(--ink-80)}
+.cmp__pick .chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid rgba(48,64,68,.35);background:#fff;color:var(--ink);font:inherit;font-size:.9375rem;cursor:pointer}
+.cmp__pick .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.cmp__pick .chip:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.cmp__pick .chips{display:flex;gap:8px}
+/* telefon: ten model + jeden wybrany obok, wybór przyciskami */
 @media(max-width:767px){
-  .cmp__head{flex-direction:column;align-items:flex-start;gap:var(--s3)}
-  .cmp__t th,.cmp__t td{width:232px;min-width:232px;padding-inline:var(--s2)}
-  .cmp__name{font-size:var(--t2)}
-  .cmp__price .cmp__v{font-size:var(--t3)}
+  .cmp__pick{display:grid;gap:8px;margin-bottom:var(--s3)}
+  .cmp__pick-l{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80)}
+  .cmp__pick .chips{flex-wrap:wrap!important;overflow:visible!important;margin:0!important;padding:0!important;-webkit-mask-image:none!important;mask-image:none!important}
+  .cmp__pick .chip{min-height:44px}
+  .cmp{margin-inline:calc(-1*var(--gutter));border-inline:0}
+  .cmp__t [data-i]:not(.is-current):not(.is-sel){display:none}
+  .cmp__corner{width:28%}
+  .cmp__t th,.cmp__t td{padding:12px 10px}
+  .cmp__t thead th,.cmp__t thead td{padding-top:14px}
+  .cmp__t tbody th{font-size:.75rem;letter-spacing:.05em;padding-left:var(--gutter)}
+  .cmp__t tbody td{font-size:.9375rem}
+  .cmp__t tfoot td:first-child{padding-left:var(--gutter)}
+  .cmp__flag{font-size:.75rem;letter-spacing:.08em;margin-bottom:6px}
+  .cmp__name{font-size:1.125rem;margin-top:8px}
+  .cmp__price td b{font-size:1.25rem}
+  .cmp__price .per{display:block;margin-top:2px}
+  .cmp__more{font-size:.875rem}
 }
 
 /* pas dofinansowania w stopce — logotypy obowiązkowe, na białym polu */
@@ -213,6 +216,35 @@
 .legend__v,.fli__name,.fli__pricev,.fgh__n,.mem__n,.mem__ini,.about__facts dd,.war__h,.war__l b,.war__hours b,.tq blockquote p,
 .cmp__name,.cmp__price .cmp__v,.book__price b,.price td.n,.h3,.meas__hd b,.cal__hd b,.mobilebar .amt,.fe__n b,.sim__name,.band__txt{font-weight:500;font-optical-sizing:auto}
 .display,.h1,.h2,.fgh__t,.band__num{font-optical-sizing:auto}
+
+/* galeria: powiększenie */
+.gal__zoom{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:transparent;cursor:zoom-in;z-index:1}
+.gal__zoom:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+.gal__count{z-index:2;pointer-events:none}
+.gal__thumbs button{cursor:zoom-in}
+.lb__warm{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;left:-9999px}
+.lb{position:fixed;inset:0;z-index:200;background:rgb(18,26,29);color:#fff;display:grid;grid-template-rows:auto 1fr;opacity:0;transition:opacity .2s var(--ease)}
+.lb.is-open{opacity:1}
+.lb__bar{display:flex;align-items:center;gap:var(--s3);padding:12px var(--gutter)}
+.lb__n{font-size:.875rem;letter-spacing:.08em;font-weight:600}
+.lb__cap{font-size:.9375rem;color:rgba(255,255,255,.8);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb__x,.lb__nav{width:48px;height:48px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.4);background:rgba(18,26,29,.6);color:#fff;cursor:pointer}
+.lb__x:hover,.lb__nav:hover{background:#fff;color:var(--ink)}
+.lb__x:focus-visible,.lb__nav:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.lb__stage{display:grid;place-items:center;padding:0 88px 24px;min-height:0;touch-action:pan-y}
+.lb__stage picture{display:contents}
+.lb__stage img{max-width:calc(100vw - 176px);max-height:calc(100vh - 96px);max-height:calc(100dvh - 96px);width:auto;height:auto;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.lb__nav{position:absolute;top:50%;transform:translateY(-50%)}
+.lb__nav--prev{left:var(--gutter)}.lb__nav--next{right:var(--gutter)}
+body.lb-open{overflow:hidden}
+body.lb-open .callfab,body.lb-open .mobilebar{display:none!important}
+@media(max-width:767px){
+  .lb__stage{padding:0 0 88px}
+  .lb__stage img{max-width:100vw;max-height:calc(100vh - 170px);max-height:calc(100dvh - 170px)}
+  .lb__nav{top:auto;bottom:24px;transform:none}
+  .lb__nav--prev{left:calc(50% - 60px)}.lb__nav--next{right:calc(50% - 60px)}
+}
+@media(prefers-reduced-motion:reduce){.lb{transition:none}}
 </style>
 <link rel="stylesheet" href="assets/css/mobile.css">
 </head>
@@ -257,18 +289,19 @@
     </ol></nav>
     <div class="g12 gal">
       <figure class="gal__main c8 bleed-l">
-        <picture><source type="image/avif" srcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" sizes="(min-width:1024px) 66vw, 100vw"><source type="image/webp" srcset="assets/img/r/a33-burta-480.webp 480w, assets/img/r/a33-burta-800.webp 800w" sizes="(min-width:1024px) 66vw, 100vw"><img id="gal-main" fetchpriority="high" src="assets/img/r/a33-burta-800.jpg" srcset="assets/img/r/a33-burta-480.jpg 480w, assets/img/r/a33-burta-800.jpg 800w" sizes="(min-width:1024px) 66vw, 100vw" width="800" height="600" alt="Antila 33 „Kassari” — burta" decoding="async"></picture>
-        <span class="gal__count num"><i data-lucide="images" class="lucide"></i><span id="gal-n">1</span> / 8</span>
+        <picture><source type="image/avif" srcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" sizes="(min-width:1024px) 66vw, 100vw"><source type="image/webp" srcset="assets/img/r/a33-burta-480.webp 480w, assets/img/r/a33-burta-800.webp 800w" sizes="(min-width:1024px) 66vw, 100vw"><img id="gal-main" fetchpriority="high" loading="eager" src="assets/img/r/a33-burta-800.jpg" srcset="assets/img/r/a33-burta-480.jpg 480w, assets/img/r/a33-burta-800.jpg 800w" sizes="(min-width:1024px) 66vw, 100vw" width="800" height="600" alt="Antila 33 „Kassari” — burta" decoding="async"></picture>
+        <button class="gal__zoom" type="button" aria-label="Powiększ zdjęcie"></button>
+        <span class="gal__count num" aria-hidden="true"><i data-lucide="maximize-2" class="lucide"></i><span id="gal-n">1</span> / 8</span>
       </figure>
       <div class="gal__thumbs c4" role="group" aria-label="Zdjęcia jachtu">
-        <button aria-current="true" aria-label="Zdjęcie 1: burta"><picture><source type="image/avif" srcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-burta-480.webp 480w, assets/img/r/a33-burta-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-burta-800.jpg" srcset="assets/img/r/a33-burta-480.jpg 480w, assets/img/r/a33-burta-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — burta" decoding="async" loading="lazy"></picture></button>
-        <button aria-label="Zdjęcie 2: burta z innej strony"><picture><source type="image/avif" srcset="assets/img/r/a33-burta-2-480.avif 480w, assets/img/r/a33-burta-2-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-burta-2-480.webp 480w, assets/img/r/a33-burta-2-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-burta-2-800.jpg" srcset="assets/img/r/a33-burta-2-480.jpg 480w, assets/img/r/a33-burta-2-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — burta z innej strony" decoding="async" loading="lazy"></picture></button>
-        <button aria-label="Zdjęcie 3: kokpit"><picture><source type="image/avif" srcset="assets/img/r/a33-kokpit-480.avif 480w, assets/img/r/a33-kokpit-732.avif 732w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-kokpit-480.webp 480w, assets/img/r/a33-kokpit-732.webp 732w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-kokpit-732.jpg" srcset="assets/img/r/a33-kokpit-480.jpg 480w, assets/img/r/a33-kokpit-732.jpg 732w" sizes="(min-width:1024px) 16vw, 25vw" width="732" height="600" alt="Antila 33 „Kassari” — kokpit" decoding="async" loading="lazy"></picture></button>
-        <button aria-label="Zdjęcie 4: rufa"><picture><source type="image/avif" srcset="assets/img/r/a33-rufa-480.avif 480w, assets/img/r/a33-rufa-600.avif 600w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-rufa-480.webp 480w, assets/img/r/a33-rufa-600.webp 600w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-rufa-600.jpg" srcset="assets/img/r/a33-rufa-480.jpg 480w, assets/img/r/a33-rufa-600.jpg 600w" sizes="(min-width:1024px) 16vw, 25vw" width="600" height="800" alt="Antila 33 „Kassari” — rufa" decoding="async" loading="lazy"></picture></button>
-        <button aria-label="Zdjęcie 5: mesa"><picture><source type="image/avif" srcset="assets/img/r/a33-mesa-480.avif 480w, assets/img/r/a33-mesa-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-mesa-480.webp 480w, assets/img/r/a33-mesa-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-mesa-800.jpg" srcset="assets/img/r/a33-mesa-480.jpg 480w, assets/img/r/a33-mesa-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — mesa" decoding="async" loading="lazy"></picture></button>
-        <button aria-label="Zdjęcie 6: kambuz"><picture><source type="image/avif" srcset="assets/img/r/a33-kambuz-480.avif 480w, assets/img/r/a33-kambuz-600.avif 600w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-kambuz-480.webp 480w, assets/img/r/a33-kambuz-600.webp 600w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-kambuz-600.jpg" srcset="assets/img/r/a33-kambuz-480.jpg 480w, assets/img/r/a33-kambuz-600.jpg 600w" sizes="(min-width:1024px) 16vw, 25vw" width="600" height="800" alt="Antila 33 „Kassari” — kambuz" decoding="async" loading="lazy"></picture></button>
-        <button aria-label="Zdjęcie 7: toaleta"><picture><source type="image/avif" srcset="assets/img/r/a33-toaleta-480.avif 480w, assets/img/r/a33-toaleta-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-toaleta-480.webp 480w, assets/img/r/a33-toaleta-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-toaleta-800.jpg" srcset="assets/img/r/a33-toaleta-480.jpg 480w, assets/img/r/a33-toaleta-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — toaleta" decoding="async" loading="lazy"></picture></button>
-        <button aria-label="Zdjęcie 8: ploter"><picture><source type="image/avif" srcset="assets/img/r/a33-ploter-480.avif 480w, assets/img/r/a33-ploter-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-ploter-480.webp 480w, assets/img/r/a33-ploter-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-ploter-800.jpg" srcset="assets/img/r/a33-ploter-480.jpg 480w, assets/img/r/a33-ploter-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — ploter" decoding="async" loading="lazy"></picture></button>
+        <button aria-current="true" aria-label="Zdjęcie 1: burta"><picture><source type="image/avif" srcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-burta-480.webp 480w, assets/img/r/a33-burta-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-burta-800.jpg" srcset="assets/img/r/a33-burta-480.jpg 480w, assets/img/r/a33-burta-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — burta" decoding="async"></picture></button>
+        <button aria-label="Zdjęcie 2: burta z innej strony"><picture><source type="image/avif" srcset="assets/img/r/a33-burta-2-480.avif 480w, assets/img/r/a33-burta-2-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-burta-2-480.webp 480w, assets/img/r/a33-burta-2-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-burta-2-800.jpg" srcset="assets/img/r/a33-burta-2-480.jpg 480w, assets/img/r/a33-burta-2-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — burta z innej strony" decoding="async"></picture></button>
+        <button aria-label="Zdjęcie 3: kokpit"><picture><source type="image/avif" srcset="assets/img/r/a33-kokpit-480.avif 480w, assets/img/r/a33-kokpit-732.avif 732w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-kokpit-480.webp 480w, assets/img/r/a33-kokpit-732.webp 732w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-kokpit-732.jpg" srcset="assets/img/r/a33-kokpit-480.jpg 480w, assets/img/r/a33-kokpit-732.jpg 732w" sizes="(min-width:1024px) 16vw, 25vw" width="732" height="600" alt="Antila 33 „Kassari” — kokpit" decoding="async"></picture></button>
+        <button aria-label="Zdjęcie 4: rufa"><picture><source type="image/avif" srcset="assets/img/r/a33-rufa-480.avif 480w, assets/img/r/a33-rufa-600.avif 600w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-rufa-480.webp 480w, assets/img/r/a33-rufa-600.webp 600w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-rufa-600.jpg" srcset="assets/img/r/a33-rufa-480.jpg 480w, assets/img/r/a33-rufa-600.jpg 600w" sizes="(min-width:1024px) 16vw, 25vw" width="600" height="800" alt="Antila 33 „Kassari” — rufa" decoding="async"></picture></button>
+        <button aria-label="Zdjęcie 5: mesa"><picture><source type="image/avif" srcset="assets/img/r/a33-mesa-480.avif 480w, assets/img/r/a33-mesa-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-mesa-480.webp 480w, assets/img/r/a33-mesa-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-mesa-800.jpg" srcset="assets/img/r/a33-mesa-480.jpg 480w, assets/img/r/a33-mesa-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — mesa" decoding="async"></picture></button>
+        <button aria-label="Zdjęcie 6: kambuz"><picture><source type="image/avif" srcset="assets/img/r/a33-kambuz-480.avif 480w, assets/img/r/a33-kambuz-600.avif 600w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-kambuz-480.webp 480w, assets/img/r/a33-kambuz-600.webp 600w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-kambuz-600.jpg" srcset="assets/img/r/a33-kambuz-480.jpg 480w, assets/img/r/a33-kambuz-600.jpg 600w" sizes="(min-width:1024px) 16vw, 25vw" width="600" height="800" alt="Antila 33 „Kassari” — kambuz" decoding="async"></picture></button>
+        <button aria-label="Zdjęcie 7: toaleta"><picture><source type="image/avif" srcset="assets/img/r/a33-toaleta-480.avif 480w, assets/img/r/a33-toaleta-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-toaleta-480.webp 480w, assets/img/r/a33-toaleta-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-toaleta-800.jpg" srcset="assets/img/r/a33-toaleta-480.jpg 480w, assets/img/r/a33-toaleta-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — toaleta" decoding="async"></picture></button>
+        <button aria-label="Zdjęcie 8: ploter"><picture><source type="image/avif" srcset="assets/img/r/a33-ploter-480.avif 480w, assets/img/r/a33-ploter-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-ploter-480.webp 480w, assets/img/r/a33-ploter-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-ploter-800.jpg" srcset="assets/img/r/a33-ploter-480.jpg 480w, assets/img/r/a33-ploter-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — ploter" decoding="async"></picture></button>
       </div>
     </div>
   </div>
@@ -381,24 +414,25 @@
 
 <section class="sec sand cmpsec" id="podobne">
   <div class="wrap">
-    <div class="bearing"><span class="bearing__n"><b>02</b> / Porównanie modeli</span><div class="ticks" aria-hidden="true"></div></div>
+    <div class="bearing"><span class="bearing__n">Porównanie modeli</span><div class="ticks" aria-hidden="true"></div></div>
     <div class="cmp__head reveal">
-      <div><h2 class="h2">Porównaj z innymi</h2>
-        <p class="lead muted">Te same dane producenta, jedna kolumna obok drugiej. Antila 33 stoi pierwsza, żeby było do czego porównywać.</p></div>
-      <div class="carousel__nav" id="cmp-nav" hidden>
-        <button class="carousel__btn" data-dir="-1" aria-label="Przewiń w lewo"><i data-lucide="arrow-left" class="lucide"></i></button>
-        <button class="carousel__btn" data-dir="1" aria-label="Przewiń w prawo"><i data-lucide="arrow-right" class="lucide"></i></button>
-      </div>
+      <h2 class="h2">Porównaj z innymi</h2>
+      <p class="lead muted">Te same dane producenta, jedna kolumna obok drugiej. Antila 33 stoi pierwsza, żeby było do czego porównywać.</p>
     </div>
-
-    <div class="cmp reveal" id="cmp" tabindex="0" role="region" aria-label="Porównanie modeli, przewijaj poziomo">
+    <div class="cmp__pick" role="group" aria-label="Wybierz model do porównania z Antila 33"><span class="cmp__pick-l">Porównaj z</span><div class="chips"><button class="chip" type="button" data-i="1" aria-pressed="true">Antila 30</button><button class="chip" type="button" data-i="2" aria-pressed="false">Nautic 880</button><button class="chip" type="button" data-i="3" aria-pressed="false">Nexus 870 Revo</button></div></div>
+    <div class="cmp reveal" id="cmp">
       <table class="cmp__t num">
         <caption class="sr">Porównanie danych technicznych i cen modeli</caption>
-        <thead><tr><th scope="col" class="cmp__y is-current"><span class="cmp__flag">Ten model</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/a33-burta-480.webp 480w, assets/img/r/a33-burta-800.webp 800w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/a33-burta-800.jpg" srcset="assets/img/r/a33-burta-480.jpg 480w, assets/img/r/a33-burta-800.jpg 800w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Antila 33" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Antila 33</span></th><th scope="col" class="cmp__y"><span class="cmp__flag cmp__flag--ghost">Żaglowy</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/src-a30-640.avif 640w, assets/img/r/src-a30-960.avif 960w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/src-a30-640.webp 640w, assets/img/r/src-a30-960.webp 960w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/src-a30-640.jpg" srcset="assets/img/r/src-a30-640.jpg 640w, assets/img/r/src-a30-960.jpg 960w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Antila 30" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Antila 30</span></th><th scope="col" class="cmp__y"><span class="cmp__flag cmp__flag--ghost">Motorowy</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/src-nautic-640.avif 640w, assets/img/r/src-nautic-960.avif 960w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/src-nautic-640.webp 640w, assets/img/r/src-nautic-960.webp 960w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/src-nautic-640.jpg" srcset="assets/img/r/src-nautic-640.jpg 640w, assets/img/r/src-nautic-960.jpg 960w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Nautic 880" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Nautic 880</span></th><th scope="col" class="cmp__y"><span class="cmp__flag cmp__flag--ghost">Motorowy</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/src-nexus-640.avif 640w, assets/img/r/src-nexus-960.avif 960w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/src-nexus-640.webp 640w, assets/img/r/src-nexus-960.webp 960w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/src-nexus-640.jpg" srcset="assets/img/r/src-nexus-640.jpg 640w, assets/img/r/src-nexus-960.jpg 960w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Nexus 870 Revo" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Nexus 870 Revo</span></th></tr></thead>
-        <tbody><tr><td class="is-current"><span class="cmp__k">Miejsca</span><b class="cmp__v">10</b></td><td class=""><span class="cmp__k">Miejsca</span><b class="cmp__v">8</b></td><td class=""><span class="cmp__k">Miejsca</span><b class="cmp__v">6</b></td><td class=""><span class="cmp__k">Miejsca</span><b class="cmp__v">4 + 2</b></td></tr><tr><td class="is-current"><span class="cmp__k">Kabiny</span><b class="cmp__v">3</b></td><td class=""><span class="cmp__k">Kabiny</span><b class="cmp__v">3</b></td><td class=""><span class="cmp__k">Kabiny</span><b class="cmp__v">2</b></td><td class=""><span class="cmp__k">Kabiny</span><b class="cmp__v">2</b></td></tr><tr><td class="is-current"><span class="cmp__k">Długość</span><b class="cmp__v">10,79 m</b></td><td class=""><span class="cmp__k">Długość</span><b class="cmp__v">9,99 m</b></td><td class=""><span class="cmp__k">Długość</span><b class="cmp__v">9,17 m</b></td><td class=""><span class="cmp__k">Długość</span><b class="cmp__v">8,70 m</b></td></tr><tr><td class="is-current"><span class="cmp__k">Szerokość</span><b class="cmp__v">3,24 m</b></td><td class=""><span class="cmp__k">Szerokość</span><b class="cmp__v">3,20 m</b></td><td class=""><span class="cmp__k">Szerokość</span><b class="cmp__v">3,00 m</b></td><td class=""><span class="cmp__k">Szerokość</span><b class="cmp__v">2,90 m</b></td></tr><tr><td class="is-current"><span class="cmp__k">Zanurzenie</span><b class="cmp__v">0,45 / 1,80 m</b></td><td class=""><span class="cmp__k">Zanurzenie</span><b class="cmp__v">0,44 / 1,79 m</b></td><td class=""><span class="cmp__k">Zanurzenie</span><b class="cmp__v">0,65 m</b></td><td class=""><span class="cmp__k">Zanurzenie</span><b class="cmp__v">0,40 m</b></td></tr>
-          <tr class="cmp__price"><td class="is-current"><span class="cmp__k">Cena od</span><b class="cmp__v">650&nbsp;zł</b><span class="per">/ doba</span></td><td class=""><span class="cmp__k">Cena od</span><b class="cmp__v">650&nbsp;zł</b><span class="per">/ doba</span></td><td class=""><span class="cmp__k">Cena od</span><b class="cmp__v">na zapytanie</b></td><td class=""><span class="cmp__k">Cena od</span><b class="cmp__v">330&nbsp;zł</b><span class="per">/ doba</span></td></tr>
+        <thead><tr><td class="cmp__corner" aria-hidden="true"></td><th scope="col" data-i="0" class="is-current"><span class="cmp__flag">Ten model</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/a33-burta-480.webp 480w, assets/img/r/a33-burta-800.webp 800w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/a33-burta-800.jpg" srcset="assets/img/r/a33-burta-480.jpg 480w, assets/img/r/a33-burta-800.jpg 800w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Antila 33" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Antila 33</span></th><th scope="col" data-i="1" class="is-sel"><span class="cmp__flag cmp__flag--type">Żaglowy</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/src-a30-640.avif 640w, assets/img/r/src-a30-960.avif 960w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/src-a30-640.webp 640w, assets/img/r/src-a30-960.webp 960w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/src-a30-640.jpg" srcset="assets/img/r/src-a30-640.jpg 640w, assets/img/r/src-a30-960.jpg 960w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Antila 30" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Antila 30</span></th><th scope="col" data-i="2"><span class="cmp__flag cmp__flag--type">Motorowy</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/src-nautic-640.avif 640w, assets/img/r/src-nautic-960.avif 960w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/src-nautic-640.webp 640w, assets/img/r/src-nautic-960.webp 960w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/src-nautic-640.jpg" srcset="assets/img/r/src-nautic-640.jpg 640w, assets/img/r/src-nautic-960.jpg 960w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Nautic 880" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Nautic 880</span></th><th scope="col" data-i="3"><span class="cmp__flag cmp__flag--type">Motorowy</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/src-nexus-640.avif 640w, assets/img/r/src-nexus-960.avif 960w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/src-nexus-640.webp 640w, assets/img/r/src-nexus-960.webp 960w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/src-nexus-640.jpg" srcset="assets/img/r/src-nexus-640.jpg 640w, assets/img/r/src-nexus-960.jpg 960w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Nexus 870 Revo" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Nexus 870 Revo</span></th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Miejsca</th><td data-i="0" class="is-current"><b>10</b></td><td data-i="1" class="is-sel"><b>8</b></td><td data-i="2"><b>6</b></td><td data-i="3"><b>4 + 2</b></td></tr>
+          <tr><th scope="row">Kabiny</th><td data-i="0" class="is-current"><b>3</b></td><td data-i="1" class="is-sel"><b>3</b></td><td data-i="2"><b>2</b></td><td data-i="3"><b>2</b></td></tr>
+          <tr><th scope="row">Długość</th><td data-i="0" class="is-current"><b>10,79 m</b></td><td data-i="1" class="is-sel"><b>9,99 m</b></td><td data-i="2"><b>9,17 m</b></td><td data-i="3"><b>8,70 m</b></td></tr>
+          <tr><th scope="row">Szerokość</th><td data-i="0" class="is-current"><b>3,24 m</b></td><td data-i="1" class="is-sel"><b>3,20 m</b></td><td data-i="2"><b>3,00 m</b></td><td data-i="3"><b>2,90 m</b></td></tr>
+          <tr><th scope="row">Zanurzenie</th><td data-i="0" class="is-current"><b>0,45 / 1,80 m</b></td><td data-i="1" class="is-sel"><b>0,44 / 1,79 m</b></td><td data-i="2"><b>0,65 m</b></td><td data-i="3"><b>0,40 m</b></td></tr>
+          <tr class="cmp__price"><th scope="row">Cena od</th><td data-i="0" class="is-current"><b>650&nbsp;zł</b> <span class="per">/ doba</span></td><td data-i="1" class="is-sel"><b>650&nbsp;zł</b> <span class="per">/ doba</span></td><td data-i="2"><b class="cmp__ask">na zapytanie</b></td><td data-i="3"><b>330&nbsp;zł</b> <span class="per">/ doba</span></td></tr>
         </tbody>
-        <tfoot><tr><td class="is-current"><span class="cmp__here">Oglądasz ten model</span></td><td><a class="btn btn--sm" href="index.html#rezerwuj" aria-label="Rezerwuj Antila 30">Rezerwuj</a><a class="u cmp__more" href="jachty-zaglowe.html?model=Antila%2030">Jednostki Antila 30 →</a></td><td><a class="btn btn--sm" href="index.html#rezerwuj" aria-label="Rezerwuj Nautic 880">Rezerwuj</a><a class="u cmp__more" href="jachty-motorowe.html?model=Nautic%20880">Jednostki Nautic 880 →</a></td><td><a class="btn btn--sm" href="index.html#rezerwuj" aria-label="Rezerwuj Nexus 870 Revo">Rezerwuj</a><a class="u cmp__more" href="jachty-motorowe.html?model=Nexus%20870%20Revo">Jednostki Nexus 870 Revo →</a></td></tr></tfoot>
+        <tfoot><tr><td class="cmp__corner"></td><td data-i="0" class="is-current"><span class="cmp__here">Oglądasz ten model</span></td><td data-i="1" class="is-sel"><a class="btn btn--sm" href="index.html#rezerwuj" aria-label="Rezerwuj Antila 30">Rezerwuj</a><a class="u cmp__more" href="jachty-zaglowe.html?model=Antila%2030">Jednostki Antila 30 →</a></td><td data-i="2"><a class="btn btn--sm" href="index.html#rezerwuj" aria-label="Rezerwuj Nautic 880">Rezerwuj</a><a class="u cmp__more" href="jachty-motorowe.html?model=Nautic%20880">Jednostki Nautic 880 →</a></td><td data-i="3"><a class="btn btn--sm" href="index.html#rezerwuj" aria-label="Rezerwuj Nexus 870 Revo">Rezerwuj</a><a class="u cmp__more" href="jachty-motorowe.html?model=Nexus%20870%20Revo">Jednostki Nexus 870 Revo →</a></td></tr></tfoot>
       </table>
     </div>
     <p class="cmp__note">Dane techniczne za kartami modeli. Ceny „od” z cennika 2027 — najniższa stawka dobowa w sezonie.</p>
@@ -437,21 +471,55 @@
   <span class="callfab__ico" aria-hidden="true"><i data-lucide="phone" class="lucide"></i><span class="callfab__fb">✆</span></span>
 </a>
 
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Zdjęcia jachtu">
+  <div class="lb__bar"><span class="lb__n num" id="lb-n"></span><span class="lb__cap" id="lb-cap"></span>
+    <button class="lb__x" type="button" aria-label="Zamknij zdjęcia"><i data-lucide="x" class="lucide"></i></button></div>
+  <div class="lb__stage" id="lb-stage"></div>
+  <button class="lb__nav lb__nav--prev" type="button" aria-label="Poprzednie zdjęcie"><i data-lucide="arrow-left" class="lucide"></i></button>
+  <button class="lb__nav lb__nav--next" type="button" aria-label="Następne zdjęcie"><i data-lucide="arrow-right" class="lucide"></i></button>
+</div>
+<div class="lb__warm" aria-hidden="true"></div>
 <script src="https://unpkg.com/lucide@latest" defer></script>
 <script>
 document.documentElement.classList.add('js');
 function icons(){try{window.lucide&&lucide.createIcons()}catch(e){}}
 icons();addEventListener('load',icons);
 
-/* galeria */
+/* galeria: miniatura zmienia duże zdjęcie i otwiera powiększenie */
 const fig=document.querySelector('.gal__main'),n=document.getElementById('gal-n');
-document.querySelectorAll('.gal__thumbs button').forEach((b,i)=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.gal__thumbs button').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','true');
-  const old=fig.querySelector('picture'),pic=b.querySelector('picture').cloneNode(true);
-  pic.querySelectorAll('[sizes]').forEach(x=>x.sizes='(min-width:1024px) 66vw, 100vw');
-  const img=pic.querySelector('img');img.id='gal-main';img.removeAttribute('loading');img.alt=b.getAttribute('aria-label');img.style.opacity=0;
-  old.replaceWith(pic);requestAnimationFrame(()=>img.style.opacity=1);n.textContent=i+1;
-}));
+const thumbs=[...document.querySelectorAll('.gal__thumbs button')];
+const cap=b=>(b.getAttribute('aria-label')||'').replace(/^Zdjęcie \d+:\s*/,'');
+const bigPic=(i,sizes)=>{const p=thumbs[i].querySelector('picture').cloneNode(true);
+  p.querySelectorAll('[sizes]').forEach(x=>x.sizes=sizes);const im=p.querySelector('img');im.removeAttribute('loading');im.decoding='sync';return p};
+let cur=0;
+function showMain(i){cur=i;thumbs.forEach((x,k)=>k===i?x.setAttribute('aria-current','true'):x.removeAttribute('aria-current'));
+  const p=bigPic(i,'(min-width:1024px) 66vw, 100vw'),im=p.querySelector('img');im.id='gal-main';im.alt='Antila 33 „Kassari” — '+cap(thumbs[i]);
+  fig.querySelector('picture').replaceWith(p);n.textContent=i+1}
+/* wszystkie duże wersje od razu do pamięci przeglądarki — przełączanie bez czekania */
+addEventListener('load',()=>{const w=document.querySelector('.lb__warm');thumbs.forEach((_,i)=>w.appendChild(bigPic(i,'100vw')))});
+
+const lb=document.getElementById('lb'),stage=document.getElementById('lb-stage'),lbN=document.getElementById('lb-n'),lbCap=document.getElementById('lb-cap');
+let lbLast=null;
+function lbShow(i){cur=(i+thumbs.length)%thumbs.length;const p=bigPic(cur,'100vw');p.querySelector('img').alt=cap(thumbs[cur]);
+  stage.replaceChildren(p);lbN.textContent=(cur+1)+' / '+thumbs.length;lbCap.textContent=cap(thumbs[cur]);showMain(cur)}
+function lbOpen(i,from){lbLast=from||document.activeElement;lb.hidden=false;document.body.classList.add('lb-open');lbShow(i);
+  requestAnimationFrame(()=>lb.classList.add('is-open'));lb.querySelector('.lb__x').focus();icons()}
+function lbClose(){lb.classList.remove('is-open');document.body.classList.remove('lb-open');lb.hidden=true;lbLast&&lbLast.focus()}
+thumbs.forEach((b,i)=>b.addEventListener('click',()=>lbOpen(i,b)));
+fig.querySelector('.gal__zoom').addEventListener('click',e=>lbOpen(cur,e.currentTarget));
+lb.querySelector('.lb__x').addEventListener('click',lbClose);
+lb.querySelector('.lb__nav--prev').addEventListener('click',()=>lbShow(cur-1));
+lb.querySelector('.lb__nav--next').addEventListener('click',()=>lbShow(cur+1));
+stage.addEventListener('click',e=>{if(e.target===stage)lbClose()});
+lb.addEventListener('keydown',e=>{
+  if(e.key==='Escape')return lbClose();
+  if(e.key==='ArrowLeft')return lbShow(cur-1);
+  if(e.key==='ArrowRight')return lbShow(cur+1);
+  if(e.key==='Tab'){const f=[...lb.querySelectorAll('button')];const a=f[0],z=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
+/* przesuwanie palcem */
+let tx=null;stage.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+stage.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>45)lbShow(cur+(dx<0?1:-1))});
 
 /* wideo: iframe dopiero po kliknięciu */
 const video=document.getElementById('video');
@@ -465,18 +533,11 @@ let pastHero=false,atFoot=false;const syncBar=()=>{const on=pastHero&&!atFoot;ba
 new IntersectionObserver(([e])=>{pastHero=!e.isIntersecting&&e.boundingClientRect.top<0;syncBar()},{threshold:0}).observe(document.getElementById('galeria'));
 new IntersectionObserver(([e])=>{atFoot=e.isIntersecting;syncBar()},{threshold:0}).observe(document.querySelector('footer'));
 
-/* porównanie: przewijanie kolumnami; nawigacja tylko gdy jest co przewijać */
-const cmp=document.getElementById('cmp'),cmpNav=document.getElementById('cmp-nav');
-const colW=()=>{const c=cmp.querySelector('.cmp__y');return c?c.getBoundingClientRect().width:240};
-cmpNav.querySelectorAll('.carousel__btn').forEach(b=>b.addEventListener('click',()=>cmp.scrollBy({left:colW()*+b.dataset.dir,behavior:'smooth'})));
-function cmpSync(){
-  const over=cmp.scrollWidth-cmp.clientWidth>4;
-  cmpNav.hidden=!over;
-  if(!over)return;
-  cmpNav.querySelector('[data-dir="-1"]').disabled=cmp.scrollLeft<=2;
-  cmpNav.querySelector('[data-dir="1"]').disabled=cmp.scrollLeft>=cmp.scrollWidth-cmp.clientWidth-2;
-}
-cmp.addEventListener('scroll',cmpSync,{passive:true});addEventListener('resize',cmpSync);cmpSync();
+/* porównanie: na telefonie ten model + jeden wybrany obok */
+document.querySelectorAll('.cmp__pick .chip').forEach(c=>c.addEventListener('click',()=>{
+  document.querySelectorAll('.cmp__pick .chip').forEach(x=>x.setAttribute('aria-pressed',x===c));
+  document.querySelectorAll('#cmp [data-i]').forEach(el=>el.classList.toggle('is-sel',el.dataset.i===c.dataset.i));
+}));
 
 /* pojawianie */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});

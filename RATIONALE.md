@@ -300,6 +300,12 @@ Na telefonie grafika w nagłówku stoi pod tekstem. Róża wiatrów w pasie „W
 - menu w dwóch kolumnach mieści się bez przewijania nawet na 390×667; przycisk menu zmienia się w X,
 - niższe kafle zespołu.
 
+**Karta jachtu (24.09.2026)**
+- Galeria ma lightbox: klik w duże zdjęcie albo miniaturę otwiera powiększenie; strzałki, klawiatura (←/→, Esc), przesuwanie palcem, licznik i podpis, blokada przewijania strony, fokus zamknięty w oknie i wracający na miniaturę.
+- Zdjęcia ładują się od razu: pierwsze jest wczytywane z wyprzedzeniem (`preload` z wysokim priorytetem), miniatury bez leniwego ładowania, a po wczytaniu strony wszystkie duże wersje trafiają do pamięci przeglądarki — przełączanie bez czekania.
+- Oryginały zdjęć Kassari na obecnej stronie mają najwyżej 800 px, więc powiększenie pokazuje je w naturalnym rozmiarze. **Do potwierdzenia:** zdjęcia w wyższej rozdzielczości od klienta.
+- „Porównaj z innymi” to zwykła tabela: nazwy parametrów raz, w lewej kolumnie; oglądany model wyróżniony jasnym tłem i linią. Na telefonie widać ten model i jeden wybrany obok, wybór przyciskami nad tabelą.
+
 **Pas „Wybrałeś termin?"** nad stopką ma od dołu cienką jasną linię (`rgba(252,249,244,.5)`), bo oba bloki są ciemne i zlewały się w jeden.
 
 **Cennik na telefonie**: szeroka tabela (13 kolumn) zamienia się w listę rozwijanych pozycji (`<details>`) — nazwa jachtu i „od … zł / doba", po rozwinięciu wszystkie okresy, kaucja i sprzątanie.
