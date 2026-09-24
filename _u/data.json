@@ -1,0 +1,530 @@
+{
+ "antila-24-4": {
+  "title": "Antila 24.4 – jacht żaglowy Mazury, wynajem i czarter",
+  "spec": {
+   "Długość": "7.35 m",
+   "Szerokość": "2.70 m",
+   "Zanurzenie": "0.32-1.36 m",
+   "Liczba osób": "6 (max 8)",
+   "Zamykane kabiny": "0",
+   "Wysokość kabiny": "1.88 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "płetwa na pawęży",
+   "Typ silnika": "przyczepny",
+   "Powierzchnia żagli": "30 m",
+   "Rok produkcji": "2020"
+  },
+  "img": [
+   "antila-24-4-1.jpg",
+   "antila-24-4-2.jpg",
+   "antila-24-4-3.jpg",
+   "antila-24-4-4.jpg"
+  ]
+ },
+ "antila-27-furaha": {
+  "title": "Antila 27 &quot;Furaha&quot; – czarter żaglówki w Giżycku na Mazurach",
+  "spec": {
+   "Długość": "8.85 m",
+   "Szerokość": "2.98 m",
+   "Zanurzenie": "0.39-1.85 m",
+   "Liczba osób": "8",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.85 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "płetwa na pawęży",
+   "Typ silnika": "przyczepny",
+   "Powierzchnia żagli": "38 m",
+   "Rok produkcji": "2022"
+  },
+  "img": [
+   "antila-27-kokpit.jpg",
+   "antila27-rufa-1.jpg",
+   "antila27-rufa-1-scaled.jpg",
+   "antila27-messa.jpg"
+  ]
+ },
+ "antila-27-hiuma": {
+  "title": "Antila 27 &quot;Hiuma&quot; – wynajem jachtu żaglowego w Giżycku Mazury",
+  "spec": {
+   "Długość": "8.85 m",
+   "Szerokość": "2.98 m",
+   "Zanurzenie": "0.39-1.85 m",
+   "Liczba osób": "8",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.85 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "płetwa na pawęży",
+   "Typ silnika": "przyczepny",
+   "Powierzchnia żagli": "38 m",
+   "Rok produkcji": "2022"
+  },
+  "img": [
+   "IMG-0599-scaled.jpg",
+   "IMG-0599.jpg",
+   "antila-27-rufa-1.jpg",
+   "antila-27-messa.jpg"
+  ]
+ },
+ "antila-27-marmolada": {
+  "title": "Antila 27 &quot;Marmolada&quot; – żaglówka Giżycko, czarter na Mazurach",
+  "spec": {
+   "Długość": "8.85 m",
+   "Szerokość": "2.98 m",
+   "Zanurzenie": "0.39-1.85 m",
+   "Liczba osób": "8",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.85 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "płetwa na pawęży",
+   "Typ silnika": "przyczepny",
+   "Powierzchnia żagli": "38 m",
+   "Rok produkcji": "2023"
+  },
+  "img": [
+   "IMG-0639-scaled.jpg",
+   "IMG-0639.jpg",
+   "antila-27-marmolada.jpg",
+   "antila-27-kokpit-2.jpg"
+  ]
+ },
+ "antila-27-ramzesowa": {
+  "title": "Antila 27 &quot;Ramzesowa&quot; – wynajem łódki żaglowej Giżycko Mazury",
+  "spec": {
+   "Długość": "8.85 m",
+   "Szerokość": "2.98 m",
+   "Zanurzenie": "0.39-1.85 m",
+   "Liczba osób": "8",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.85 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "płetwa na pawęży",
+   "Typ silnika": "przyczepny",
+   "Powierzchnia żagli": "38 m",
+   "Rok produkcji": "2022"
+  },
+  "img": [
+   "antila-27-kokpit-1.jpg",
+   "antila-27-mesa.jpg",
+   "antila-27-kambuz.jpg",
+   "antila-27-rufa.jpg"
+  ]
+ },
+ "antila-28-2-pakri": {
+  "title": "Antila 28.2 &quot;Pakri&quot; – czarter żaglówki Giżycko, Mazury",
+  "spec": {
+   "Długość": "8.85 m",
+   "Szerokość": "3.07 m",
+   "Zanurzenie": "0.43-1.75 m",
+   "Liczba osób": "8",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.86 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "płetwa na pawęży",
+   "Typ silnika": "przyczepny",
+   "Powierzchnia żagli": "39 m",
+   "Rok produkcji": "2024"
+  },
+  "img": [
+   "antila-28.2-1-1.jpg",
+   "antila-28.2-kokpit.jpg",
+   "antila-28.2-1.jpg",
+   "antila-28.2-messa-3.jpg"
+  ]
+ },
+ "antila-30-1-bradl": {
+  "title": "Antila 30.1 &quot;Bradl&quot; - jacht żaglowy, czarter Giżycko Mazury",
+  "spec": {
+   "Długość": "9.99 m",
+   "Szerokość": "3.20 m",
+   "Zanurzenie": "0.44-1.79 m",
+   "Liczba osób": "max 8",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.91 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "głębinowy + koło",
+   "Typ silnika": "stacjonarny",
+   "Powierzchnia żagli": "46.9 m",
+   "Rok produkcji": "2022"
+  },
+  "img": [
+   "antila-30.1-burta.jpg",
+   "antila-30.1-kokpit.jpg",
+   "antila-30.1-kokpit-2.jpg",
+   "antila-30.1-messa.jpg"
+  ]
+ },
+ "antila-30-1-e-cleopatra": {
+  "title": "Antila 30.1 E &quot;Cleopatra&quot; – jacht żaglowy Mazury, czarter w Giżycku",
+  "spec": {
+   "Długość": "9.99 m",
+   "Szerokość": "3.20 m",
+   "Zanurzenie": "0.44-1.79 m",
+   "Liczba osób": "max 8",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.91 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "głębinowy + koło",
+   "Typ silnika": "elektryczny",
+   "Powierzchnia żagli": "46.9 m",
+   "Rok produkcji": "2026"
+  },
+  "img": [
+   "Antila-30.1.jpg",
+   "Antila-30.1-kokpit-3.jpg",
+   "Antila-30.1-kokpit-1.jpg",
+   "Antila-30.1-elektryczna.jpg"
+  ]
+ },
+ "antila-30-sarema": {
+  "title": "Antila 30 &quot;Sarema&quot; - komfortowa żaglówka, czarter Giżycko",
+  "spec": {
+   "Długość": "9.99 m",
+   "Szerokość": "3.20 m",
+   "Zanurzenie": "0.44-1.79 m",
+   "Liczba osób": "8",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.91 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "głębinowy + koło",
+   "Typ silnika": "stacjonarny",
+   "Powierzchnia żagli": "46.9 m",
+   "Rok produkcji": "2022"
+  },
+  "img": [
+   "antila-30-burta.jpg",
+   "antila-30-kokpit.jpg",
+   "antila-30-mesa.jpg",
+   "antila-30-mesa-2.jpg"
+  ]
+ },
+ "antila-30-tutto-bene": {
+  "title": "Antila 30 &quot;Tutto Bene&quot; - jacht żaglowy, czarter w Giżycku",
+  "spec": {
+   "Długość": "9.99 m",
+   "Szerokość": "3.20 m",
+   "Zanurzenie": "0.44-1.79 m",
+   "Liczba osób": "8",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.91 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "głębinowy + koło",
+   "Typ silnika": "stacjonarny",
+   "Powierzchnia żagli": "46.9 m",
+   "Rok produkcji": "2021"
+  },
+  "img": [
+   "antila-30-tutto-bene.jpg",
+   "antila-30-tutto-bene-sterowka.jpg",
+   "antila-30-tutto-bene-mesa-1.jpg",
+   "antila-30-tutto-bene-messa.jpg"
+  ]
+ },
+ "antila-33-3-infinitum": {
+  "title": "Antila 33.3 &quot;Infinitum&quot; - nowoczesna żaglówka, czarter Mazury",
+  "spec": {
+   "Długość": "10.79 m",
+   "Szerokość": "3.24 m",
+   "Zanurzenie": "0.45-1.80 m",
+   "Liczba osób": "max 10",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.95 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "głębinowy + koło",
+   "Typ silnika": "stacjonarny",
+   "Powierzchnia żagli": "51.2 m",
+   "Rok produkcji": "2023"
+  },
+  "img": [
+   "antila-33.3-burta-1.jpg",
+   "antila-33.3-burta.1.jpg",
+   "antila-33.3-kokpit.1.jpg",
+   "antila-33.3-mesa.1.jpg"
+  ]
+ },
+ "antila-33-biala-perla": {
+  "title": "Antila 33 &quot;Biała Perła&quot; - komfortowy jacht, czarter Giżycko",
+  "spec": {
+   "Długość": "10.79 m",
+   "Szerokość": "3.24 m",
+   "Zanurzenie": "0.45-1.80 m",
+   "Liczba osób": "max 10",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.95 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "głębinowy + koło",
+   "Typ silnika": "stacjonarny",
+   "Powierzchnia żagli": "51.20 m",
+   "Rok produkcji": "2026"
+  },
+  "img": [
+   "antila-33.3-biala-perla.jpg",
+   "Antila-33.3-biala-perla-kokpit.jpg",
+   "Antila-33.3-kokpit-2.jpg",
+   "Antila-33.3-biala-perla-nawigacja.jpg"
+  ]
+ },
+ "antila-33-kassari": {
+  "title": "Antila 33 &quot;Kassari&quot; - żaglówka Mazury, wynajem w Giżycku",
+  "spec": {
+   "Długość": "10.79 m",
+   "Szerokość": "3.24 m",
+   "Zanurzenie": "0.45-1.80 m",
+   "Liczba osób": "max 10",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.95 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "głębinowy + koło",
+   "Typ silnika": "stacjonarny",
+   "Powierzchnia żagli": "51.20 m",
+   "Rok produkcji": "2023"
+  },
+  "img": [
+   "antila-33-burta.jpg",
+   "antila-33-burta.1.jpg",
+   "antila-33-kokpit.1.jpg",
+   "antila-33-plotter.1.jpg"
+  ]
+ },
+ "antila-33-strega": {
+  "title": "Antila 33 &quot;Strega&quot; - jacht żaglowy, czarter w Giżycku Mazury",
+  "spec": {
+   "Długość": "10.79 m",
+   "Szerokość": "3.24 m",
+   "Zanurzenie": "0.45-1.80 m",
+   "Liczba osób": "max 10",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.95 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "głębinowy + koło",
+   "Typ silnika": "stacjonarny",
+   "Powierzchnia żagli": "49 m",
+   "Rok produkcji": "2019"
+  },
+  "img": [
+   "antila-33-strega-kokpit.jpg",
+   "antila-33-messa.jpg",
+   "antila-33-kambuz-2.jpg",
+   "antila-33-messa-2.jpg"
+  ]
+ },
+ "antila-34-progresja": {
+  "title": "Antila 34 &quot;Progresja&quot; - czarter jachtu Giżycko",
+  "spec": {
+   "Długość": "10.79 m",
+   "Szerokość": "3.24 m",
+   "Zanurzenie": "0.45-1.80 m",
+   "Liczba osób": "max 10",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.95 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "głębinowy + koło",
+   "Typ silnika": "elektryczny",
+   "Powierzchnia żagli": "51.20 m2",
+   "Rok produkcji": "2026"
+  },
+  "img": [
+   "antila-34-mesa.jpg",
+   "Antila-34.jpg",
+   "Antila-34-kokpit-1.jpg",
+   "Antila-34-kokpit-2.jpg"
+  ]
+ },
+ "calipso-750-fire-cruiser": {
+  "title": "Calipso 750 &quot;Fire Cruiser&quot; - łódź motorowa, czarter Giżycko",
+  "spec": {
+   "Długość": "7.50 m",
+   "Szerokość": "2.80 m",
+   "Zanurzenie": "0.50 m",
+   "Liczba osób": "4 (max 6)",
+   "Zamykane kabiny": "1.90 m",
+   "Wysokość kabiny": "przyczepny",
+   "Typ silnika": "30 KM",
+   "Moc silnika": "2020"
+  },
+  "img": [
+   "calipso-750-4.jpg",
+   "calipso-750-messa-2.jpg",
+   "calipso-750-messa-1.jpg",
+   "calipso-750-dziob-1.jpg"
+  ]
+ },
+ "futura-860-eufemia": {
+  "title": "Futura 860 &quot;Eufemia&quot; – komfortowy jacht, czarter Giżycko Mazury",
+  "spec": {
+   "Długość": "8.60 m",
+   "Szerokość": "3.25 m",
+   "Zanurzenie": "0.50 m",
+   "Liczba osób": "6 (max 8)",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "2.00 m",
+   "Typ silnika": "stacjonarny",
+   "Moc silnika": "33 KM",
+   "Rok produkcji": "2015"
+  },
+  "img": [
+   "futura860.jpg",
+   "futura-860-7.jpg",
+   "futura860-6.jpg",
+   "futura860-2.jpg"
+  ]
+ },
+ "maxus-24-evo-waski": {
+  "title": "Maxus 24 Evo &quot;Wąski&quot; – żaglówka Mazury, czarter w Giżycku",
+  "spec": {
+   "Długość": "8.20 m",
+   "Szerokość": "2.55 m",
+   "Zanurzenie": "0.32-1.35 m",
+   "Liczba osób": "6 (max 8)",
+   "Zamykane kabiny": "0",
+   "Wysokość kabiny": "1.88 m",
+   "Typ miecza": "obrotowy",
+   "Typ steru": "płetwa na pawęży",
+   "Typ silnika": "przyczepny",
+   "Powierzchnia żagli": "29 m",
+   "Rok produkcji": "2020"
+  },
+  "img": [
+   "maxus-24-evo-burta.jpg",
+   "maxus-24-evo-burta.1.jpg",
+   "maxus-24-evo-kokpit.1.jpg",
+   "maxus-24-evo-srodek.1.jpg"
+  ]
+ },
+ "maxus-28-prawy-hals": {
+  "title": "Maxus 28 &quot;Prawy Hals&quot; – komfortowy jacht, czarter Giżycko",
+  "spec": {
+   "Długość": "9.44 m",
+   "Szerokość": "2.92 m",
+   "Zanurzenie": "0.40-1.60 m",
+   "Liczba osób": "8",
+   "Zamykane kabiny": "1.85 m",
+   "Wysokość kabiny": "obrotowy",
+   "Typ miecza": "płetwa na pawęży",
+   "Typ steru": "przyczepny",
+   "Typ silnika": "39 m²",
+   "Powierzchnia żagli": "2019"
+  },
+  "img": [
+   "maxus-28-kokpit-scaled.jpg",
+   "maxus-28-poklad.jpg",
+   "maxus-28-poklad-scaled.jpg",
+   "maxus-28-kokpit.jpg"
+  ]
+ },
+ "nautic-880-cuba-libre": {
+  "title": "Nautic 880 &quot;Cuba Libre&quot; – jacht Mazury, czarter w Giżycku",
+  "spec": {
+   "Długość": "9.00 m",
+   "Szerokość": "3.05 m",
+   "Zanurzenie": "–",
+   "Liczba osób": "4 (max 6)",
+   "Zamykane kabiny": "–",
+   "Wysokość kabiny": "przyczepny",
+   "Typ silnika": "50 KM",
+   "Moc silnika": "2023"
+  },
+  "img": [
+   "nautic-880-rufa.1-1.jpg",
+   "nautic880.1.jpg",
+   "nautic-880-rufa.1.jpg",
+   "nautic-880-sterowka.1.jpg"
+  ]
+ },
+ "nautic-880-mojito": {
+  "title": "Nautic 880 &quot;Mojito&quot; – jacht Mazury, wynajem Giżycko",
+  "spec": {
+   "Długość": "9.00 m",
+   "Szerokość": "3.05 m",
+   "Zanurzenie": "–",
+   "Liczba osób": "4 (max 6)",
+   "Zamykane kabiny": "–",
+   "Wysokość kabiny": "przyczepny",
+   "Typ silnika": "50 KM",
+   "Moc silnika": "2023"
+  },
+  "img": [
+   "nautic880.jpg",
+   "nautic880.1.jpg",
+   "nautic-880-rufa.1-1.jpg",
+   "nautic-880-rufa.1.jpg"
+  ]
+ },
+ "nautiner-38-black-stilo": {
+  "title": "Nautiner 38 &quot;Blask Stilo&quot; – jacht Mazury, czarter Giżycko",
+  "spec": {
+   "Długość": "11.50 m",
+   "Szerokość": "3.50 m",
+   "Zanurzenie": "0.75 m",
+   "Liczba osób": "6 (max 8)",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "2.00 m",
+   "Typ silnika": "stacjonarny",
+   "Moc silnika": "42 KM",
+   "Rok produkcji": "2014"
+  },
+  "img": [
+   "nautiner-38-burta.jpg",
+   "nautiner-38-7.jpg",
+   "nautiner-38-7-e1605393159948.jpg",
+   "nautiner38-5.jpg"
+  ]
+ },
+ "nexus-870-revo-bolek": {
+  "title": "Nexus 870 Revo &quot;Bolek&quot; – jacht Mazury, czarter w Giżycku",
+  "spec": {
+   "Długość": "8.70 m",
+   "Szerokość": "2.90 m",
+   "Zanurzenie": "0.40 m",
+   "Liczba osób": "4 (max 6)",
+   "Zamykane kabiny": "1.86 m",
+   "Wysokość kabiny": "przyczepny",
+   "Typ silnika": "25 KM",
+   "Moc silnika": "2018"
+  },
+  "img": [
+   "nexus-870-revo-bolek.jpg",
+   "nexus-870-revo-bolek-6.jpg",
+   "nexus-870-revo-bolek-7.jpg",
+   "nexus-870-revo-bolek-2.jpg"
+  ]
+ },
+ "nexus-870-revo-wiktor": {
+  "title": "Nexus 870 Revo &quot;Wiktor&quot; – komfortowy jacht, wynajem Mazury",
+  "spec": {
+   "Długość": "8.70 m",
+   "Szerokość": "2.90 m",
+   "Zanurzenie": "0.40 m",
+   "Liczba osób": "4 (max 6)",
+   "Zamykane kabiny": "1",
+   "Wysokość kabiny": "1.86 m",
+   "Typ silnika": "przyczepny",
+   "Moc silnika": "25 KM",
+   "Rok produkcji": "2020"
+  },
+  "img": [
+   "nexus-870-revo-burta.jpg",
+   "revo-poklad-sloneczny.jpg",
+   "revo-kokpit.jpg",
+   "nexus-870-revo-mesa-2.jpg"
+  ]
+ },
+ "stillo-31-star": {
+  "title": "Stillo 31 - komfortowy i nowoczesny jacht motorowy",
+  "spec": {
+   "Długość": "9.8 m",
+   "Szerokość": "3.2 m",
+   "Zanurzenie": "0.50 m",
+   "Liczba osób": "max 8",
+   "Zamykane kabiny": "3",
+   "Wysokość kabiny": "1.95 m",
+   "Typ silnika": "stacjonarny – diesel",
+   "Rok produkcji": "2025"
+  },
+  "img": [
+   "stillo31-2025-2.jpg",
+   "stillo31-2025-3.jpg",
+   "stillo31-2025.jpg",
+   "stillo31-sterowka.jpg"
+  ]
+ }
+}

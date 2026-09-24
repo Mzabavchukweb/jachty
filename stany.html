@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jachty Mazury — stany komponentów</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/system.css">
+<style>
+.doc{padding-block:var(--s6)}
+.row{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;margin-top:var(--s2)}
+.lbl{font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80);min-width:120px}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:var(--s2)}
+.sw div{border:1px solid var(--line);padding:var(--s2);font-size:var(--t-1);letter-spacing:.06em}
+.sw i{display:block;height:56px;margin-bottom:8px}
+.dark{background:var(--ink);padding:var(--s3)}
+.forced-hover.btn{background:var(--deep);border-color:var(--deep)}
+.forced-hover.btn--outline{background:var(--ink);color:var(--paper)}
+.hovlist li{padding:6px 0;border-bottom:1px solid var(--line);font-size:var(--t-1)}
+.forced-focus{outline:2px solid var(--focus);outline-offset:3px}
+.forced-active.btn{background:color-mix(in srgb,var(--deep) 82%,var(--ink));border-color:color-mix(in srgb,var(--deep) 82%,var(--ink))}
+.forced-hover.input{border-color:var(--wave)}
+.mini{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:360px;border-top:1px solid var(--line-strong);padding-top:8px}
+.mini b{display:grid;place-items:center;height:40px;font-weight:500;border:1px solid var(--line);font-size:var(--t-1)}
+.mini b.past{color:var(--ink-80);opacity:.4;text-decoration:line-through;border-color:transparent}
+.mini b.busy{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.mini b.ask{background:var(--sand)}
+.mini b.today{border-color:var(--deep);color:var(--deep)}
+.navdemo{display:flex;gap:var(--s3)}.navdemo a{color:var(--ink);font-weight:500}
+.forced-focus.input{border-color:var(--deep)}
+table.t td,table.t th{padding:8px 12px 8px 0;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:var(--t-1)}
+table.t th{font-weight:500}
+/* wyszukiwarka w hero */
+.srch{margin-top:var(--s5);max-width:660px;background:var(--paper);color:var(--ink);display:grid;grid-template-columns:1fr 1fr auto}
+.srch__f{display:grid;gap:2px;padding:var(--s2) var(--s3);border-right:1px solid var(--line);min-width:0}
+.srch__f label{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);font-weight:500}
+.srch__f input{border:0;background:none;font-family:var(--f-display);font-size:var(--t1);line-height:1.25;color:var(--ink);padding:0;width:100%;min-width:0}
+.srch__f input::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
+.srch__f:focus-within{background:var(--sand)}
+.srch__f input:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.srch .btn{padding-inline:var(--s4)}
+.srch.has-error .srch__f--bad{box-shadow:inset 0 -2px 0 var(--ink)}
+.srch__hint{margin-top:var(--s2);font-size:var(--t-1);color:rgba(252,249,244,.78);letter-spacing:.02em}
+@media(max-width:640px){.srch{grid-template-columns:1fr 1fr}.srch__f:nth-of-type(2){border-right:0}.srch .btn{grid-column:1/-1;min-height:56px}}
+
+/* pasek wybranego terminu */
+.termbar{position:sticky;top:var(--head-h);z-index:55;background:var(--ink);color:var(--paper)}
+.termbar__in{display:flex;align-items:center;gap:var(--s2) var(--s4);flex-wrap:wrap;padding-block:12px;font-size:var(--t-1);letter-spacing:.08em;text-transform:uppercase}
+.termbar__d{font-weight:600}
+.termbar__c{color:rgba(252,249,244,.75)}
+.termbar__edit{margin-left:auto;color:var(--paper);background:none;border:0;padding:0;font-size:var(--t-1);letter-spacing:.08em;text-transform:uppercase;
+  background-image:linear-gradient(currentColor,currentColor);background-size:100% 1px;background-repeat:no-repeat;background-position:0 100%}
+.termbar__edit:hover{background-size:0 1px;background-position:100% 100%}
+
+/* status floty */
+.fleet__status{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);flex-wrap:wrap;margin-bottom:var(--s5)}
+.fleet__status__t{font-size:var(--t1)}
+.fleet__status b{font-weight:500}
+.fleet__status button{background:none;border:0;padding:0;font:inherit;color:var(--ink);font-weight:500}
+.fleet__status .u{color:var(--ink);font-weight:500}
+.state__act{display:flex;gap:var(--s2);flex-wrap:wrap}
+
+/* stan pozycji floty */
+.fli.is-busy{display:none}
+.fl.show-busy .fli.is-busy{display:grid;opacity:.55}
+.fl.show-busy .fli.is-busy .fli__ph img{filter:grayscale(1)}
+.fli__st{display:none;font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.fli.is-busy .fli__st,.fli.is-ask .fli__st{display:inline}
+.fli.is-busy .fli__st{color:var(--ink-80)}
+.fli.is-ask .fli__st{color:var(--deep)}
+.fli__total{display:none;margin-left:var(--s2);padding-left:var(--s2);border-left:1px solid var(--line);color:var(--ink-80);font-size:var(--t0)}
+.fli__total.is-on{display:inline}
+.fleet__grp.is-empty{display:none}
+
+.fli{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"ph body" "ph foot";column-gap:var(--s4);row-gap:var(--s2);padding-block:var(--s4);border-bottom:1px solid var(--line);align-items:start;align-content:start}
+.fli__ph{grid-area:ph}.fli__body{grid-area:body}.fli__foot{grid-area:foot}
+.fli__ph{position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--sand);display:block}
+.fli__ph img{width:100%;height:100%;object-fit:cover}
+.fli__ph .alt{position:absolute;inset:0;opacity:0;transition:opacity var(--dur) var(--ease)}
+@media(hover:hover){.fli:hover .fli__ph .alt{opacity:1}}
+.fli__body{display:grid;gap:6px;min-width:0}
+.fli__tag{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80)}
+.fli__name{font-family:var(--f-display);font-size:var(--t3);line-height:1;letter-spacing:-.01em}
+.fli__name a{color:var(--ink)}.fli__name em{font-style:italic;color:var(--deep)}
+.fli__specs{color:var(--ink-80);font-size:var(--t0)}
+.fli__foot{display:flex;justify-content:space-between;align-items:center;gap:var(--s2);flex-wrap:wrap}
+.fli__act{display:flex;align-items:center;gap:var(--s3)}
+.fli__price small{font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80)}
+.fli__price b{font-family:var(--f-display);font-weight:400;font-size:var(--t3);letter-spacing:-.01em;line-height:1}
+.fli__cta{color:var(--ink);font-weight:500;white-space:nowrap}
+@media(max-width:1023px){.fl{grid-template-columns:1fr;column-gap:0}}
+@media(max-width:640px){.fli{grid-template-columns:132px minmax(0,1fr);grid-template-areas:"ph body" "foot foot";column-gap:var(--s3);row-gap:var(--s3)}.fli__name{font-size:var(--t2)}.fli__specs{font-size:.9375rem}
+  .fli__foot{row-gap:var(--s2)}.fli__price{width:100%;white-space:nowrap}.fli__act{width:100%;justify-content:space-between}.fli__act .btn{flex:1;min-height:48px}
+  .fleet__grph .muted{display:none}.fleet__grph a{white-space:nowrap}}
+.hide-m{display:inline}@media(max-width:767px){.hide-m{display:none}}
+
+
+.fli__ph.skeleton{display:block}
+
+/* Newsreader: małe teksty szeryfowe o pół stopnia grubsze — czytelność przy 18–31 px */
+.legend__v,.fli__name,.fli__pricev,.fgh__n,.mem__n,.mem__ini,.about__facts dd,.war__h,.war__l b,.war__hours b,.tq blockquote p,
+.cmp__name,.cmp__price .cmp__v,.book__price b,.price td.n,.h3,.meas__hd b,.cal__hd b,.mobilebar .amt,.fe__n b,.sim__name,.band__txt{font-weight:500;font-optical-sizing:auto}
+.display,.h1,.h2,.fgh__t,.band__num{font-optical-sizing:auto}
+</style>
+</head>
+<body>
+<main class="chart"><div class="wrap doc">
+  <div class="bearing"><span class="bearing__n"><b>00</b> / System</span><div class="ticks" aria-hidden="true"></div></div>
+  <h1 class="h1">Tokeny i stany</h1>
+  <p class="lead muted" style="margin-top:var(--s2)">Dokumentacja robocza. Każdy stan poniżej jest wymuszony klasą, żeby dało się go zobaczyć bez interakcji.</p>
+
+  <section style="margin-top:var(--s6)">
+    <h2 class="h3">Kolor — kontrast i limity</h2>
+    <div class="sw" style="margin-top:var(--s3)">
+      <div><i style="background:var(--ink)"></i>--ink #304044<br>10,3:1 na paper · tekst, CTA, stopka</div>
+      <div><i style="background:var(--deep)"></i>--deep #137396<br>5,1:1 na paper · linki, focus, akcent</div>
+      <div><i style="background:var(--wave)"></i>--wave #3E9AB3<br>3,1:1 · tylko display ≥32px, hover, linie</div>
+      <div><i style="background:var(--sage)"></i>--sage #71846F<br>3,8:1 · tylko linie, znaczniki, siatka</div>
+      <div><i style="background:var(--sand);border:1px solid var(--line)"></i>--sand #F1E6D6<br>tła sekcji, wypełnienia, szkielety</div>
+      <div><i style="background:var(--paper);border:1px solid var(--line)"></i>--paper #FCF9F4<br>tło bazowe</div>
+      <div><i style="background:var(--ink-80)"></i>--ink-80 #576161<br>6,1:1 / 5,2:1 na sand · tekst drugorzędny</div>
+    </div>
+    <p class="muted" style="margin-top:var(--s2);font-size:var(--t-1)">Na sand link w --deep ma 4,3:1 — dlatego na piaskowych sekcjach linki są w --ink z podkreśleniem w --deep.</p>
+  </section>
+
+  <section style="margin-top:var(--s6)">
+    <h2 class="h3">Skala typograficzna 1,25 · rytm 8 px</h2>
+    <table class="t" style="margin-top:var(--s3);max-width:640px">
+      <tr><th>--t-1</th><td>12 px</td><td>micro, etykiety, współrzędne, okruszki</td></tr>
+      <tr><th>--t0</th><td>16 px</td><td>body, przyciski, wartości</td></tr>
+      <tr><th>--t1</th><td>20 px</td><td>lead, wartości w rejestrze</td></tr>
+      <tr><th>--t2</th><td>25 px</td><td>ceny w tabeli, cytaty mobile</td></tr>
+      <tr><th>--t3</th><td>31 px</td><td>h3, nazwy w karuzeli</td></tr>
+      <tr><th>--t4</th><td>39 px</td><td>nazwa w rejestrze, cytaty desktop</td></tr>
+      <tr><th>--t5</th><td>49 px</td><td>h2, cena w rejestrze</td></tr>
+      <tr><th>--t6</th><td>61 px</td><td>h1 strony jachtu</td></tr>
+      <tr><th>--t7</th><td>49 → 95 px</td><td>display hero</td></tr>
+      <tr><th>--s1…--s9</th><td>8 · 16 · 24 · 32 · 48 · 64 · 96 · 128 · 160</td><td>wszystkie odstępy</td></tr>
+    </table>
+  </section>
+
+  <section style="margin-top:var(--s6)">
+    <h2 class="h3">Przycisk</h2>
+    <p class="muted" style="font-size:var(--t-1);margin-top:var(--s1)">Trzy warianty: primary (ink), secondary (outline ink), ghost (link z podkreśleniem). Na fotografii oba odwracają barwy — jedyny wyjątek.</p>
+    <div class="row"><span class="lbl">primary</span>
+      <button class="btn">Domyślny</button><button class="btn forced-hover">Hover</button><button class="btn forced-focus">Focus-visible</button><button class="btn forced-active">Active</button><button class="btn" disabled>Disabled</button><button class="btn is-loading" aria-busy="true"><span class="btn__label">Ładowanie</span></button></div>
+    <div class="row"><span class="lbl">secondary</span>
+      <button class="btn btn--outline">Domyślny</button><button class="btn btn--outline forced-hover">Hover</button><button class="btn btn--outline forced-focus">Focus-visible</button><button class="btn btn--outline" disabled>Disabled</button><button class="btn btn--outline btn--sm">Mały</button></div>
+    <div class="row"><span class="lbl">ghost / link</span>
+      <a class="u" href="#" style="color:var(--ink)">Karta jachtu →</a><a class="u u--on" href="#" style="color:var(--ink)">Hover (podkreślenie wjechało)</a><a class="u forced-focus" href="#" style="color:var(--ink)">Focus-visible</a></div>
+    <div class="row dark on-dark on-photo"><span class="lbl">na fotografii</span>
+      <button class="btn">Primary</button><button class="btn btn--outline">Secondary</button><button class="btn forced-focus">Focus</button></div>
+  </section>
+
+  <section style="margin-top:var(--s6)">
+    <h2 class="h3">Pole</h2>
+    <div class="g12" style="margin-top:var(--s3)">
+      <div class="field c3"><label>Domyślne</label><input class="input" placeholder="dd.mm.rrrr"></div>
+      <div class="field c3"><label>Hover</label><input class="input forced-hover" placeholder="dd.mm.rrrr"></div>
+      <div class="field c3"><label>Focus</label><input class="input forced-focus" value="12.07.2026"></div>
+      <div class="field c3"><label>Disabled</label><input class="input" disabled value="niedostępne"></div>
+      <div class="field c6 has-error"><label>Błąd</label><input class="input" aria-invalid="true" value="19.07.2026"><span class="field__error"><i data-lucide="alert-triangle" class="lucide"></i><span>Data końca musi być późniejsza niż początek.</span></span></div>
+      <div class="field c6"><label>Z podpowiedzią</label><input class="input" placeholder="dd.mm.rrrr"><span class="field__hint">Czartery tygodniowe zaczynają się w soboty.</span></div>
+    </div>
+  </section>
+
+  <section style="margin-top:var(--s6)">
+    <h2 class="h3">Szkielet · stan pusty · błąd</h2>
+    <div class="g12" style="margin-top:var(--s3)">
+      <div class="c4"><div class="skeleton skeleton--media"></div><div class="skeleton skeleton--line" style="width:60%;margin-top:16px"></div><div class="skeleton skeleton--line" style="width:40%"></div></div>
+      <div class="c4"><div class="state"><div class="state__tag">Brak wolnych jednostek</div><h3 class="h3">Ten termin jest już zajęty.</h3><p>Przesuń start o dzień lub dwa — pokażemy, co się zwolniło.</p><button class="btn btn--outline btn--sm">Sprawdź sąsiednie terminy</button></div></div>
+      <div class="c4"><div class="state"><div class="state__tag">Nie udało się pobrać kalendarza</div><h3 class="h3">Kalendarz nie odpowiada.</h3><p>Odśwież stronę. Jeśli to nie pomoże, sprawdź termin telefonicznie: +48 511 420 100.</p><button class="btn btn--sm">Odśwież</button></div></div>
+    </div>
+  </section>
+
+  <section style="margin-top:var(--s6)">
+    <h2 class="h3">Okruszki · karuzela · etykieta</h2>
+    <div class="row"><ol class="crumbs"><li><a class="u" href="#">Start</a></li><li><a class="u" href="#">Jachty żaglowe</a></li><li aria-current="page">Antila 33</li></ol></div>
+    <div class="row"><span class="lbl">karuzela</span><div class="carousel__nav"><button class="carousel__btn" disabled aria-label="Poprzednie"><i data-lucide="arrow-left" class="lucide"></i></button><button class="carousel__btn" aria-label="Następne"><i data-lucide="arrow-right" class="lucide"></i></button></div><span class="lbl">disabled na krańcu</span></div>
+    <div class="row"><span class="lbl">etykieta</span><span class="tag">Żaglowy</span><span class="tag">Motorowy</span></div>
+  </section>
+
+  <section style="margin-top:var(--s6)">
+    <h2 class="h3">Ruch i hover — polityka</h2>
+    <p class="muted" style="font-size:var(--t-1);margin-top:var(--s1)">Hover tylko tam, gdzie coś jest sterowaniem. Zero hoverów dekoracyjnych na zdjęciach i kartach.</p>
+    <div class="g12" style="margin-top:var(--s3)">
+      <div class="c6">
+        <p class="micro muted" style="margin-bottom:var(--s2)">Hover dozwolony</p>
+        <ul class="hovlist">
+          <li>Przycisk — zmiana tła ink → deep</li>
+          <li>Pole — obramowanie sage → wave</li>
+          <li>Link — podkreślenie wjeżdża od lewej</li>
+          <li>Strzałka karuzeli — inwersja</li>
+          <li>Zamknięcie modala, przycisk odtwarzania filmu</li>
+        </ul>
+      </div>
+      <div class="c6">
+        <p class="micro muted" style="margin-bottom:var(--s2)">Usunięte</p>
+        <ul class="hovlist">
+          <li>Podmiana kadru na drugie zdjęcie we flocie</li>
+          <li>Powiększanie zdjęcia w porównaniu jednostek</li>
+          <li>Unoszenie bloku danych</li>
+          <li>Obramowanie miniatury w galerii</li>
+        </ul>
+      </div>
+    </div>
+    <table class="t" style="margin-top:var(--s4);max-width:640px">
+      <tr><th>--dur</th><td>260 ms</td><td>sterowania: hover, focus, stany</td></tr>
+      <tr><th>--dur-in</th><td>640 ms</td><td>wejścia sekcji i kaskady</td></tr>
+      <tr><th>--ease-in</th><td>cubic-bezier(.22,.61,.36,1)</td><td>wyhamowanie, bez odbicia</td></tr>
+      <tr><th>--shift</th><td>10 px</td><td>jedyny ruch w pionie; zero skalowania</td></tr>
+      <tr><th>--d</th><td>0 / 70 / 140 / 210 ms</td><td>opóźnienie kaskady w grupie floty</td></tr>
+    </table>
+    <p class="muted" style="font-size:var(--t-1);margin-top:var(--s2)">Wejścia działają tylko przy <code>html.js</code> — bez JS treść jest po prostu widoczna. <code>prefers-reduced-motion</code> wyłącza wszystko.</p>
+  </section>
+
+  <section style="margin-top:var(--s6)">
+    <h2 class="h3">Wyszukiwarka terminu i stany floty</h2>
+    <p class="muted" style="font-size:var(--t-1);margin-top:var(--s1)">Wybór terminu filtruje flotę, przelicza cenę na sezon danej doby i liczy sumę za pobyt. Dane dostępności w prototypie są demonstracyjne — do podmiany na system rezerwacji.</p>
+    <div class="row" style="align-items:flex-start;gap:var(--s4)">
+      <div style="background:var(--ink);padding:var(--s3)">
+        <form class="srch" onsubmit="return false">
+          <div class="srch__f"><label>Termin od</label><input type="date" value="2026-07-11"></div>
+          <div class="srch__f"><label>Termin do</label><input type="date" value="2026-07-18"></div>
+          <button class="btn" type="submit">Pokaż wolne jachty</button>
+        </form>
+      </div>
+      <div style="background:var(--ink);padding:var(--s3)">
+        <form class="srch has-error" onsubmit="return false">
+          <div class="srch__f"><label>Termin od</label><input type="date" value="2026-07-11"></div>
+          <div class="srch__f srch__f--bad"><label>Termin do</label><input type="date" value="2026-07-11"></div>
+          <button class="btn" type="submit">Pokaż wolne jachty</button>
+        </form>
+        <p class="srch__hint" style="color:rgba(252,249,244,.9)">Data końca musi być późniejsza niż początek.</p>
+      </div>
+    </div>
+    <div class="termbar" style="position:static;margin-top:var(--s3)"><div class="termbar__in">
+      <span class="termbar__d num">11–18 lipca · 7 dób</span><span class="termbar__c num">4 wolne jachty</span>
+      <button class="termbar__edit" type="button">Zmień termin</button></div></div>
+    <div class="fl show-busy" style="grid-template-columns:1fr;margin-top:var(--s4)">
+      <article class="fli"><span class="fli__ph skeleton" style="aspect-ratio:3/2"></span>
+        <div class="fli__body"><span class="fli__tag">Żaglowy</span><h3 class="fli__name">Wolny</h3><p class="fli__specs num">Koje 6 + 2 · Kabiny 3 · 9,05 m</p></div>
+        <div class="fli__foot"><p class="fli__price num"><small></small> <b>1 000&nbsp;zł</b> <span class="per">/ doba</span><span class="fli__total is-on">7 dób · 7 000 zł</span></p><div class="fli__act"><button class="btn btn--sm" type="button">Rezerwuj</button><a class="u fli__cta" href="#">Karta →</a></div></div></article>
+      <article class="fli is-ask"><span class="fli__ph skeleton" style="aspect-ratio:3/2"></span>
+        <div class="fli__body"><span class="fli__tag">Żaglowy <span class="fli__st">· Na zapytanie</span></span><h3 class="fli__name">Powyżej 14 dób</h3><p class="fli__specs num">Koje 5 + 1 · Kabiny 2 · 8,20 m</p></div>
+        <div class="fli__foot"><p class="fli__price num"><small></small> <b>850&nbsp;zł</b> <span class="per">/ doba</span><span class="fli__total is-on">21 dób · 17 850 zł</span></p><div class="fli__act"><button class="btn btn--sm" type="button">Zapytaj</button><a class="u fli__cta" href="#">Karta →</a></div></div></article>
+      <article class="fli is-busy"><span class="fli__ph skeleton" style="aspect-ratio:3/2"></span>
+        <div class="fli__body"><span class="fli__tag">Motorowy <span class="fli__st">· Zajęty</span></span><h3 class="fli__name">Zajęty w tym terminie</h3><p class="fli__specs num">Koje 6 · Kabiny 2 · 8,80 m</p></div>
+        <div class="fli__foot"><p class="fli__price num"><small>od</small> <b>1 000&nbsp;zł</b> <span class="per">/ doba</span></p><div class="fli__act"><button class="btn btn--sm" type="button" disabled>Rezerwuj</button><a class="u fli__cta" href="#">Karta →</a></div></div></article>
+    </div>
+  </section>
+
+  <section style="margin-top:var(--s6)">
+    <h2 class="h3">Stan aktywny · kalendarz · ładowanie listy</h2>
+    <div class="row"><span class="lbl">menu</span><nav class="navdemo"><a class="u u--on" href="#" aria-current="page">Czarter jachtów</a><a class="u" href="#">Cennik</a><a class="u" href="#">Wiedza</a></nav><span class="lbl">aktywny = podkreślenie stałe</span></div>
+    <div class="row"><span class="lbl">okruszki</span><ol class="crumbs"><li><a class="u" href="#">Start</a></li><li><a class="u" href="#">Jachty żaglowe</a></li><li aria-current="page">Antila 33</li></ol><span class="lbl">bieżący = ink, bez linku</span></div>
+    <div class="row" style="align-items:flex-start"><span class="lbl">kalendarz</span>
+      <div class="mini num"><b class="past">21</b><b class="past">22</b><b class="past">23</b><b class="today">24</b><b>25</b><b class="busy">26</b><b class="busy">27</b><b class="busy">28</b><b class="ask">29</b><b>30</b><b>1</b><b>2</b><b>3</b><b>4</b></div>
+      <span class="lbl" style="max-width:220px">przeszłość = wygaszona i przekreślona, dziś = obrys deep, zajęty = ink, na zapytanie = sand</span></div>
+    <div class="row" style="align-items:flex-start"><span class="lbl">lista jachtów</span></div>
+    <article class="reg reg--skeleton" aria-busy="true" aria-label="Ładuję rejestr">
+      <div class="reg__ph skeleton" style="grid-column:span 7"></div>
+      <div class="reg__data"><div class="skeleton skeleton--line" style="width:40%"></div><div class="skeleton skeleton--line" style="width:70%;height:32px"></div>
+        <div class="reg__spec"><div><div class="skeleton skeleton--line" style="width:50%"></div><div class="skeleton skeleton--line" style="width:30%"></div></div><div><div class="skeleton skeleton--line" style="width:50%"></div><div class="skeleton skeleton--line" style="width:30%"></div></div><div><div class="skeleton skeleton--line" style="width:50%"></div><div class="skeleton skeleton--line" style="width:30%"></div></div><div><div class="skeleton skeleton--line" style="width:50%"></div><div class="skeleton skeleton--line" style="width:30%"></div></div></div>
+        <div class="reg__foot"><div class="skeleton skeleton--line" style="width:96px"></div><div class="skeleton skeleton--line" style="width:140px;height:40px"></div></div></div>
+    </article>
+  </section>
+
+</div></main>
+<script src="https://unpkg.com/lucide@latest" defer></script><script>document.documentElement.classList.add('js');function icons(){try{window.lucide&&lucide.createIcons()}catch(e){}}icons();addEventListener('load',icons);</script>
+</body>
+</html>

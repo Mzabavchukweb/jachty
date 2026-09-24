@@ -1,0 +1,10 @@
+# zrzuty z weryfikacji (duże, generowane lokalnie)
+_podglad/
+# kopie zapasowe generatora
+_build/kopie/
+# audyt obecnej strony — lista wtyczek i wersji, nie do repo publicznego
+_audyt/
+# paczki z grafikami (rozpakowane są w assets/img/deco)
+*.zip
+__pycache__/
+.DS_Store

@@ -1,0 +1,24 @@
+/* nagłówek strony nad ciemnym pasem: na górze ciemny z białym tekstem, po przewinięciu jasny */
+.head--dark{transition:background-color var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.head--dark .head__logo--color{display:none}
+.head--dark.is-scrolled .head__logo--mono,body.mnav-open .head--dark .head__logo--mono{display:none}
+.head--dark.is-scrolled .head__logo--color,body.mnav-open .head--dark .head__logo--color{display:block}
+body:not(.mnav-open) .head--dark:not(.is-scrolled){background:var(--ink);border-bottom-color:rgba(255,255,255,.14);color:#fff}
+body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav>a,body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav__b{color:#fff}
+body:not(.mnav-open) .head--dark:not(.is-scrolled) .head__lang{color:rgba(255,255,255,.75)}
+body:not(.mnav-open) .head--dark:not(.is-scrolled) .head__lang [aria-current]{color:#fff}
+body:not(.mnav-open) .head--dark:not(.is-scrolled) .head__lang a:not([aria-current]){color:#fff}
+body:not(.mnav-open) .head--dark:not(.is-scrolled) .btn{background:#fff;color:var(--ink);border-color:#fff}
+body:not(.mnav-open) .head--dark:not(.is-scrolled) .btn:hover{background:var(--sand);border-color:var(--sand)}
+body:not(.mnav-open) .head--dark:not(.is-scrolled) .burger{border-color:#fff;color:#fff}
+body:not(.mnav-open) .head--dark:not(.is-scrolled) :focus-visible{outline-color:#fff}
+/* ciemny pas u góry strony (karta jachtu, fundusze) — ciągnie kolor nagłówka */
+.dtop{background:var(--ink);color:#fff}
+.dtop .crumbs a,.dtop .crumbs [aria-current]{color:#fff}
+.dtop .crumbs li+li::before{color:rgba(255,255,255,.55)}
+.dtop :focus-visible{outline-color:#fff}
+@media(max-width:640px){
+  .dtop .crumbs li{display:none}
+  .dtop .crumbs li:nth-last-child(2){display:flex}
+  .dtop .crumbs li:nth-last-child(2)::before{content:"←";color:#fff}
+}

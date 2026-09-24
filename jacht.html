@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Antila 33 — czarter jachtu żaglowego, Giżycko | Jachty Mazury</title>
+<meta name="description" content="Antila 33: 10,79 m, 3 kabiny, do 10 miejsc do spania, żagle 49 m². Cennik sezonowy 2027, wyposażenie i rezerwacja online.">
+<link rel="icon" href="assets/img/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/system.css">
+<link rel="stylesheet" href="assets/css/head-dark.css">
+<style>
+/* nagłówek — na podstronie od razu papierowy */
+.head{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px solid var(--line)}
+.head__bar{display:flex;align-items:center;gap:var(--s4);height:var(--head-h)}
+.head__logo{height:34px;width:auto}
+@media(min-width:1024px){.head__logo{height:42px}}
+.nav{display:flex;align-items:center;gap:var(--s3);margin-left:auto}
+.nav a,.nav button{color:var(--ink);font-weight:500;background:none;border:0;padding:0;display:inline-flex;align-items:center;gap:4px}
+.nav .lucide{width:16px;height:16px}
+.head__lang{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);white-space:nowrap}
+.head__lang [aria-current]{color:var(--deep);font-weight:600}
+.head .btn{min-height:44px}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--ink);background:transparent;color:var(--ink);place-items:center}
+.burger .lucide{width:22px;height:22px}
+@media(max-width:1023px){.nav{display:none}.burger{display:grid}.head__lang{margin-left:auto}.head .btn{display:none}}
+
+/* okruszki + galeria */
+.top{padding-block:var(--s4) var(--s5)}
+.dtop .gal__thumbs button[aria-current="true"]{border-color:#fff}
+@media print{.head,.mnav,footer,.callfab,.mobilebar,.book .btn,.cmpsec,.gal__thumbs{display:none!important}.dtop{background:none;color:var(--ink)}}
+.gal{align-items:start}
+.gal__main{position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--sand)}
+.gal__main img{width:100%;height:100%;object-fit:cover;transition:opacity var(--dur) var(--ease)}
+.gal__count{position:absolute;right:var(--s2);bottom:var(--s2);background:var(--ink);color:var(--paper);font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;padding:8px 12px;display:inline-flex;gap:8px;align-items:center}
+.gal__count .lucide{width:14px;height:14px}
+.gal__thumbs{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
+.gal__thumbs button{padding:0;border:1px solid transparent;background:var(--sand);aspect-ratio:3/2;overflow:hidden;display:block;transition:border-color var(--dur) var(--ease)}
+.gal__thumbs img{width:100%;height:100%;object-fit:cover}
+
+.gal__thumbs button[aria-current="true"]{border-color:var(--ink)}.gal__thumbs button[aria-current="true"] img{opacity:.45}
+@media(max-width:767px){.gal__thumbs{grid-template-columns:repeat(4,1fr);gap:var(--s1)}.crumbs li:first-child{display:none}.crumbs li:nth-child(2)::before{content:none}}
+
+/* treść 7 / aside 4 */
+.detail{align-items:start;row-gap:var(--s7)}
+.title{display:grid;gap:var(--s3)}
+.title__hull{display:flex;flex-wrap:wrap;gap:var(--s1) var(--s3);font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80)}
+.title .h1 em{font-style:italic;color:var(--deep)}
+.title .lead{color:var(--ink-80);margin-top:var(--s1)}
+.title__meta{display:flex;flex-wrap:wrap;gap:var(--s1) var(--s3);padding-top:var(--s2);border-top:1px solid var(--line);font-size:var(--t-1);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-80)}
+.title__meta b{color:var(--ink);font-weight:500}
+
+.block{display:grid;gap:var(--s4)}
+.block__head{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s3);padding-bottom:var(--s2);border-bottom:1px solid var(--ink)}
+.block__head .h3{max-width:none}
+@media(max-width:600px){.block__head{flex-direction:column;align-items:flex-start;gap:4px}.specs th{width:62%;letter-spacing:.08em}}
+
+/* dane techniczne — prawdziwa tabela */
+.specs th,.specs td{text-align:left;padding:12px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.specs th{font-weight:400;font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80);width:44%}
+.specs td{font-weight:500;text-align:right}
+.specs th,.specs td{padding:14px 0}
+
+/* wyposażenie */
+.equip{columns:2;column-gap:var(--s5)}
+.equip li{break-inside:avoid;padding:10px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:12px 1fr;gap:var(--s2);align-items:baseline}
+.equip li::before{content:"";width:8px;height:8px;border:1px solid var(--ink);background:var(--ink);display:inline-block;transform:translateY(1px)}
+.equip li.opt::before{background:transparent}
+.equip li.opt span::after{content:" · opcja";color:var(--ink-80);font-size:var(--t-1);letter-spacing:.08em;text-transform:uppercase}
+@media(max-width:600px){.equip{columns:1}}
+
+/* cennik sezonowy */
+.price th,.price td{padding:12px 0;border-bottom:1px solid var(--line);text-align:left;vertical-align:baseline}
+.price thead th{font-weight:400;font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80);padding-top:0}
+.price td.n,.price th.n{text-align:right}
+.price td.n{font-family:var(--f-display);font-size:var(--t2);line-height:1}
+.price td.n small{font-family:var(--f-sans);font-size:var(--t0);color:var(--ink-80)}
+.price tr.peak td:first-child::after{content:"szczyt";margin-left:8px;font-size:var(--t-1);letter-spacing:.1em;text-transform:uppercase;color:var(--deep);font-weight:600}
+.price__note{font-size:var(--t-1);color:var(--ink-80);line-height:1.5;letter-spacing:0}
+
+/* wideo — fasada */
+.video{position:relative;aspect-ratio:16/9;background:var(--ink);overflow:hidden}
+.video img{width:100%;height:100%;object-fit:cover;opacity:.88}
+.video__btn{position:absolute;left:var(--s3);bottom:var(--s3);display:inline-flex;align-items:center;gap:0;border:0;padding:0;background:none;color:var(--paper)}
+.video__btn .sq{width:56px;height:56px;background:var(--paper);color:var(--ink);display:grid;place-items:center;transition:background var(--dur) var(--ease)}
+.video__btn .sq .lucide{width:20px;height:20px}
+.video__btn:hover .sq{background:var(--sand)}
+.video__btn .lbl{padding:0 var(--s2);height:56px;display:flex;align-items:center;background:rgba(48,64,68,.7);font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* kontener na kalendarz zewnętrzny */
+.cal{border:1px solid var(--line-strong)}
+.cal__head{display:flex;justify-content:space-between;align-items:center;gap:var(--s2);padding:var(--s2);border-bottom:1px solid var(--line);font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80)}
+.cal__head b{color:var(--ink);font-weight:500}
+@media(max-width:600px){.cal__head span{display:none}}
+.cal__slot{min-height:360px;padding:var(--s3);display:grid;gap:var(--s2)}
+.cal__slot .skel{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.cal__slot .skel i{display:block;height:40px;background:var(--sand)}
+.cal__legend{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s3);padding:var(--s2);border-top:1px solid var(--line);font-size:var(--t-1);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-80)}
+.cal__legend span{display:inline-flex;gap:8px;align-items:center}
+.cal__legend i{width:12px;height:12px;border:1px solid var(--sage);display:inline-block}
+.cal__legend .b{background:var(--ink);border-color:var(--ink)}
+.cal__legend .q{background:var(--sand)}
+
+/* aside rezerwacji */
+.book{position:sticky;top:calc(var(--head-h) + var(--s3));border:1px solid var(--ink);padding:var(--s4);display:grid;gap:var(--s2);background:var(--paper)}
+.book__price{display:flex;align-items:baseline;gap:8px}
+.book__price b{font-family:var(--f-display);font-weight:400;font-size:var(--t5);line-height:1;letter-spacing:-.01em}
+.book__price span{color:var(--ink-80)}
+.book .rule{margin-block:var(--s1)}
+.book__list{display:grid;gap:10px;font-size:.9375rem;letter-spacing:0;color:var(--ink);line-height:1.45}
+.book__list li{display:grid;grid-template-columns:10px 1fr;gap:10px;align-items:baseline}
+.book__list li::before{content:"";width:6px;height:6px;background:var(--ink);display:inline-block;transform:translateY(-2px)}
+.book__contact{font-size:.9375rem;color:var(--ink-80);letter-spacing:0;line-height:1.5}
+.book__contact a{color:var(--ink)}
+/* desktop: panel w prawej kolumnie przez całą wysokość treści, przyklejony */
+.detail{grid-template-rows:auto 1fr}
+.detail__title{grid-row:1}
+.book{grid-row:1/span 2;align-self:start}
+.detail>.c7:not(.detail__title){grid-row:2}
+/* telefon i tablet: panel zaraz pod tytułem, w pełnej szerokości */
+@media(max-width:1023px){
+  .detail{grid-template-rows:none}
+  .detail__title,.book,.detail>.c7:not(.detail__title){grid-row:auto}
+  .book{position:static;padding:var(--s3)}
+  .detail{row-gap:var(--s5)}
+  .detail>.c7:not(.detail__title){gap:var(--s6)!important}
+  .book__price b{font-size:var(--t5)}
+  .book .btn{min-height:52px}
+}
+
+/* pasek mobilny — pojawia się dopiero, gdy galeria zniknie z ekranu */
+.mobilebar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--paper);border-top:1px solid var(--ink);padding:var(--s2) var(--gutter);
+  display:none;align-items:center;gap:var(--s2);transform:translateY(100%);transition:transform var(--dur) var(--ease)}
+.mobilebar.is-on{transform:none}
+.mobilebar .amt{font-family:var(--f-display);font-size:var(--t3);line-height:1;letter-spacing:-.01em}
+.mobilebar .from{display:block;font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80)}
+.mobilebar .btn{margin-left:auto}
+@media(max-width:1023px){.mobilebar{display:flex}body{padding-bottom:88px}}
+
+/* podobne — porównanie kolumnami; oglądana jednostka jako pełny blok ink */
+.cmp__head{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s4);margin-bottom:var(--s5)}
+.cmp__head .lead{margin-top:var(--s2);max-width:52ch}
+.cmp{overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;
+  margin-inline:calc(-1*var(--bleed));padding-inline:var(--bleed)}
+.cmp::-webkit-scrollbar{display:none}
+.cmp:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+.cmp__t{border-collapse:separate;border-spacing:0;width:100%}
+.cmp__t th,.cmp__t td{vertical-align:top;text-align:left;width:270px;min-width:270px;
+  padding:0 var(--s3);border-left:1px solid var(--line)}
+.cmp__t th:first-child,.cmp__t td:first-child{border-left:0}
+
+.cmp__y{padding-top:0;scroll-snap-align:start}
+.cmp__flag{display:block;font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;
+  font-weight:600;color:var(--deep);padding-bottom:var(--s2)}
+.cmp__flag--ghost{color:var(--ink-80);font-weight:400}
+.cmp__ph{aspect-ratio:4/3;overflow:hidden;background:var(--paper)}
+.cmp__ph img{width:100%;height:100%;object-fit:cover}
+.cmp__name{display:block;font-family:var(--f-display);font-weight:400;font-size:var(--t3);
+  line-height:1;letter-spacing:-.012em;color:var(--ink);padding:var(--s3) 0 var(--s3)}
+.cmp__name em{display:block;font-style:italic;color:var(--deep);margin-top:4px}
+
+.cmp__t tbody td{padding-top:var(--s2);padding-bottom:var(--s2);border-top:1px solid var(--line)}
+.cmp__k{display:block;font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);margin-bottom:2px}
+.cmp__v{font-weight:500;font-size:var(--t1);line-height:1.2}
+.cmp__price .cmp__v{font-family:var(--f-display);font-weight:400;font-size:var(--t4);letter-spacing:-.012em;line-height:1;display:block;margin-top:4px}
+.cmp__price .per{font-size:var(--t-1);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-80)}
+.cmp__t tfoot td{padding-top:var(--s3);padding-bottom:var(--s3);border-top:1px solid var(--line)}
+.cmp__t tfoot .btn{width:100%}
+.cmp__more{display:block;margin-top:var(--s2);color:var(--ink);font-weight:500}
+.cmp__here{font-size:var(--t-1);letter-spacing:.1em;text-transform:uppercase;color:rgba(252,249,244,.72)}
+
+/* blok ink — jedyny mocny akcent sekcji */
+.cmp__t .is-current{background:var(--ink);border-left-color:var(--ink)}
+.cmp__y.is-current{padding-top:var(--s3)}
+.cmp__y.is-current .cmp__flag{color:var(--sand)}
+.cmp__y.is-current .cmp__name{color:var(--paper)}
+.cmp__y.is-current .cmp__name em{color:var(--sand)}
+.cmp__t .is-current .cmp__k{color:rgba(252,249,244,.66)}
+.cmp__t .is-current .cmp__v{color:var(--paper)}
+.cmp__t .is-current .per{color:rgba(252,249,244,.66)}
+.cmp__t tbody .is-current,.cmp__t tfoot .is-current{border-top-color:rgba(252,249,244,.22)}
+.cmp__note{margin-top:var(--s3);font-size:var(--t-1);color:var(--ink-80)}
+
+@media(max-width:767px){
+  .cmp__head{flex-direction:column;align-items:flex-start;gap:var(--s3)}
+  .cmp__t th,.cmp__t td{width:232px;min-width:232px;padding-inline:var(--s2)}
+  .cmp__name{font-size:var(--t2)}
+  .cmp__price .cmp__v{font-size:var(--t3)}
+}
+
+/* pas dofinansowania w stopce — logotypy obowiązkowe, na białym polu */
+.ue{display:flex;align-items:center;gap:var(--s4);flex-wrap:wrap;margin-top:var(--s6);
+  padding-top:var(--s5);border-top:1px solid rgba(252,249,244,.2)}
+.ue__img{display:block;background:#fff;padding:var(--s2) var(--s3);max-width:560px;flex:1 1 320px}
+.ue__img img{width:100%;height:auto}
+.ue__txt{flex:1 1 260px;font-size:var(--t-1);line-height:1.6;color:rgba(252,249,244,.78)}
+@media(max-width:640px){.ue{gap:var(--s3)}}
+
+/* ---------- stopka ---------- */
+.foot{padding-block:var(--s7) var(--s4)}
+.foot__logo{height:38px;width:auto}
+.foot p{color:rgba(252,249,244,.72);max-width:32ch;margin-top:var(--s2)}
+.foot .micro{margin-bottom:var(--s2)}
+.foot__list li{padding:4px 0}
+.foot__list a{color:var(--paper)}
+.foot__bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s2);margin-top:var(--s6);padding-top:var(--s3);border-top:1px solid rgba(252,249,244,.2);
+  font-size:var(--t-1);letter-spacing:.06em;color:rgba(252,249,244,.6)}
+
+
+/* Newsreader: małe teksty szeryfowe o pół stopnia grubsze — czytelność przy 18–31 px */
+.legend__v,.fli__name,.fli__pricev,.fgh__n,.mem__n,.mem__ini,.about__facts dd,.war__h,.war__l b,.war__hours b,.tq blockquote p,
+.cmp__name,.cmp__price .cmp__v,.book__price b,.price td.n,.h3,.meas__hd b,.cal__hd b,.mobilebar .amt,.fe__n b,.sim__name,.band__txt{font-weight:500;font-optical-sizing:auto}
+.display,.h1,.h2,.fgh__t,.band__num{font-optical-sizing:auto}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Przejdź do treści</a>
+
+<header class="head head--dark" id="head">
+  <div class="wrap head__bar">
+    <a href="index.html" aria-label="Jachty Mazury — strona główna"><img class="head__logo head__logo--mono" src="assets/img/logo-mono.png" width="450" height="76" alt="Jachtymazury.pl"><img class="head__logo head__logo--color" src="assets/img/logo.png" width="450" height="76" alt=""></a>
+    <nav class="nav" aria-label="Główne">
+      <div class="has is-cur"><button class="nav__b" type="button" aria-expanded="false" aria-controls="m-czarter">Czarter jachtów <i data-lucide="chevron-down" class="lucide"></i></button>
+        <div class="menu" id="m-czarter"><a href="jachty-zaglowe.html" aria-current="page">Jachty żaglowe</a><a href="jachty-motorowe.html">Jachty motorowe</a><a href="czarter-bez-patentu.html">Czarter bez patentu</a></div></div>
+      <a class="u" href="jachty-na-sprzedaz.html">Na sprzedaż</a>
+      <a class="u" href="poradnik.html">Poradnik</a>
+      <a class="u" href="cennik.html">Cennik</a>
+      <a class="u" href="port.html">Port</a>
+      <a class="u" href="wspolpraca.html">Współpraca</a>
+      <a class="u" href="kontakt.html">Kontakt</a>
+    </nav>
+    <nav class="head__lang" aria-label="Wybór języka"><a href="#" aria-current="true" lang="pl">PL</a><span aria-hidden="true">·</span><a href="https://jachtymazury.pl/en/" lang="en" hreflang="en" aria-label="English version">EN</a></nav>
+    <a class="btn" href="#dostepnosc" data-open-modal>Rezerwuj online</a>
+    <button class="burger" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mnav"><i data-lucide="menu" class="lucide"></i></button>
+  </div>
+</header>
+<div class="mnav" id="mnav" hidden>
+  <nav class="mnav__in" aria-label="Menu">
+    <ul class="mnav__l"><li><a href="index.html">Start</a></li><li><a href="jachty-zaglowe.html" aria-current="page">Jachty żaglowe</a></li><li><a href="jachty-motorowe.html">Jachty motorowe</a></li><li><a href="czarter-bez-patentu.html">Czarter bez patentu</a></li><li><a href="jachty-na-sprzedaz.html">Na sprzedaż</a></li><li><a href="poradnik.html">Poradnik</a></li><li><a href="cennik.html">Cennik</a></li><li><a href="port.html">Port</a></li><li><a href="wspolpraca.html">Współpraca</a></li><li><a href="kontakt.html">Kontakt</a></li></ul>
+    <div class="mnav__cta">
+      <a class="btn btn--block" href="index.html#rezerwuj">Sprawdź dostępność <i data-lucide="arrow-right" class="lucide"></i></a>
+      <a class="btn btn--outline btn--block" href="tel:+48511420100"><i data-lucide="phone" class="lucide"></i> +48 511 420 100</a>
+      <p class="mnav__meta">Biuro 8:00 – 20:00, siedem dni w tygodniu · <a href="mailto:info@jachtymazury.pl">info@jachtymazury.pl</a></p>
+    </div>
+  </nav>
+</div>
+
+<main id="main" class="chart">
+
+<section class="top dtop" id="galeria">
+  <div class="wrap">
+    <nav aria-label="Okruszki" style="margin-bottom:var(--s3)"><ol class="crumbs">
+      <li><a class="u" href="index.html">Start</a></li><li><a class="u" href="jachty-zaglowe.html">Jachty żaglowe</a></li><li aria-current="page">Antila 33</li>
+    </ol></nav>
+    <div class="g12 gal">
+      <figure class="gal__main c8 bleed-l">
+        <picture><source type="image/avif" srcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" sizes="(min-width:1024px) 66vw, 100vw"><source type="image/webp" srcset="assets/img/r/a33-burta-480.webp 480w, assets/img/r/a33-burta-800.webp 800w" sizes="(min-width:1024px) 66vw, 100vw"><img id="gal-main" fetchpriority="high" src="assets/img/r/a33-burta-800.jpg" srcset="assets/img/r/a33-burta-480.jpg 480w, assets/img/r/a33-burta-800.jpg 800w" sizes="(min-width:1024px) 66vw, 100vw" width="800" height="600" alt="Antila 33 „Kassari” — burta" decoding="async"></picture>
+        <span class="gal__count num"><i data-lucide="images" class="lucide"></i><span id="gal-n">1</span> / 8</span>
+      </figure>
+      <div class="gal__thumbs c4" role="group" aria-label="Zdjęcia jachtu">
+        <button aria-current="true" aria-label="Zdjęcie 1: burta"><picture><source type="image/avif" srcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-burta-480.webp 480w, assets/img/r/a33-burta-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-burta-800.jpg" srcset="assets/img/r/a33-burta-480.jpg 480w, assets/img/r/a33-burta-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — burta" decoding="async" loading="lazy"></picture></button>
+        <button aria-label="Zdjęcie 2: burta z innej strony"><picture><source type="image/avif" srcset="assets/img/r/a33-burta-2-480.avif 480w, assets/img/r/a33-burta-2-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-burta-2-480.webp 480w, assets/img/r/a33-burta-2-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-burta-2-800.jpg" srcset="assets/img/r/a33-burta-2-480.jpg 480w, assets/img/r/a33-burta-2-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — burta z innej strony" decoding="async" loading="lazy"></picture></button>
+        <button aria-label="Zdjęcie 3: kokpit"><picture><source type="image/avif" srcset="assets/img/r/a33-kokpit-480.avif 480w, assets/img/r/a33-kokpit-732.avif 732w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-kokpit-480.webp 480w, assets/img/r/a33-kokpit-732.webp 732w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-kokpit-732.jpg" srcset="assets/img/r/a33-kokpit-480.jpg 480w, assets/img/r/a33-kokpit-732.jpg 732w" sizes="(min-width:1024px) 16vw, 25vw" width="732" height="600" alt="Antila 33 „Kassari” — kokpit" decoding="async" loading="lazy"></picture></button>
+        <button aria-label="Zdjęcie 4: rufa"><picture><source type="image/avif" srcset="assets/img/r/a33-rufa-480.avif 480w, assets/img/r/a33-rufa-600.avif 600w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-rufa-480.webp 480w, assets/img/r/a33-rufa-600.webp 600w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-rufa-600.jpg" srcset="assets/img/r/a33-rufa-480.jpg 480w, assets/img/r/a33-rufa-600.jpg 600w" sizes="(min-width:1024px) 16vw, 25vw" width="600" height="800" alt="Antila 33 „Kassari” — rufa" decoding="async" loading="lazy"></picture></button>
+        <button aria-label="Zdjęcie 5: mesa"><picture><source type="image/avif" srcset="assets/img/r/a33-mesa-480.avif 480w, assets/img/r/a33-mesa-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-mesa-480.webp 480w, assets/img/r/a33-mesa-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-mesa-800.jpg" srcset="assets/img/r/a33-mesa-480.jpg 480w, assets/img/r/a33-mesa-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — mesa" decoding="async" loading="lazy"></picture></button>
+        <button aria-label="Zdjęcie 6: kambuz"><picture><source type="image/avif" srcset="assets/img/r/a33-kambuz-480.avif 480w, assets/img/r/a33-kambuz-600.avif 600w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-kambuz-480.webp 480w, assets/img/r/a33-kambuz-600.webp 600w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-kambuz-600.jpg" srcset="assets/img/r/a33-kambuz-480.jpg 480w, assets/img/r/a33-kambuz-600.jpg 600w" sizes="(min-width:1024px) 16vw, 25vw" width="600" height="800" alt="Antila 33 „Kassari” — kambuz" decoding="async" loading="lazy"></picture></button>
+        <button aria-label="Zdjęcie 7: toaleta"><picture><source type="image/avif" srcset="assets/img/r/a33-toaleta-480.avif 480w, assets/img/r/a33-toaleta-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-toaleta-480.webp 480w, assets/img/r/a33-toaleta-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-toaleta-800.jpg" srcset="assets/img/r/a33-toaleta-480.jpg 480w, assets/img/r/a33-toaleta-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — toaleta" decoding="async" loading="lazy"></picture></button>
+        <button aria-label="Zdjęcie 8: ploter"><picture><source type="image/avif" srcset="assets/img/r/a33-ploter-480.avif 480w, assets/img/r/a33-ploter-800.avif 800w" sizes="(min-width:1024px) 16vw, 25vw"><source type="image/webp" srcset="assets/img/r/a33-ploter-480.webp 480w, assets/img/r/a33-ploter-800.webp 800w" sizes="(min-width:1024px) 16vw, 25vw"><img src="assets/img/r/a33-ploter-800.jpg" srcset="assets/img/r/a33-ploter-480.jpg 480w, assets/img/r/a33-ploter-800.jpg 800w" sizes="(min-width:1024px) 16vw, 25vw" width="800" height="600" alt="Antila 33 „Kassari” — ploter" decoding="async" loading="lazy"></picture></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec--tight" style="padding-top:var(--s6)">
+  <div class="wrap g12 detail">
+    <div class="c7 detail__title">
+      <header class="title reveal">
+        <div class="title__hull"><span class="tag">Żaglowy</span><span>Jacht kabinowy, turystyczny</span></div>
+        <h1 class="h1">Antila 33</h1>
+        <p class="lead">Nowoczesny jacht kabinowy o długości blisko 11 metrów. Model 33 i 33.3 to jedyne jednostki ze stoczni Antila zarejestrowane na 10 osób. Ceniony za właściwości nautyczne, przestronne wnętrze i stabilność przy silniejszym wietrze.</p>
+        <div class="title__meta num"><span>Kabiny <b>3</b></span><span>Miejsca do spania <b>10</b></span><span>Komfortowo <b>8 osób</b></span><span>Żagle <b>49 m²</b></span></div>
+      </header>
+    </div>
+    <aside class="c4 o9 book" aria-label="Rezerwacja">
+      <span class="micro muted">Cena od</span>
+      <p class="book__price num"><b>650&nbsp;zł</b><span class="per">/ doba</span></p>
+      <button class="btn btn--block" data-open-modal><span class="btn__label">Sprawdź dostępność</span> <i data-lucide="arrow-right" class="lucide"></i></button>
+      <button class="btn btn--outline btn--block" type="button" onclick="window.print()"><i data-lucide="download" class="lucide"></i> Broszura PDF</button>
+      <hr class="rule">
+      <ul class="book__list">
+        <li>Cena za dobę przy czarterze minimum tygodniowym</li>
+        <li>Wydanie jachtu 16:00 – 20:00, zdanie 8:00 – 10:00</li>
+        <li>Kaucja 3 000 zł · sprzątanie porejsowe 230 zł</li>
+        <li>W cenie ubezpieczenie, paliwo, gaz i woda</li>
+      </ul>
+      <hr class="rule">
+      <p class="book__contact num">Pytania? <a class="u" href="tel:+48511420100">+48 511 420 100</a> · 8:00 – 20:00, 7 dni</p>
+    </aside>
+    <div class="c7" style="display:grid;gap:var(--s7)">
+
+
+      <section class="block reveal" id="dane">
+        <div class="block__head"><h2 class="h3">Dane techniczne</h2><span class="micro muted">dane producenta</span></div>
+        <table class="specs num">
+          <tbody>
+            <tr><th scope="row">Długość całkowita</th><td>10,79 m</td></tr>
+            <tr><th scope="row">Szerokość całkowita</th><td>3,24 m</td></tr>
+            <tr><th scope="row">Zanurzenie bez miecza / z mieczem</th><td>0,45 / 1,80 m</td></tr>
+            <tr><th scope="row">Maksymalna wysokość w kabinie</th><td>ok. 1,95 m</td></tr>
+            <tr><th scope="row">Powierzchnia żagli</th><td>49 m²</td></tr>
+            <tr><th scope="row">Maksymalna liczba osób załogi</th><td>10</td></tr>
+            <tr><th scope="row">Miejsca do spania</th><td>10 (komfortowo 8)</td></tr>
+            <tr><th scope="row">Kabiny</th><td>3 zamykane</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="block reveal" id="wyposazenie">
+        <div class="block__head"><h2 class="h3">Wyposażenie</h2><span class="micro muted">układ standardowy</span></div>
+        <ul class="equip">
+          <li><span>Zamykana kabina dziobowa</span></li>
+          <li><span>Dwie zamykane kabiny rufowe</span></li>
+          <li><span>Przestronna mesa z rozkładanym stołem</span></li>
+          <li><span>Aneks kuchenny (kambuz)</span></li>
+          <li><span>Oddzielna toaleta z WC morskim i prysznicem</span></li>
+          <li><span>Dwa stanowiska sterowe w kokpicie</span></li>
+          <li><span>Uchylny miecz — żegluga po płytszych akwenach</span></li>
+          <li><span>Okna kadłubowe i luki pokładowe</span></li>
+        </ul>
+      </section>
+
+      <section class="block reveal" id="cennik">
+        <div class="block__head"><h2 class="h3">Cennik sezonowy 2027</h2><span class="micro muted">cennik 2027 · ceny brutto</span></div>
+        <table class="price num">
+          <thead><tr><th>Termin</th><th class="n">Cena</th></tr></thead>
+          <tbody>
+            <tr><td>do 29.04</td><td class="n">650 <small>zł / doba</small></td></tr>
+            <tr><td>29.04 – 03.05</td><td class="n">2 990 <small>zł za okres</small></td></tr>
+            <tr><td>03.05 – 26.05</td><td class="n">680 <small>zł / doba</small></td></tr>
+            <tr><td>26.05 – 30.05</td><td class="n">4 840 <small>zł za okres</small></td></tr>
+            <tr><td>30.05 – 26.06</td><td class="n">750 <small>zł / doba</small></td></tr>
+            <tr><td>26.06 – 10.07</td><td class="n">850 <small>zł / doba</small></td></tr>
+            <tr><td>10.07 – 17.07</td><td class="n">900 <small>zł / doba</small></td></tr>
+            <tr><td>17.07 – 21.08</td><td class="n">950 <small>zł / doba</small></td></tr>
+            <tr><td>21.08 – 28.08</td><td class="n">850 <small>zł / doba</small></td></tr>
+            <tr><td>28.08 – 12.09</td><td class="n">850 <small>zł / doba</small></td></tr>
+            <tr><td>od 12.09</td><td class="n">700 <small>zł / doba</small></td></tr>
+          </tbody>
+        </table>
+        <p class="price__note">Cena za dobę obowiązuje przy czarterze minimum tygodniowym; przy krótszych terminach ustalana indywidualnie. Kaucja 3 000 zł, sprzątanie porejsowe 230 zł. Wydanie jachtu 16:00–20:00, zdanie 8:00–10:00.</p>
+      </section>
+
+      <section class="block reveal" id="film">
+        <div class="block__head"><h2 class="h3">Jacht w akcji</h2><span class="micro muted">film</span></div>
+        <div class="video" id="video" data-yt="dQw4w9WgXcQ">
+          <picture><source type="image/webp" srcset="assets/img/r/a33-burta-2-800.webp 800w, assets/img/r/a33-burta-2-480.webp 480w" sizes="(min-width:1024px) 58vw, 100vw"><img src="assets/img/r/a33-burta-2-800.jpg" srcset="assets/img/r/a33-burta-2-480.jpg 480w, assets/img/r/a33-burta-2-800.jpg 800w" sizes="(min-width:1024px) 58vw, 100vw" width="800" height="600" alt="" loading="lazy" decoding="async"></picture>
+          <button class="video__btn" type="button" aria-label="Odtwórz film o jachcie"><span class="sq"><i data-lucide="play" class="lucide"></i></span><span class="lbl">Odtwórz film</span></button>
+        </div>
+      </section>
+
+      <section class="block reveal" id="dostepnosc">
+        <div class="block__head"><h2 class="h3">Dostępność</h2><span class="micro muted">kalendarz rezerwacji</span></div>
+        <div class="cal">
+          <div class="cal__head"><b>Kalendarz rezerwacji</b><span>Antila 33</span></div>
+          <div class="cal__slot" aria-busy="true" aria-label="Ładuję kalendarz dostępności">
+            <!-- tu wstawia się HTML dostawcy; do czasu załadowania szkielet -->
+            <div class="skeleton skeleton--line" style="width:38%"></div>
+            <div class="skel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="cal__legend"><span><i></i>Wolny</span><span><i class="b"></i>Zajęty</span><span><i class="q"></i>Na zapytanie</span></div>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="sec sand cmpsec" id="podobne">
+  <div class="wrap">
+    <div class="bearing"><span class="bearing__n"><b>02</b> / Porównanie modeli</span><div class="ticks" aria-hidden="true"></div></div>
+    <div class="cmp__head reveal">
+      <div><h2 class="h2">Porównaj z innymi</h2>
+        <p class="lead muted">Te same dane producenta, jedna kolumna obok drugiej. Antila 33 stoi pierwsza, żeby było do czego porównywać.</p></div>
+      <div class="carousel__nav" id="cmp-nav" hidden>
+        <button class="carousel__btn" data-dir="-1" aria-label="Przewiń w lewo"><i data-lucide="arrow-left" class="lucide"></i></button>
+        <button class="carousel__btn" data-dir="1" aria-label="Przewiń w prawo"><i data-lucide="arrow-right" class="lucide"></i></button>
+      </div>
+    </div>
+
+    <div class="cmp reveal" id="cmp" tabindex="0" role="region" aria-label="Porównanie modeli, przewijaj poziomo">
+      <table class="cmp__t num">
+        <caption class="sr">Porównanie danych technicznych i cen modeli</caption>
+        <thead><tr><th scope="col" class="cmp__y is-current"><span class="cmp__flag">Ten model</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/a33-burta-480.webp 480w, assets/img/r/a33-burta-800.webp 800w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/a33-burta-800.jpg" srcset="assets/img/r/a33-burta-480.jpg 480w, assets/img/r/a33-burta-800.jpg 800w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Antila 33" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Antila 33</span></th><th scope="col" class="cmp__y"><span class="cmp__flag cmp__flag--ghost">Żaglowy</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/src-a30-640.avif 640w, assets/img/r/src-a30-960.avif 960w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/src-a30-640.webp 640w, assets/img/r/src-a30-960.webp 960w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/src-a30-640.jpg" srcset="assets/img/r/src-a30-640.jpg 640w, assets/img/r/src-a30-960.jpg 960w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Antila 30" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Antila 30</span></th><th scope="col" class="cmp__y"><span class="cmp__flag cmp__flag--ghost">Motorowy</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/src-nautic-640.avif 640w, assets/img/r/src-nautic-960.avif 960w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/src-nautic-640.webp 640w, assets/img/r/src-nautic-960.webp 960w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/src-nautic-640.jpg" srcset="assets/img/r/src-nautic-640.jpg 640w, assets/img/r/src-nautic-960.jpg 960w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Nautic 880" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Nautic 880</span></th><th scope="col" class="cmp__y"><span class="cmp__flag cmp__flag--ghost">Motorowy</span><figure class="cmp__ph"><picture><source type="image/avif" srcset="assets/img/r/src-nexus-640.avif 640w, assets/img/r/src-nexus-960.avif 960w" sizes="(min-width:1024px) 270px, 62vw"><source type="image/webp" srcset="assets/img/r/src-nexus-640.webp 640w, assets/img/r/src-nexus-960.webp 960w" sizes="(min-width:1024px) 270px, 62vw"><img src="assets/img/r/src-nexus-640.jpg" srcset="assets/img/r/src-nexus-640.jpg 640w, assets/img/r/src-nexus-960.jpg 960w" sizes="(min-width:1024px) 270px, 62vw" width="640" height="480" alt="Nexus 870 Revo" loading="lazy" decoding="async"></picture></figure><span class="cmp__name">Nexus 870 Revo</span></th></tr></thead>
+        <tbody><tr><td class="is-current"><span class="cmp__k">Miejsca</span><b class="cmp__v">10</b></td><td class=""><span class="cmp__k">Miejsca</span><b class="cmp__v">8</b></td><td class=""><span class="cmp__k">Miejsca</span><b class="cmp__v">6</b></td><td class=""><span class="cmp__k">Miejsca</span><b class="cmp__v">4 + 2</b></td></tr><tr><td class="is-current"><span class="cmp__k">Kabiny</span><b class="cmp__v">3</b></td><td class=""><span class="cmp__k">Kabiny</span><b class="cmp__v">3</b></td><td class=""><span class="cmp__k">Kabiny</span><b class="cmp__v">2</b></td><td class=""><span class="cmp__k">Kabiny</span><b class="cmp__v">2</b></td></tr><tr><td class="is-current"><span class="cmp__k">Długość</span><b class="cmp__v">10,79 m</b></td><td class=""><span class="cmp__k">Długość</span><b class="cmp__v">9,99 m</b></td><td class=""><span class="cmp__k">Długość</span><b class="cmp__v">9,17 m</b></td><td class=""><span class="cmp__k">Długość</span><b class="cmp__v">8,70 m</b></td></tr><tr><td class="is-current"><span class="cmp__k">Szerokość</span><b class="cmp__v">3,24 m</b></td><td class=""><span class="cmp__k">Szerokość</span><b class="cmp__v">3,20 m</b></td><td class=""><span class="cmp__k">Szerokość</span><b class="cmp__v">3,00 m</b></td><td class=""><span class="cmp__k">Szerokość</span><b class="cmp__v">2,90 m</b></td></tr><tr><td class="is-current"><span class="cmp__k">Zanurzenie</span><b class="cmp__v">0,45 / 1,80 m</b></td><td class=""><span class="cmp__k">Zanurzenie</span><b class="cmp__v">0,44 / 1,79 m</b></td><td class=""><span class="cmp__k">Zanurzenie</span><b class="cmp__v">0,65 m</b></td><td class=""><span class="cmp__k">Zanurzenie</span><b class="cmp__v">0,40 m</b></td></tr>
+          <tr class="cmp__price"><td class="is-current"><span class="cmp__k">Cena od</span><b class="cmp__v">650&nbsp;zł</b><span class="per">/ doba</span></td><td class=""><span class="cmp__k">Cena od</span><b class="cmp__v">650&nbsp;zł</b><span class="per">/ doba</span></td><td class=""><span class="cmp__k">Cena od</span><b class="cmp__v">na zapytanie</b></td><td class=""><span class="cmp__k">Cena od</span><b class="cmp__v">330&nbsp;zł</b><span class="per">/ doba</span></td></tr>
+        </tbody>
+        <tfoot><tr><td class="is-current"><span class="cmp__here">Oglądasz ten model</span></td><td><a class="btn btn--sm" href="index.html#rezerwuj" aria-label="Rezerwuj Antila 30">Rezerwuj</a><a class="u cmp__more" href="jachty-zaglowe.html?model=Antila%2030">Jednostki Antila 30 →</a></td><td><a class="btn btn--sm" href="index.html#rezerwuj" aria-label="Rezerwuj Nautic 880">Rezerwuj</a><a class="u cmp__more" href="jachty-motorowe.html?model=Nautic%20880">Jednostki Nautic 880 →</a></td><td><a class="btn btn--sm" href="index.html#rezerwuj" aria-label="Rezerwuj Nexus 870 Revo">Rezerwuj</a><a class="u cmp__more" href="jachty-motorowe.html?model=Nexus%20870%20Revo">Jednostki Nexus 870 Revo →</a></td></tr></tfoot>
+      </table>
+    </div>
+    <p class="cmp__note">Dane techniczne za kartami modeli. Ceny „od” z cennika 2027 — najniższa stawka dobowa w sezonie.</p>
+  </div>
+</section>
+</main>
+
+<div class="mobilebar num" id="mobilebar" aria-hidden="true">
+  <div><span class="from">Cena od</span><span class="amt">650&nbsp;zł <span class="per">/ doba</span></span></div>
+  <button class="btn" data-open-modal>Sprawdź dostępność <i data-lucide="arrow-right" class="lucide"></i></button>
+</div>
+
+<footer class="inkband foot on-dark">
+  <div class="wrap">
+    <div class="g12">
+      <div class="c4"><img class="foot__logo" src="assets/img/logo-mono.png" width="450" height="76" alt="Jachtymazury.pl"><p>Czarter jachtów żaglowych, motorowych i houseboatów ze Stanicy Wodnej Stranda w Giżycku.</p></div>
+      <div class="c3"><span class="micro">Kontakt</span>
+        <ul class="foot__list"><li>Stanica Wodna Stranda</li><li>Pierkunowo 36</li><li class="num">11-500 Giżycko</li><li class="num"><a class="u" href="tel:+48511420100">+48 511 420 100</a></li><li><a class="u" href="mailto:info@jachtymazury.pl">info@jachtymazury.pl</a></li></ul></div>
+      <div class="c3"><span class="micro">Biuro</span><ul class="foot__list"><li class="num">8:00 – 20:00</li><li>siedem dni w tygodniu</li></ul></div>
+      <div class="c2"><span class="micro">Social</span><ul class="foot__list"><li><a class="u" href="https://www.facebook.com/jachtymazury/" rel="noopener" target="_blank">Facebook</a></li><li><a class="u" href="https://www.instagram.com/jachtymazury.pl/" rel="noopener" target="_blank">Instagram</a></li><li><a class="u" href="https://www.youtube.com/channel/UCGulH1SMSyk0Ihr2HQ8rfRA" rel="noopener" target="_blank">YouTube</a></li></ul></div>
+    </div>
+
+    <div class="ue">
+      <a class="ue__img" href="fundusze-europejskie.html" aria-label="Fundusze Europejskie — szczegóły dofinansowania">
+        <picture><source type="image/webp" srcset="assets/img/r/ue-logotypy-630.webp 630w, assets/img/r/ue-logotypy-1260.webp 1260w, assets/img/r/ue-logotypy-1890.webp 1890w" sizes="(min-width:768px) 560px, 100vw">
+        <img src="assets/img/r/ue-logotypy-630.png" srcset="assets/img/r/ue-logotypy-630.png 630w, assets/img/r/ue-logotypy-1260.png 1260w, assets/img/r/ue-logotypy-1890.png 1890w" sizes="(min-width:768px) 560px, 100vw" width="630" height="57" alt="Fundusze Europejskie dla Warmii i Mazur, Rzeczpospolita Polska, Dofinansowane przez Unię Europejską, Warmia Mazury" loading="lazy" decoding="async"></picture>
+      </a>
+      <p class="ue__txt">Projekt dofinansowany ze środków Unii Europejskiej. <a class="u u--on" href="fundusze-europejskie.html">Szczegóły dofinansowania →</a></p>
+    </div>
+
+    <div class="foot__bot"><span>© 2026 jachtymazury.pl</span><span class="num">Pierkunowo 36, 11-500 Giżycko</span><span><a class="u" href="fundusze-europejskie.html">Fundusze Europejskie</a> · <a class="u" href="polityka-prywatnosci.html">Polityka prywatności</a></span></div>
+  </div>
+</footer>
+
+<a class="callfab" href="tel:+48511420100" aria-label="Zadzwoń: +48 511 420 100" title="+48 511 420 100">
+  <span class="callfab__ico" aria-hidden="true"><i data-lucide="phone" class="lucide"></i><span class="callfab__fb">✆</span></span>
+</a>
+
+<script src="https://unpkg.com/lucide@latest" defer></script>
+<script>
+document.documentElement.classList.add('js');
+function icons(){try{window.lucide&&lucide.createIcons()}catch(e){}}
+icons();addEventListener('load',icons);
+
+/* galeria */
+const fig=document.querySelector('.gal__main'),n=document.getElementById('gal-n');
+document.querySelectorAll('.gal__thumbs button').forEach((b,i)=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.gal__thumbs button').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','true');
+  const old=fig.querySelector('picture'),pic=b.querySelector('picture').cloneNode(true);
+  pic.querySelectorAll('[sizes]').forEach(x=>x.sizes='(min-width:1024px) 66vw, 100vw');
+  const img=pic.querySelector('img');img.id='gal-main';img.removeAttribute('loading');img.alt=b.getAttribute('aria-label');img.style.opacity=0;
+  old.replaceWith(pic);requestAnimationFrame(()=>img.style.opacity=1);n.textContent=i+1;
+}));
+
+/* wideo: iframe dopiero po kliknięciu */
+const video=document.getElementById('video');
+video.querySelector('.video__btn').addEventListener('click',()=>{
+  video.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+video.dataset.yt+'?autoplay=1&rel=0" title="Film o jachcie" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+});
+
+/* pasek mobilny: dopiero gdy galeria opuści ekran */
+const bar=document.getElementById('mobilebar');
+let pastHero=false,atFoot=false;const syncBar=()=>{const on=pastHero&&!atFoot;bar.classList.toggle('is-on',on);bar.setAttribute('aria-hidden',!on)};
+new IntersectionObserver(([e])=>{pastHero=!e.isIntersecting&&e.boundingClientRect.top<0;syncBar()},{threshold:0}).observe(document.getElementById('galeria'));
+new IntersectionObserver(([e])=>{atFoot=e.isIntersecting;syncBar()},{threshold:0}).observe(document.querySelector('footer'));
+
+/* porównanie: przewijanie kolumnami; nawigacja tylko gdy jest co przewijać */
+const cmp=document.getElementById('cmp'),cmpNav=document.getElementById('cmp-nav');
+const colW=()=>{const c=cmp.querySelector('.cmp__y');return c?c.getBoundingClientRect().width:240};
+cmpNav.querySelectorAll('.carousel__btn').forEach(b=>b.addEventListener('click',()=>cmp.scrollBy({left:colW()*+b.dataset.dir,behavior:'smooth'})));
+function cmpSync(){
+  const over=cmp.scrollWidth-cmp.clientWidth>4;
+  cmpNav.hidden=!over;
+  if(!over)return;
+  cmpNav.querySelector('[data-dir="-1"]').disabled=cmp.scrollLeft<=2;
+  cmpNav.querySelector('[data-dir="1"]').disabled=cmp.scrollLeft>=cmp.scrollWidth-cmp.clientWidth-2;
+}
+cmp.addEventListener('scroll',cmpSync,{passive:true});addEventListener('resize',cmpSync);cmpSync();
+
+/* pojawianie */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* rezerwacja: kalendarz dostawcy stoi na tej stronie — każde wezwanie prowadzi do niego */
+document.querySelectorAll('[data-open-modal]').forEach(b=>b.addEventListener('click',e=>{
+  e.preventDefault();document.getElementById('dostepnosc').scrollIntoView({behavior:'smooth',block:'start'});
+}));
+</script>
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>
