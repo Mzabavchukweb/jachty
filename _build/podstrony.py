@@ -127,7 +127,7 @@ FOOT = f'''<footer class="inkband foot on-dark" id="kontakt">
     <div class="ue">
       <a class="ue__img" href="fundusze-europejskie.html" aria-label="Fundusze Europejskie — szczegóły dofinansowania">
         <picture><source type="image/webp" srcset="assets/img/r/ue-logotypy-630.webp 630w, assets/img/r/ue-logotypy-1260.webp 1260w, assets/img/r/ue-logotypy-1890.webp 1890w" sizes="(min-width:768px) 560px, 100vw">
-        <img src="assets/img/r/ue-logotypy-630.png" srcset="assets/img/r/ue-logotypy-630.png 630w, assets/img/r/ue-logotypy-1260.png 1260w, assets/img/r/ue-logotypy-1890.png 1890w" sizes="(min-width:768px) 560px, 100vw" width="630" height="57" alt="Fundusze Europejskie dla Warmii i Mazur, Rzeczpospolita Polska, Dofinansowane przez Unię Europejską, Warmia Mazury" loading="lazy" decoding="async"></picture>
+        <img src="assets/img/r/ue-logotypy-630.png" srcset="assets/img/r/ue-logotypy-630.png 630w, assets/img/r/ue-logotypy-1260.png 1260w, assets/img/r/ue-logotypy-1890.png 1890w" sizes="(min-width:768px) 560px, 100vw" width="630" height="57" alt="Fundusze Europejskie dla Warmii i Mazur, Rzeczpospolita Polska, Dofinansowane przez Unię Europejską, Warmia Mazury" decoding="async"></picture>
       </a>
       <p class="ue__txt">Projekt dofinansowany ze środków Unii Europejskiej. <a class="u u--on" href="fundusze-europejskie.html">Szczegóły dofinansowania →</a></p>
     </div>
@@ -204,7 +204,7 @@ def pic(key, alt, sizes, eager=False):
     ws, w, h = WS[key]
     f = lambda e: ', '.join(f'assets/img/r/{key}-{x}.{e} {x}w' for x in ws)
     mid = min(ws, key=lambda x: abs(x - 600))
-    lazy = '' if eager else ' loading="lazy"'
+    lazy = ''   # bez leniwego ładowania: na części iPhone'ów leniwe zdjęcia w <picture> nie wczytywały się wcale
     return (f'<picture><source type="image/webp" srcset="{f("webp")}" sizes="{sizes}">'
             f'<img src="assets/img/r/{key}-{mid}.jpg" srcset="{f("jpg")}" sizes="{sizes}" width="{w}" height="{h}" alt="{esc(alt)}"{lazy} decoding="async"></picture>')
 
