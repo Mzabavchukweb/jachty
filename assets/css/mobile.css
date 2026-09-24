@@ -1,0 +1,60 @@
+/* jachtymazury.pl — telefon. Ładowany na końcu na wszystkich stronach, wygrywa z resztą. */
+
+/* treść nigdy nie czeka na animację: bez sygnału „pojawienia” zdjęcia jachtów byłyby niewidoczne */
+@media(max-width:767px),(prefers-reduced-motion:reduce){
+  html.js .reveal,html.js .reveal .fli,html.js .fleet__grp.reveal .fli,html.js .legend__row{opacity:1!important;transform:none!important;animation:none!important}
+}
+
+/* przycisk menu: hamburger ↔ X */
+.burger .burger__x{display:none}
+.burger[aria-expanded="true"] .burger__x{display:block}
+.burger[aria-expanded="true"] .burger__m{display:none}
+
+@media(max-width:640px){
+  /* skala: mniejsze nagłówki i odstępy */
+  :root{--t1:1.125rem;--t2:1.25rem;--t3:1.5rem;--t4:1.875rem;--t5:2.25rem;--t6:2.5rem;
+        --s4:28px;--s5:36px;--s6:44px;--s7:56px}
+  .hero .display{font-size:2.75rem!important;line-height:1.02}
+  .h1,.phead__h{font-size:2.25rem!important;line-height:1.08}
+  .h2{font-size:1.875rem!important;line-height:1.1}
+  .h3{font-size:1.5rem!important}
+  .phead__lead,.hero__lead{font-size:1rem!important;line-height:1.55}
+  .band__txt{font-size:1.5rem!important}
+  .fgh__n{font-size:1.625rem!important}
+
+  /* karta jachtu: duże zdjęcie, zwarte dane */
+  .fli{row-gap:12px!important;padding-block:20px 24px!important}
+  .fli__ph{aspect-ratio:16/10!important;height:auto!important}
+  .fli__ph picture,.fli__ph img{width:100%;height:100%;object-fit:cover}
+  .fli__body{gap:0!important}
+  .fli__model{font-size:.75rem!important}
+  .fli__name{font-size:1.375rem!important;line-height:1.15;margin:2px 0 0!important;padding-bottom:10px!important}
+  .fli__spec{grid-template-columns:1fr 1fr!important;gap:8px 16px!important;padding-block:10px!important;margin:0!important}
+  .fli__spec dt{font-size:.75rem!important;letter-spacing:.06em!important;margin:0!important}
+  .fli__spec dd{font-size:.9375rem!important;margin:0!important}
+  .fli__spec .berth{display:none!important}
+  .meas{padding-block:10px 4px!important;margin:0!important}
+  .meas__hd span{font-size:.75rem!important}
+  .meas__hd b{font-size:1rem!important}
+  .meas__sc{display:none!important}
+  .fli__buy{margin-top:10px!important;padding-top:12px!important;gap:10px!important}
+  .fli__pricev{font-size:1.5rem!important}
+  .fli__pricev--ask,.fli__pricev--ask b{font-size:1rem!important}
+  .fli__act .btn{min-height:46px!important}
+  /* jeden przycisk: cena i „Rezerwuj” w jednym rzędzie */
+  .fli__buy:has(.fli__act>.btn:only-child){grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;display:grid!important}
+  .fli__act:has(>.btn:only-child) .btn{min-width:136px!important;width:auto!important}
+
+  /* zespół: niższe kafle z inicjałami */
+  .mem__ini{aspect-ratio:3/2!important;font-size:2.75rem!important}
+  .team__grid{row-gap:var(--s4)!important}
+
+  /* menu mobilne w dwóch kolumnach — wszystko pod ręką bez przewijania */
+  .mnav__in{padding:var(--s2) var(--gutter) var(--s3);gap:var(--s3)}
+  .mnav__l{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--s2)}
+  .mnav__l a{min-height:50px;font-size:1.125rem;line-height:1.2}
+  .mnav__l a[aria-current]::after{width:5px;height:5px;margin-left:8px;flex:none}
+  .mnav__cta{grid-template-columns:1fr 1fr;gap:8px}
+  .mnav__cta .btn{min-height:48px;font-size:.9375rem;padding-inline:10px;white-space:nowrap}
+  .mnav__meta{font-size:.8125rem;line-height:1.5}
+}

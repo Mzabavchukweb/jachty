@@ -293,6 +293,13 @@ Na telefonie grafika w nagłówku stoi pod tekstem. Róża wiatrów w pasie „W
 - Strona 404 z linkami do floty, cennika i kontaktu. Jej teksty są moje — do akceptacji.
 - Ze strony głównej usunięty martwy skrypt starego formularza rezerwacji (wywoływał błąd JS i zawierał wymyślony komunikat o zajętych sobotach).
 
+**Telefon (24.09.2026)** — osobny arkusz `assets/css/mobile.css`, ładowany na końcu na każdej stronie:
+- treść nie czeka na animację wejścia; wcześniej karty jachtów miały krycie 0 do chwili sygnału z przeglądarki, więc bez niego zdjęć nie było widać; na komputerze dodatkowo zabezpieczenie oparte na przewijaniu,
+- mniejsza skala: tytuły 36 px zamiast 49, nagłówki sekcji 30 zamiast 39, nazwy jachtów 22 zamiast 31, odstępy między sekcjami 44 zamiast 64,
+- karta jachtu zwarta: duże zdjęcie 16:10, dane w dwóch kolumnach, pasek długości bez podziałki, cena i „Rezerwuj” w jednym rzędzie (lista żaglowych 11 400 px zamiast 14 700),
+- menu w dwóch kolumnach mieści się bez przewijania nawet na 390×667; przycisk menu zmienia się w X,
+- niższe kafle zespołu.
+
 **Pas „Wybrałeś termin?"** nad stopką ma od dołu cienką jasną linię (`rgba(252,249,244,.5)`), bo oba bloki są ciemne i zlewały się w jeden.
 
 **Cennik na telefonie**: szeroka tabela (13 kolumn) zamienia się w listę rozwijanych pozycji (`<details>`) — nazwa jachtu i „od … zł / doba", po rozwinięciu wszystkie okresy, kaucja i sprzątanie.

@@ -109,7 +109,7 @@ def header(cur, photo=False, dark=False):
     {nav(cur)}
     {LANG}
     {btn}
-    <button class="burger" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mnav"><i data-lucide="menu" class="lucide"></i></button>
+    <button class="burger" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mnav"><i data-lucide="menu" class="lucide burger__m"></i><i data-lucide="x" class="lucide burger__x"></i></button>
   </div>
 </header>
 {mnav(cur)}''')
@@ -154,6 +154,7 @@ def page(fname, title, desc, body, cur, extra_js=''):
 {FONTS}
 <link rel="stylesheet" href="assets/css/system.css">
 <link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/mobile.css">
 </head>
 <body class="sub">
 <a class="skip" href="#main">Przejdź do treści</a>
@@ -740,6 +741,8 @@ def patch(fname, cur, photo=False, own_booking=False, dark=False):
     s = s[:fa] + FOOT.replace(' id="kontakt"', '' if not photo else ' id="kontakt"') + s[fb:]
     if dark and 'assets/css/head-dark.css' not in s:
         s = s.replace('<link rel="stylesheet" href="assets/css/system.css">', '<link rel="stylesheet" href="assets/css/system.css">\n<link rel="stylesheet" href="assets/css/head-dark.css">', 1)
+    if 'assets/css/mobile.css' not in s:
+        s = s.replace('</head>', '<link rel="stylesheet" href="assets/css/mobile.css">\n</head>', 1)
     if 'assets/js/site.js' not in s:
         s = s.replace('</body>', '<script src="assets/js/site.js" defer></script>\n</body>', 1)
     open(fname, 'w').write(s); print('  ✎', fname)
