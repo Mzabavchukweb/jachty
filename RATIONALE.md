@@ -312,6 +312,12 @@ Na telefonie grafika w nagłówku stoi pod tekstem. Róża wiatrów w pasie „W
 
 **Oddech sekcji (24.09.2026)** — osobna warstwa rytmu na końcu `assets/css/mobile.css`. Odstępy między sekcjami: komputer 120–144 px, tablet 96–112 px, telefon 76–88 px. Większe odstępy między nagłówkiem a treścią i wewnątrz kart jachtów. Na telefonie czcionki zostają mniejsze, rosną tylko odstępy.
 
+**Strony jednostek (24.09.2026)** — każda z 24 jednostek ma własną stronę (`<jednostka>.html`, adres jak na obecnej stronie, np. `antila-27-furaha.html`), a każda karta na listach ma przycisk „Zobacz jacht”. Generator: `_build/jednostki.py` (treść) i `_build/galerie.py` (zdjęcia).
+- Treść 1:1 ze stron jednostek obecnego serwisu: opis (wnętrze, koje, prowadzenie…), wyposażenie, dane techniczne, warunki rezerwacji. Pominięte tylko zdania odsyłające do układu starej strony („w tabeli poniżej”, „znajdziesz na stronie…”).
+- Galerie: zdjęcia ze stron jednostek (5–12 na jednostkę, bez duplikatów przycinanych przez WordPress), warianty 480 i 1200 px WebP + JPG; lightbox jak na karcie Kassari. Jedno zdjęcie Antili 34 („antila-34-mesa.jpg”) na serwerze klienta nie istnieje (404) — pominięte.
+- Cennik 2027 jednostki z wiersza przypisanego w cenniku; brak wiersza → „na zapytanie”.
+- Antila 30.1 „Bradl” nie ma strony, bo nie ma jej na liście floty (patrz niezgodności wyżej).
+
 **Pas „Wybrałeś termin?"** nad stopką ma od dołu cienką jasną linię (`rgba(252,249,244,.5)`), bo oba bloki są ciemne i zlewały się w jeden.
 
 **Cennik na telefonie**: szeroka tabela (13 kolumn) zamienia się w listę rozwijanych pozycji (`<details>`) — nazwa jachtu i „od … zł / doba", po rozwinięciu wszystkie okresy, kaucja i sprzątanie.

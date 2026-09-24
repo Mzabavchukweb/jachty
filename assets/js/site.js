@@ -50,6 +50,37 @@
       if(want){var c=[].slice.call(g.querySelectorAll('.chip')).filter(function(x){return x.dataset.f===want})[0];if(c)c.click()}}catch(e){}
   });
 
+
+  /* galeria jednostki: miniatura i duże zdjęcie otwierają powiększenie */
+  var ug=document.querySelector('.ugal');
+  if(ug){
+    var th=[].slice.call(ug.querySelectorAll('.ugal__thumbs button')),fig=ug.querySelector('.ugal__main'),nEl=ug.querySelector('.ugal__n'),cur=0,from=null;
+    var big=function(i,sizes){var p=th[i].querySelector('picture').cloneNode(true);[].forEach.call(p.querySelectorAll('[sizes]'),function(x){x.setAttribute('sizes',sizes)});var im=p.querySelector('img');im.removeAttribute('loading');im.alt='';return p};
+    var setMain=function(i){cur=i;th.forEach(function(b,k){if(k===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
+      var old=fig.querySelector('picture');if(old)fig.replaceChild(big(i,'(min-width:1024px) 60vw, 100vw'),old);if(nEl)nEl.textContent=i+1};
+    var lb=document.createElement('div');lb.className='lb';lb.hidden=true;lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.setAttribute('aria-label','Zdjęcia jachtu');
+    lb.innerHTML='<div class="lb__bar"><span class="lb__n num"></span><span class="lb__cap"></span><button class="lb__x" type="button" aria-label="Zamknij zdjęcia"><i data-lucide="x" class="lucide"></i></button></div><div class="lb__stage"></div><button class="lb__nav lb__nav--prev" type="button" aria-label="Poprzednie zdjęcie"><i data-lucide="arrow-left" class="lucide"></i></button><button class="lb__nav lb__nav--next" type="button" aria-label="Następne zdjęcie"><i data-lucide="arrow-right" class="lucide"></i></button>';
+    document.body.appendChild(lb);icons();
+    var stage=lb.querySelector('.lb__stage'),lbN=lb.querySelector('.lb__n'),lbCap=lb.querySelector('.lb__cap'),title=(document.querySelector('.unit__h')||{}).textContent||'';
+    var show=function(i){i=(i+th.length)%th.length;var p=big(i,'100vw');stage.innerHTML='';stage.appendChild(p);lbN.textContent=(i+1)+' / '+th.length;lbCap.textContent=title;setMain(i)};
+    var open=function(i,el){from=el||document.activeElement;lb.hidden=false;document.body.classList.add('lb-open');show(i);requestAnimationFrame(function(){lb.classList.add('is-open')});lb.querySelector('.lb__x').focus()};
+    var close=function(){lb.classList.remove('is-open');document.body.classList.remove('lb-open');lb.hidden=true;if(from)from.focus()};
+    th.forEach(function(b,i){b.addEventListener('click',function(){open(i,b)})});
+    var z=fig.querySelector('.ugal__zoom');if(z)z.addEventListener('click',function(){open(cur,z)});
+    lb.querySelector('.lb__x').addEventListener('click',close);
+    lb.querySelector('.lb__nav--prev').addEventListener('click',function(){show(cur-1)});
+    lb.querySelector('.lb__nav--next').addEventListener('click',function(){show(cur+1)});
+    stage.addEventListener('click',function(e){if(e.target===stage)close()});
+    lb.addEventListener('keydown',function(e){
+      if(e.key==='Escape')return close();if(e.key==='ArrowLeft')return show(cur-1);if(e.key==='ArrowRight')return show(cur+1);
+      if(e.key==='Tab'){var f=[].slice.call(lb.querySelectorAll('button')),a=f[0],zz=f[f.length-1];
+        if(e.shiftKey&&document.activeElement===a){e.preventDefault();zz.focus()}else if(!e.shiftKey&&document.activeElement===zz){e.preventDefault();a.focus()}}});
+    var tx=null;stage.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+    stage.addEventListener('touchend',function(e){if(tx===null)return;var dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>45)show(cur+(dx<0?1:-1))});
+    /* duże wersje od razu do pamięci — przełączanie bez czekania */
+    addEventListener('load',function(){var w=document.createElement('div');w.className='lb__warm';w.setAttribute('aria-hidden','true');th.forEach(function(_,i){w.appendChild(big(i,'100vw'))});document.body.appendChild(w)});
+  }
+
   /* pojawianie sekcji */
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});

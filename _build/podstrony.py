@@ -225,7 +225,8 @@ def berths(raw):
     if m: return m.group(1), int(m.group(1)), 0
     return raw, 0, 0
 
-def card(slug, model, name, row, detail='#'):
+def card(slug, model, name, row, detail=None):
+    if detail is None: detail = f'{slug}.html'
     sp = UNITS[slug]['spec']
     L = num(sp.get('Długość', '0')); pct = min(100, round(L / MAXM * 100, 1))
     mj, a, b = berths(sp.get('Liczba osób', '–'))
@@ -242,7 +243,7 @@ def card(slug, model, name, row, detail='#'):
     nm = f'<span class="fli__model">{model}</span>' + (f'<a class="u" href="{detail}">{title}</a>' if has else title)
     ph = pic("u-" + slug, full, "(min-width:641px) 440px, 100vw")
     ph = f'<a class="fli__ph" href="{detail}" tabindex="-1" aria-hidden="true">{ph}</a>' if has else f'<div class="fli__ph">{ph}</div>'
-    see = f'<a class="btn btn--outline btn--sm" href="{detail}" aria-label="Zobacz {esc(full)}">Zobacz <i data-lucide="arrow-right" class="lucide"></i></a>' if has else ''
+    see = f'<a class="btn btn--outline btn--sm" href="{detail}" aria-label="Zobacz jacht {esc(full)}">Zobacz jacht <i data-lucide="arrow-right" class="lucide"></i></a>' if has else ''
     return f'''      <article class="fli" data-model="{esc(model)}">
         {ph}
         <div class="fli__body">
@@ -273,7 +274,7 @@ def chips(units):
     return f'<div class="chips" role="group" aria-label="Filtr modeli">{b}</div>'
 
 def fleet_list(units, sand=False):
-    cards = ''.join(card(s, m, n, r, 'jacht.html' if s == 'antila-33-kassari' else '#') for s, m, n, r in units)
+    cards = ''.join(card(s, m, n, r) for s, m, n, r in units)
     return f'''<section class="psec fleet{" fleet--sand" if sand else ""}">
   <div class="wrap">
     {chips(units)}
@@ -722,6 +723,103 @@ for i, a in enumerate(ART):
 </section>'''
      + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'),
      'poradnik.html')
+
+# ---- strony jednostek (treść i zdjęcia z obecnych stron jednostek, 1:1)
+import jednostki
+GAL = json.load(open('_img/galerie-ws.json'))
+def gpic(slug, n, ws, W, H, sizes, big=False, eager=False):
+    src = lambda e: ', '.join(f'assets/img/j/{slug}/{n}-{w}.{e} {w}w' for w in ws)
+    w0 = ws[-1] if big else ws[0]
+    return (f'<picture><source type="image/webp" srcset="{src("webp")}" sizes="{sizes}">'
+            f'<img src="assets/img/j/{slug}/{n}-{w0}.jpg" srcset="{src("jpg")}" sizes="{sizes}" width="{W}" height="{H}" alt=""'
+            f'{" fetchpriority=\"high\"" if eager else ""} decoding="async"></picture>')
+
+SPEC_ORDER = ['Długość', 'Szerokość', 'Zanurzenie', 'Liczba osób', 'Zamykane kabiny', 'Wysokość kabiny', 'Typ miecza', 'Typ steru', 'Typ silnika', 'Moc silnika', 'Powierzchnia żagli', 'Rok produkcji']
+def spec_val(k, v):
+    v = v.replace('-', ' – ') if k == 'Zanurzenie' else v
+    v = re.sub(r'(\d)\.(\d)', r'\1,\2', v)
+    if k == 'Powierzchnia żagli' and re.search(r'\d m$', v): v += '²'
+    return esc(v).replace('²', '²')
+
+def unit_page(u, kind):
+    slug, model, name, row = u
+    full = f'{model} „{name}”' if name else model
+    x = jednostki.extract(slug); sp = UNITS[slug]['spec']; g = GAL.get(slug, [])
+    lst, lst_name = ('jachty-zaglowe.html', 'Jachty żaglowe') if kind == 'sail' else ('jachty-motorowe.html', 'Jachty motorowe')
+    # galeria
+    main = gpic(slug, g[0][0], g[0][1], g[0][2], g[0][3], '(min-width:1024px) 60vw, 100vw', big=True, eager=True) if g else ''
+    thumbs = ''.join(f'<button type="button" data-i="{i}" aria-label="Zdjęcie {i+1} z {len(g)}"{" aria-current=\"true\"" if i == 0 else ""}>'
+                     f'{gpic(slug, n, ws, W, H, "(min-width:1024px) 12vw, 25vw")}</button>' for i, (n, ws, W, H) in enumerate(g))
+    # fakty
+    mj, a, b = berths(sp.get('Liczba osób', '–'))
+    facts = [('Miejsca', mj), ('Kabiny', sp.get('Zamykane kabiny', '–')), ('Długość', spec_val('Długość', sp.get('Długość', '–'))), ('Rok', sp.get('Rok produkcji', '–'))]
+    facts_h = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in facts)
+    # opis
+    desc = ''.join(f'<h2 class="unit__h2">{esc(t)}</h2>' if tag == 'h2' else f'<p>{esc(t)}</p>' for tag, t in x['desc'])
+    equip = ''.join(f'<li>{esc(e)}</li>' for e in x['equip'])
+    keys = [k for k in SPEC_ORDER if k in sp] + [k for k in sp if k not in SPEC_ORDER]
+    spec = ''.join(f'<div><dt>{esc(k)}</dt><dd>{spec_val(k, sp[k])}</dd></div>' for k in keys)
+    terms = ''.join(f'<li>{esc(t)}</li>' for t in x['terms'])
+    v = ROWS.get(row); p = od(row)
+    price = (f'<span class="micro muted">Cena od</span><p class="unit__price num"><b>{zl(p)}</b> <span>/ doba</span></p>' if p
+             else '<span class="micro muted">Cena</span><p class="unit__price unit__price--ask">na zapytanie</p>')
+    ptab = ''
+    if v:
+        lis = ''.join(f'<li><span>{r}{t}</span><b class="num">{zl(int(val)) if val.strip().isdigit() else "—"} <small>{un}</small></b></li>' for (r, un, t), val in zip(periods, v[:11]))
+        ptab = (f'<h2 class="unit__h2">Cennik 2027</h2><ul class="unit__prices">{lis}'
+                f'<li class="unit__px"><span>Kaucja</span><b class="num">{zl(int(v[11]))}</b></li><li class="unit__px"><span>Sprzątanie</span><b class="num">{zl(int(v[12]))}</b></li></ul>'
+                f'<p class="unit__note">Cena za dobę obowiązuje przy czarterze minimum tygodniowym. Przy krótszych terminach cena ustalana jest indywidualnie.</p>')
+    book = f'''{price}
+        <a class="btn btn--block" href="index.html#rezerwuj">Sprawdź dostępność <i data-lucide="arrow-right" class="lucide"></i></a>
+        <a class="btn btn--outline btn--block" href="{TEL_H}"><i data-lucide="phone" class="lucide"></i> {TEL}</a>'''
+    same = [w for w in SAIL + MOTOR if w[0] != slug and w[1] == model]
+    other = [w for w in (SAIL if kind == 'sail' else MOTOR) if w[0] != slug and w[1] != model]
+    more = (same + other)[:4]
+    body = f'''<section class="dtop utop">
+  <div class="wrap">
+    {crumbs([(lst, lst_name), (f"{slug}.html", full)])}
+    <div class="ugal" data-n="{len(g)}">
+      <figure class="ugal__main">{main}
+        <button class="ugal__zoom" type="button" aria-label="Powiększ zdjęcie"></button>
+        <span class="ugal__count num" aria-hidden="true"><i data-lucide="maximize-2" class="lucide"></i><span class="ugal__n">1</span> / {len(g)}</span>
+      </figure>
+      <div class="ugal__thumbs" role="group" aria-label="Zdjęcia jachtu">{thumbs}</div>
+    </div>
+  </div>
+</section>
+<section class="psec unit">
+  <div class="wrap g12">
+    <div class="c7 unit__main">
+      <p class="micro unit__type">{"Jacht żaglowy" if kind == "sail" else "Jacht motorowy"} · {esc(model)}</p>
+      <h1 class="h1 unit__h">{esc(full)}</h1>
+      <dl class="unit__facts num">{facts_h}</dl>
+      <div class="unit__mbook">{book}</div>
+      <div class="unit__desc">{desc}</div>
+      {f'<h2 class="unit__h2">Wyposażenie</h2><ul class="unit__eq">{equip}</ul>' if equip else ''}
+      <h2 class="unit__h2">Dane techniczne</h2><dl class="unit__spec num">{spec}</dl>
+      {ptab}
+      {f'<h2 class="unit__h2">Warunki rezerwacji</h2><ul class="unit__terms">{terms}</ul>' if terms else ''}
+    </div>
+    <aside class="c4 o9 unit__book" aria-label="Rezerwacja">
+      <div class="unit__bookin">{book}
+        <p class="unit__hours">Wydanie jachtu 16:00 – 20:00 · zdanie 8:00 – 10:00</p>
+        <a class="u unit__all" href="{lst}?model={model.replace(" ", "%20")}">Wszystkie jednostki {esc(model)} →</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="psec psec--sand fleet">
+  <div class="wrap">
+    <h2 class="h3 psec__h">Inne jednostki</h2>
+    <div class="fl">
+{''.join(card(*w) for w in more)}    </div>
+  </div>
+</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.')
+    first = next((t for tag, t in x['desc'] if tag == 'p'), f'{full} — czarter z Giżycka, Stanica Wodna Stranda.')
+    page(f'{slug}.html', f'{full} — czarter na Mazurach, Giżycko | Jachty Mazury', first[:155], body, lst)
+
+for u in SAIL: unit_page(u, 'sail')
+for u in MOTOR: unit_page(u, 'motor')
 
 # ---- 404
 page('404.html', 'Nie ma takiej strony | Jachty Mazury', 'Strona nie istnieje albo zmieniła adres.',
