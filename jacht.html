@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="preload" as="image" type="image/avif" imagesrcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" imagesizes="(min-width:1024px) 66vw, 100vw" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/system.css?v=2cf25f1f">
+<link rel="stylesheet" href="assets/css/system.css?v=48b54e2b">
 <link rel="stylesheet" href="assets/css/head-dark.css?v=9d6d9206">
 <style>
 /* nagłówek — na podstronie od razu papierowy */
@@ -224,6 +224,7 @@
 .gal__thumbs button{cursor:zoom-in}
 .lb__warm{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;left:-9999px}
 .lb{position:fixed;inset:0;z-index:200;background:rgb(18,26,29);color:#fff;display:grid;grid-template-rows:auto 1fr;opacity:0;transition:opacity .2s var(--ease)}
+.lb[hidden]{display:none}
 .lb.is-open{opacity:1}
 .lb__bar{display:flex;align-items:center;gap:var(--s3);padding:12px var(--gutter)}
 .lb__n{font-size:.875rem;letter-spacing:.08em;font-weight:600}

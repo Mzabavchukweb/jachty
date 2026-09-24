@@ -346,3 +346,5 @@ body.mnav-open .callfab{display:none}
   .crumbs{font-size:.8125rem}
   .crumbs a{display:inline-flex;align-items:center;min-height:44px;margin-block:-12px}
 }
+/* atrybut hidden zawsze wygrywa ze stylem display komponentu */
+[hidden]{display:none!important}
