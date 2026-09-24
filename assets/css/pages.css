@@ -594,3 +594,18 @@ body:has(.konh) .callfab{display:none}
   .kond__soc a{display:inline-flex;align-items:center;min-height:44px}
   .kond__soc{gap:var(--s2) var(--s3)}
 }
+
+/* cennik: miniatura jachtu przy każdym wierszu */
+.cen__y{display:flex;align-items:center;gap:12px}
+.cen__ph,.cmob__ph{flex:none;display:block;aspect-ratio:4/3;overflow:hidden;background:var(--sand)}
+.cen__ph{width:64px}
+.cen__ph picture,.cmob__ph picture{display:block;height:100%}
+.cen__ph img,.cmob__ph img{width:100%;height:100%;object-fit:cover;display:block}
+.cmob__ph{width:80px}
+@media(max-width:767px){
+  .cmob summary{display:grid!important;grid-template-columns:80px minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:14px;row-gap:2px;align-items:center;padding:10px 14px 10px 10px!important}
+  .cmob__ph{grid-row:1/3}
+  .cmob__n{grid-column:2;align-self:end;line-height:1.25}
+  .cmob__p{grid-column:2;margin-left:0!important;align-self:start}
+  .cmob summary::after{grid-column:3;grid-row:1/3}
+}

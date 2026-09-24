@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="preload" as="image" type="image/avif" imagesrcset="assets/img/r/a33-burta-480.avif 480w, assets/img/r/a33-burta-800.avif 800w" imagesizes="(min-width:1024px) 66vw, 100vw" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/system.css">
-<link rel="stylesheet" href="assets/css/head-dark.css">
+<link rel="stylesheet" href="assets/css/system.css?v=2cf25f1f">
+<link rel="stylesheet" href="assets/css/head-dark.css?v=9d6d9206">
 <style>
 /* nagłówek — na podstronie od razu papierowy */
 .head{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px solid var(--line)}
@@ -246,7 +246,7 @@ body.lb-open .callfab,body.lb-open .mobilebar{display:none!important}
 }
 @media(prefers-reduced-motion:reduce){.lb{transition:none}}
 </style>
-<link rel="stylesheet" href="assets/css/mobile.css">
+<link rel="stylesheet" href="assets/css/mobile.css?v=6f2df0c5">
 </head>
 <body>
 <a class="skip" href="#main">Przejdź do treści</a>
@@ -548,6 +548,6 @@ document.querySelectorAll('[data-open-modal]').forEach(b=>b.addEventListener('cl
   e.preventDefault();document.getElementById('dostepnosc').scrollIntoView({behavior:'smooth',block:'start'});
 }));
 </script>
-<script src="assets/js/site.js" defer></script>
+<script src="assets/js/site.js?v=f91d978a" defer></script>
 </body>
 </html>

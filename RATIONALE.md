@@ -306,6 +306,10 @@ Na telefonie grafika w nagłówku stoi pod tekstem. Róża wiatrów w pasie „W
 - Oryginały zdjęć Kassari na obecnej stronie mają najwyżej 800 px, więc powiększenie pokazuje je w naturalnym rozmiarze. **Do potwierdzenia:** zdjęcia w wyższej rozdzielczości od klienta.
 - „Porównaj z innymi” to zwykła tabela: nazwy parametrów raz, w lewej kolumnie; oglądany model wyróżniony jasnym tłem i linią. Na telefonie widać ten model i jeden wybrany obok, wybór przyciskami nad tabelą.
 
+**Cennik ze zdjęciami (24.09.2026)** — każdy wiersz cennika (tabela na komputerze i lista na telefonie) ma miniaturę jachtu: zdjęcie jednostki przypisanej do wiersza, a gdy wiersz nie ma swojej jednostki (np. „Antila 28.2 2027”, „Antila 34 2022”) — zdjęcie jednostki tego samego modelu z obecnej strony.
+
+**Wersje plików** — CSS i JS mają w adresie skrót zawartości (`?v=…`), dopisywany przez generator. Po każdej zmianie przeglądarka i GitHub Pages pobierają nową wersję zamiast starej z pamięci podręcznej.
+
 **Pas „Wybrałeś termin?"** nad stopką ma od dołu cienką jasną linię (`rgba(252,249,244,.5)`), bo oba bloki są ciemne i zlewały się w jeden.
 
 **Cennik na telefonie**: szeroka tabela (13 kolumn) zamienia się w listę rozwijanych pozycji (`<details>`) — nazwa jachtu i „od … zł / doba", po rozwinięciu wszystkie okresy, kaucja i sprzątanie.

@@ -362,13 +362,29 @@ for h in HEAD_COLS[:11]:
     if rng.endswith(' i później'): rng = 'od ' + rng.replace(' i później', '')
     periods.append((rng, unit, tag))
 
+def row_photo(name):
+    """Zdjęcie do wiersza cennika: jednostka przypisana do wiersza, a gdy jej nie ma — jednostka tego samego modelu."""
+    units = SAIL + MOTOR
+    for u in units:
+        if u[3] == name: return u
+    for u in sorted(units, key=lambda u: -len(u[1])):
+        if name.startswith(u[1]) or u[1].startswith(name): return u
+    return None
+
+def thumb(name, cls):
+    u = row_photo(name)
+    if not u: return f'<span class="{cls} {cls}--none" aria-hidden="true"></span>'
+    ws, w, h = WS['u-' + u[0]]; small = min(ws)
+    return (f'<span class="{cls}" aria-hidden="true"><picture><source type="image/webp" srcset="assets/img/r/u-{u[0]}-{small}.webp">'
+            f'<img src="assets/img/r/u-{u[0]}-{small}.jpg" width="{w}" height="{h}" alt="" decoding="async"></picture></span>')
+
 def ctable(tab):
     th = ''.join(f'<th scope="col"><span class="num">{r}</span><small>{u}</small>{g}</th>' for r, u, g in periods)
     body = ''
     for row in tab[1:]:
         name, v = row[1], row[2:]
         tds = ''.join(f'<td class="num">{zl(int(x)) if x.strip().isdigit() else "<span class=muted>—</span>"}</td>' for x in v[:11])
-        body += f'<tr><th scope="row">{esc(name)}</th>{tds}<td class="num">{zl(int(v[11]))}</td><td class="num">{zl(int(v[12]))}</td></tr>'
+        body += f'<tr><th scope="row"><span class="cen__y">{thumb(name, "cen__ph")}<span>{esc(name)}</span></span></th>{tds}<td class="num">{zl(int(v[11]))}</td><td class="num">{zl(int(v[12]))}</td></tr>'
     return f'<div class="ctab" tabindex="0" role="region" aria-label="Tabela cen, przewijaj poziomo"><table class="cen"><thead><tr><th scope="col">Jacht</th>{th}<th scope="col">Kaucja</th><th scope="col">Sprzątanie</th></tr></thead><tbody>{body}</tbody></table></div>'
 
 def cmobile(tab):
@@ -378,7 +394,7 @@ def cmobile(tab):
         nums = [int(v[i]) for i in DOBA_IDX if v[i].strip().isdigit()]
         head = f'od {zl(min(nums))} / doba' if nums else 'cena indywidualna'
         lis = ''.join(f'<li><span>{r}{g}</span><b class="num">{zl(int(x)) if x.strip().isdigit() else "—"}<small> {u}</small></b></li>' for (r, u, g), x in zip(periods, v[:11]))
-        out += f'''<details class="cmob"><summary><span class="cmob__n">{esc(name)}</span><span class="cmob__p num">{head}</span></summary>
+        out += f'''<details class="cmob"><summary>{thumb(name, "cmob__ph")}<span class="cmob__n">{esc(name)}</span><span class="cmob__p num">{head}</span></summary>
   <ul class="cmob__l">{lis}<li class="cmob__x"><span>Kaucja</span><b class="num">{zl(int(v[11]))}</b></li><li class="cmob__x"><span>Sprzątanie</span><b class="num">{zl(int(v[12]))}</b></li></ul></details>'''
     return f'<div class="cmobs">{out}</div>'
 
@@ -814,5 +830,19 @@ def build_pages_css():
     hd = open('_build/head-dark.css').read().replace('url(assets/', 'url(../')
     open('assets/css/head-dark.css', 'w').write('/* ciemny nagłówek dla stron spoza generatora (karta jachtu, fundusze). Generowane z _build/head-dark.css */\n' + hd)
 build_pages_css()
+
+# numer wersji przy CSS/JS (skrót zawartości) — każda zmiana omija pamięć podręczną przeglądarki i GitHub Pages
+import hashlib, glob
+def stamp_assets():
+    ver = {}
+    for f in glob.glob('assets/css/*.css') + glob.glob('assets/js/*.js'):
+        ver[f] = hashlib.md5(open(f, 'rb').read()).hexdigest()[:8]
+    for h in glob.glob('*.html'):
+        t = open(h, encoding='utf-8').read()
+        t2 = re.sub(r'((?:href|src)="(assets/(?:css|js)/[\w.-]+\.(?:css|js)))(?:\?v=\w+)?"',
+                    lambda m: f'{m.group(1)}?v={ver[m.group(2)]}"' if m.group(2) in ver else m.group(0), t)
+        if t2 != t: open(h, 'w', encoding='utf-8').write(t2)
+    print('  wersje zasobów:', ', '.join(f'{k.split("/")[-1]}={v}' for k, v in sorted(ver.items())))
+stamp_assets()
 
 print('koniec')
