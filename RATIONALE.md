@@ -318,6 +318,39 @@ Na telefonie grafika w nagłówku stoi pod tekstem. Róża wiatrów w pasie „W
 - Cennik 2027 jednostki z wiersza przypisanego w cenniku; brak wiersza → „na zapytanie”.
 - Antila 30.1 „Bradl” nie ma strony, bo nie ma jej na liście floty (patrz niezgodności wyżej).
 
+**Przebudowa wg uwag klientki (25.09.2026)** — źródło: wizualizacje `Re_ Strona internetowa/jachtymazury.pl-1/2/3.png` i lista uwag. Moduły generatora: `_build/nawigacja.py` (menu, stopka), `_build/serwis.py` (strony).
+- Strona główna: hero ze zdjęciem jachtu pod żaglami (-2), bez filmu, napis „Mazury w najlepszym wydaniu”, bez „Więcej niż czarter”; 4 ikony pod zdjęciem (-3); „Polecane jachty” jako karuzela modeli (-3); kafle „Filmy szkoleniowe” i „Poradnik czarterowy” (-2); „Aktualności” (-3); „O nas” (-3) bez „Razem tworzymy lepsze rejsy”; „Nasza lokalizacja” (-2); stopka (-2) bez newslettera.
+- Treści z wizualizacji, których nie ma w źródle, pominięte: zdjęcia i imiona zespołu (Michał, Kasia…) — zostaje prawdziwy zespół z inicjałami; adres „Port Ekomarina”, telefon 123 456 789, godziny 8–18, e-mail biuro@ — zostają dane z obecnej strony (Stanica Wodna Stranda, 8:00–20:00, info@).
+- Strona jednostki (-1): na zdjęciu tylko model i nazwa, bez opisu i przycisków; miniatury w jednej linii z powiększeniem; ikony: długość, szerokość, zanurzenie, miejsca, kabiny, toaleta (morska/chemiczna), prysznic, ster (koło/rumpel), silnik (stacjonarny/zaburtowy + moc), ster strumieniowy (1/2), rok — każda tylko gdy wynika z tabeli danych albo listy wyposażenia jednostki; opis + jedno większe zdjęcie po prawej; kalendarz (miejsce na kod dostawcy) + formularz, którego temat zawiera nazwę jednostki („Zapytanie o czarter: Antila 33 „Kassari””).
+- Strony modeli (`model-<model>.html`, 12 szt.) z listą jednostek i opisem modelu 1:1 z obecnych stron `/czarter-jachtow-…/<model>/` — do wysyłania ofert. Generowane z listy floty, więc nowa jednostka pojawia się automatycznie na stronie modelu, liście rodzaju i w menu.
+- „Czarter jachtów” (`czarter-jachtow.html`): treść i FAQ 1:1 z `/czarter-jachtow-gizycko/`, dane strukturalne FAQPage; kafle do żaglowych, motorowych i bez patentu.
+- Menu „Czarter jachtów” rozwija listę modeli i jednostek (żaglowe | motorowe), generowaną z floty. Nowe menu „Wiedza”: Poradnik czarterowy, Filmy szkoleniowe, Aktualności.
+- „Filmy szkoleniowe”: miejsce na listę filmów. **Kanał YouTube, do którego linkuje obecna strona (UCGulH1SMSyk0Ihr2HQ8rfRA), nie istnieje** — link YouTube usunięty ze stopki. Do potwierdzenia: adres kanału.
+- „Aktualności”: na razie wpisy poradnika (obecna strona nie ma działu aktualności ani dat wpisów).
+- `jacht.html` przekierowuje na stronę modelu Antila 33.
+
+**Struktura i SEO 1:1 z obecną stroną (25.09.2026)** — inwentaryzacja: `_build/seo_crawl.py` → `_seo/obecna-strona.json` (122 adresy: 112 z sitemap.xml + 10 znalezionych w linkach). Przeniesienie: `_build/adresy.py` (mapa adresów, linki w treści) i `_build/struktura.py` (katalogi + SEO).
+- Adresy identyczne jak dziś: jednostki w katalogu głównym (`/antila-27-furaha/`), rodzaje i modele pod `/czarter-jachtow-zaglowych/…` i `/czarter-jachtow-motorowych/…`, `/czarter-jachtow-gizycko/`, `/poradnik-czarterowy/`, `/inwestycje-i-posrednictwo/`, artykuły pod swoimi adresami. Wszystkie 56 polskich adresów z mapy strony ma odpowiednik pod tym samym adresem — nowe przekierowania nie są potrzebne. Do zachowania trzy działające dziś 301 (`/bezpieczenstwo-na-jachcie-2/`, `/czarter-jachtow-zaglowych/antila-24-4/`, `/czarter-jachtow-motorowych/calipso-750/`). Pełna lista: `_seo/mapa-adresow.csv`.
+- Modele z jedną jednostką bez własnej strony u klienta (Antila 34, Antila 24.4, Stillo 31, Nautiner 38, Futura 860, Calipso 750) linkują od razu do jednostki — tak działa obecna strona.
+- Dodana brakująca strona `/houseboat-mazury/` (treść i FAQ 1:1).
+- Z obecnej strony przeniesione na każdą stronę: title, meta description, canonical, hreflang (pl-PL, en-GB, x-default), Open Graph i Twitter, dane strukturalne (Product, CollectionPage, BlogPosting, WebPage, ContactPage, Organization, WebSite), H1, `lang="pl-PL"`, linki w treści (przepięte na nowe strony), teksty alternatywne zdjęć (250 z 281 zdjęć galerii; reszta nie ma ich też dziś), daty publikacji artykułów. Przełącznik EN prowadzi do angielskiego odpowiednika danej strony.
+- Strona główna: H1 „Czarter jachtów Mazury” jak dziś; hasło „Mazury w najlepszym wydaniu” zostaje jako nagłówek wizualny.
+- Podgląd ma `noindex, nofollow`, żeby Google nie zindeksował kopii strony klienta. Wartość robots z obecnej strony jest zapisana w komentarzu w nagłówku każdej strony; przy wdrożeniu `PREVIEW = False` w `_build/struktura.py`.
+- Różnice do decyzji: H1 Cleopatry na obecnej stronie to „Czarter jachtu żaglowego Antila 30.1 „Cleopatra”” (pozostałe jednostki mają sam model i nazwę); martwe linki na obecnej stronie (`/solina-22/`, `/11186phila-880-kora/`, 404) nie są przenoszone.
+- Nie zrobione: wersja angielska (56 adresów `/en/…`). Jej tytuły, opisy, H1 i hreflang są w inwentaryzacji; strony trzeba zbudować.
+- Nowe adresy (nie ma ich dziś): `/aktualnosci/`, `/filmy-szkoleniowe/`. `/polityka-prywatnosci/` istnieje dziś, ale nie ma jej w mapie strony.
+
+**Wizualizacje 2 (25.09.2026)** — źródło: `Re_ Strona internetowa (1).zip` (czarter jachtów, jachty żaglowe, motorowe, strona modelu ×2, strona jachtu, Wiedza, cennik). Wygląd z wizualizacji, teksty z obecnej strony (klientka: teksty w wizualizacjach są przykładowe).
+- Kolory uporządkowane jedną zasadą: tekst i nagłówki `--ink`; przyciski akcji `--deep`; tła `--paper`, `--sand`, `--ink`; zieleń `--sage` tylko w ikonach i etykietach. Na ciemnym tle i na zdjęciach przyciski białe.
+- Czarter jachtów: zdjęcie, dwa duże kafle (żaglowe, motorowe; opisy = meta opisy tych stron), „Co zyskujesz” z sześciu korzyści z tej strony (wizualizacja miała pięć wymyślonych), FAQ w dwóch kolumnach, tekst SEO.
+- Jachty żaglowe / motorowe: zdjęcie, wstęp z obecnej strony, siatka modeli z ikonami (silnik, ster, miejsca, kabiny — z danych jednostek), cały tekst SEO z obecnej strony pod siatką. Jednostki są na stronach modeli.
+- Strona modelu wg wersji 2 (najpierw jednostki — do wysyłania ofert): jednostki z rokiem i ceną od, „O modelu” + najważniejsze informacje (ikony), sekcje opisu modelu (wnętrze, kabiny, prowadzenie) w kolumnach. Wersja 1 różni się tylko kolejnością — do wyboru.
+- Strona jachtu: strzałki na dużym zdjęciu. Spacer wirtualny: gotowe miejsce obok opisu (`SPACERY` w `_build/serwis.py`; w motywie pole ACF) — ramka ładuje się dopiero po kliknięciu; dopóki spaceru nie ma, jest zdjęcie.
+- Wiedza: nowa strona zbiorcza `/wiedza/` (poradnik, filmy, aktualności, najnowsze artykuły, miejsce na filmy).
+- Cennik: zdjęcie w nagłówku, większe miniatury i nazwy; lista rozwijana na telefonie bez zmian. Pory roku („niski/wysoki sezon”) z wizualizacji nie są wpisane — obecny cennik ich nie nazywa, ma 11 okresów.
+- Pominięte z wizualizacji jako przykładowe: modele spoza floty (Phobos 25, Tes 678 BT, Jannor 700, Twister 780, Balt 818, Weekend 820, Stillo 26, Nexus 870), imiona i lata jednostek (Luna, Tawerna…), ceny w cenniku, dane kontaktowe, hasła („Przestrzeń, która inspiruje”).
+- Nagłówek strony (pasek z menu) zostaje ciemny, jak ustalono wcześniej — wizualizacje mają jasny; do decyzji.
+
 **Pas „Wybrałeś termin?"** nad stopką ma od dołu cienką jasną linię (`rgba(252,249,244,.5)`), bo oba bloki są ciemne i zlewały się w jeden.
 
 **Cennik na telefonie**: szeroka tabela (13 kolumn) zamienia się w listę rozwijanych pozycji (`<details>`) — nazwa jachtu i „od … zł / doba", po rozwinięciu wszystkie okresy, kaucja i sprzątanie.

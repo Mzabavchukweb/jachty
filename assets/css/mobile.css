@@ -124,3 +124,19 @@
   .fli__buy{margin-top:14px!important;padding-top:18px!important}
   .foot{padding-top:80px!important}
 }
+
+/* menu mobilne: kolumny nie mogą rozpychać ekranu; na wąskich telefonach mniejszy krój */
+@media(max-width:640px){
+  .mnav__l{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .mnav__l li{min-width:0}
+  .mnav__l a{white-space:normal;overflow-wrap:anywhere;min-height:46px;font-size:1.0625rem}
+  .mnav__cta{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .mnav__cta .btn{min-width:0;white-space:normal;text-align:center;line-height:1.2}
+}
+@media(max-width:380px){
+  .mnav__in{gap:14px!important;padding-top:10px!important}
+  .mnav__l a{font-size:.9375rem;min-height:40px}
+  .mnav__cta .btn{font-size:.8125rem;min-height:44px;padding-inline:6px}
+  .mnav__cta .btn .lucide{display:none}
+  .mnav__meta{font-size:.75rem}
+}

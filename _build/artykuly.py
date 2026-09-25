@@ -10,8 +10,12 @@ LINKS = {
     'antila-34-progresja': 'jachty-zaglowe.html?model=Antila%2034',
 }
 KEEP_INLINE = ('strong', 'b', 'em', 'i', 'a', 'br')
+RESOLVE = None   # ustawiane przez adresy.py
 
 def _link(href, slugs):
+    if RESOLVE:
+        f = RESOLVE(href)
+        return (f, False) if f else (href, not href.startswith('#'))
     m = re.match(r'https?://(?:www\.)?jachtymazury\.pl/?(.*?)/?$', href)
     if not m: return href, True
     path = m.group(1)

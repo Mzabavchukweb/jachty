@@ -1,0 +1,15 @@
+/* nagłówek — na podstronie od razu papierowy */
+.head{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px solid var(--line)}
+.head__bar{display:flex;align-items:center;gap:var(--s4);height:var(--head-h)}
+.head__logo{height:34px;width:auto}
+@media(min-width:1024px){.head__logo{height:42px}}
+.nav{display:flex;align-items:center;gap:var(--s3);margin-left:auto}
+.nav a,.nav button{color:var(--ink);font-weight:500;background:none;border:0;padding:0;display:inline-flex;align-items:center;gap:4px}
+.nav .lucide{width:16px;height:16px}
+.head__lang{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);white-space:nowrap}
+.head__lang [aria-current]{color:var(--deep);font-weight:600}
+.head .btn{min-height:44px}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--ink);background:transparent;color:var(--ink);place-items:center}
+.burger .lucide{width:22px;height:22px}
+@media(max-width:1023px){.nav{display:none}.burger{display:grid}.head__lang{margin-left:auto}.head .btn{display:none}}
+
