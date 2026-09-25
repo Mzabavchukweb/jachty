@@ -4,13 +4,7 @@ Statyczna makieta strony czarteru jachtów z Giżycka (Stanica Wodna Stranda). N
 
 ## Jak obejrzeć
 
-Strony leżą w katalogach, pod tymi samymi adresami co na obecnej jachtymazury.pl (np. `antila-27-furaha/`, `czarter-jachtow-zaglowych/antila-27/`), więc do podglądu potrzebny jest serwer:
-
-```
-python3 -m http.server 8000
-```
-
-i adres http://localhost:8000/. Podgląd online: https://mzabavchukweb.github.io/jachty/
+Otwórz `index.html` w przeglądarce. Wszystko działa z dysku, bez serwera.
 
 ## Struktura
 
@@ -24,8 +18,6 @@ i adres http://localhost:8000/. Podgląd online: https://mzabavchukweb.github.io
 - `assets/img/` — zdjęcia (warianty WebP/AVIF/JPG) i grafiki liniowe (`deco/`)
 - `_build/` — generator podstron i źródła CSS
 - `_a/`, `_u/`, `_p/`, `_img/` — dane źródłowe z obecnej strony (treści, specyfikacje, cennik, zdjęcia)
-- `_seo/` — inwentaryzacja SEO obecnej strony (`obecna-strona.json`: tytuły, opisy, H1–H3, canonical, hreflang, Open Graph, dane strukturalne, alt zdjęć, linki), mapa adresów (`mapa-adresow.csv`) i docelowa mapa strony
-- `_build/seo_crawl.py` — ponowna inwentaryzacja obecnej strony
 
 ## Po zmianach
 

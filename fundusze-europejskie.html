@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fundusze Europejskie — dofinansowanie projektu | Jachty Mazury</title>
+<meta name="description" content="Firma Sebastian Pażyszek uzyskała dotację z Unii Europejskiej na rozwój działalności na terenach przygranicznych. Wartość projektu 737 385,00 zł, wkład Funduszy Europejskich 389 675,00 zł.">
+<link rel="icon" href="assets/img/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/system.css?v=48b54e2b">
+<link rel="stylesheet" href="assets/css/head-dark.css?v=9d6d9206">
+<style>
+/* nagłówek — na podstronie od razu papierowy */
+.head{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px solid var(--line)}
+.head__bar{display:flex;align-items:center;gap:var(--s4);height:var(--head-h)}
+.head__logo{height:34px;width:auto}
+@media(min-width:1024px){.head__logo{height:42px}}
+.nav{display:flex;align-items:center;gap:var(--s3);margin-left:auto}
+.nav a,.nav button{color:var(--ink);font-weight:500;background:none;border:0;padding:0;display:inline-flex;align-items:center;gap:4px}
+.nav .lucide{width:16px;height:16px}
+.head__lang{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);white-space:nowrap}
+.head__lang [aria-current]{color:var(--deep);font-weight:600}
+.head .btn{min-height:44px}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--ink);background:transparent;color:var(--ink);place-items:center}
+.burger .lucide{width:22px;height:22px}
+@media(max-width:1023px){.nav{display:none}.burger{display:grid}.head__lang{margin-left:auto}.head .btn{display:none}}
+
+
+.fe{padding-block:var(--s6) var(--s8)}
+.fe-top{padding-block:var(--s5) var(--s6)}
+.fe-top .fe__ben{color:#fff;margin-top:var(--s5)}
+.fe-top .fe__title{color:#fff;max-width:24ch;overflow-wrap:break-word;hyphens:auto}
+@media(max-width:640px){.fe-top .fe__title{font-size:clamp(1.875rem,8.2vw,2.5rem)}}
+.fe__logos{background:#fff;border:1px solid var(--line);padding:var(--s4) var(--s5);margin-block:0 var(--s6)}
+.fe__logos img{width:100%;max-width:760px;height:auto;margin-inline:auto}
+.fe__ben{font-size:var(--t1);color:var(--ink-80)}
+.fe__title{margin-top:var(--s3)}
+.fe__body{display:grid;gap:var(--s5);margin-top:var(--s6)}
+.fe__body h2{font-family:var(--f-display);font-weight:400;font-size:var(--t3);letter-spacing:-.01em;line-height:1.05;margin-bottom:var(--s2)}
+.fe__body p{max-width:64ch;color:var(--ink-80)}
+.fe__nums{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);margin-top:var(--s7);
+  padding-top:var(--s5);border-top:2px solid var(--ink)}
+.fe__n span{display:block;font-size:var(--t-1);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-80);margin-bottom:var(--s2)}
+.fe__n b{font-family:var(--f-display);font-weight:400;font-size:var(--t5);letter-spacing:-.016em;line-height:1;display:block}
+.fe__tags{margin-top:var(--s6);font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--deep);font-weight:600}
+@media(max-width:640px){.fe__nums{grid-template-columns:1fr;gap:var(--s4)}.fe__logos{padding:var(--s3)}}
+/* pas dofinansowania w stopce — logotypy obowiązkowe, na białym polu */
+.ue{display:flex;align-items:center;gap:var(--s4);flex-wrap:wrap;margin-top:var(--s6);
+  padding-top:var(--s5);border-top:1px solid rgba(252,249,244,.2)}
+.ue__img{display:block;background:#fff;padding:var(--s2) var(--s3);max-width:560px;flex:1 1 320px}
+.ue__img img{width:100%;height:auto}
+.ue__txt{flex:1 1 260px;font-size:var(--t-1);line-height:1.6;color:rgba(252,249,244,.78)}
+@media(max-width:640px){.ue{gap:var(--s3)}}
+
+/* ---------- stopka ---------- */
+.foot{padding-block:var(--s7) var(--s4)}
+.foot__logo{height:38px;width:auto}
+.foot p{color:rgba(252,249,244,.72);max-width:32ch;margin-top:var(--s2)}
+.foot .micro{margin-bottom:var(--s2)}
+.foot__list li{padding:4px 0}
+.foot__list a{color:var(--paper)}
+.foot__bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s2);margin-top:var(--s6);padding-top:var(--s3);border-top:1px solid rgba(252,249,244,.2);
+  font-size:var(--t-1);letter-spacing:.06em;color:rgba(252,249,244,.6)}
+
+
+
+/* Newsreader: małe teksty szeryfowe o pół stopnia grubsze — czytelność przy 18–31 px */
+.legend__v,.fli__name,.fli__pricev,.fgh__n,.mem__n,.mem__ini,.about__facts dd,.war__h,.war__l b,.war__hours b,.tq blockquote p,
+.cmp__name,.cmp__price .cmp__v,.book__price b,.price td.n,.h3,.meas__hd b,.cal__hd b,.mobilebar .amt,.fe__n b,.sim__name,.band__txt{font-weight:500;font-optical-sizing:auto}
+.display,.h1,.h2,.fgh__t,.band__num{font-optical-sizing:auto}
+</style>
+<link rel="stylesheet" href="assets/css/mobile.css?v=56ed7d9e">
+</head>
+<body>
+<a class="skip" href="#main">Przejdź do treści</a>
+
+<header class="head head--dark" id="head">
+  <div class="wrap head__bar">
+    <a href="index.html" aria-label="Jachty Mazury — strona główna"><img class="head__logo head__logo--mono" src="assets/img/logo-mono.png" width="450" height="76" alt="Jachtymazury.pl"><img class="head__logo head__logo--color" src="assets/img/logo.png" width="450" height="76" alt=""></a>
+    <nav class="nav" aria-label="Główne">
+      <div class="has"><button class="nav__b" type="button" aria-expanded="false" aria-controls="m-czarter">Czarter jachtów <i data-lucide="chevron-down" class="lucide"></i></button>
+        <div class="menu" id="m-czarter"><a href="jachty-zaglowe.html">Jachty żaglowe</a><a href="jachty-motorowe.html">Jachty motorowe</a><a href="czarter-bez-patentu.html">Czarter bez patentu</a></div></div>
+      <a class="u" href="jachty-na-sprzedaz.html">Na sprzedaż</a>
+      <a class="u" href="poradnik.html">Poradnik</a>
+      <a class="u" href="cennik.html">Cennik</a>
+      <a class="u" href="port.html">Port</a>
+      <a class="u" href="wspolpraca.html">Współpraca</a>
+      <a class="u" href="kontakt.html">Kontakt</a>
+    </nav>
+    <nav class="head__lang" aria-label="Wybór języka"><a href="#" aria-current="true" lang="pl">PL</a><span aria-hidden="true">·</span><a href="https://jachtymazury.pl/en/" lang="en" hreflang="en" aria-label="English version">EN</a></nav>
+    <a class="btn" href="index.html#rezerwuj">Rezerwuj online</a>
+    <button class="burger" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mnav"><i data-lucide="menu" class="lucide burger__m"></i><i data-lucide="x" class="lucide burger__x"></i></button>
+  </div>
+</header>
+<div class="mnav" id="mnav" hidden>
+  <nav class="mnav__in" aria-label="Menu">
+    <ul class="mnav__l"><li><a href="index.html">Start</a></li><li><a href="jachty-zaglowe.html">Jachty żaglowe</a></li><li><a href="jachty-motorowe.html">Jachty motorowe</a></li><li><a href="czarter-bez-patentu.html">Czarter bez patentu</a></li><li><a href="jachty-na-sprzedaz.html">Na sprzedaż</a></li><li><a href="poradnik.html">Poradnik</a></li><li><a href="cennik.html">Cennik</a></li><li><a href="port.html">Port</a></li><li><a href="wspolpraca.html">Współpraca</a></li><li><a href="kontakt.html">Kontakt</a></li></ul>
+    <div class="mnav__cta">
+      <a class="btn btn--block" href="index.html#rezerwuj">Sprawdź dostępność <i data-lucide="arrow-right" class="lucide"></i></a>
+      <a class="btn btn--outline btn--block" href="tel:+48511420100"><i data-lucide="phone" class="lucide"></i> +48 511 420 100</a>
+      <p class="mnav__meta">Biuro 8:00 – 20:00, siedem dni w tygodniu · <a href="mailto:info@jachtymazury.pl">info@jachtymazury.pl</a></p>
+    </div>
+  </nav>
+</div>
+
+<main id="main">
+  <section class="dtop fe-top">
+    <div class="wrap">
+      <nav aria-label="Okruszki"><ol class="crumbs">
+        <li><a class="u" href="index.html">Start</a></li><li aria-current="page">Fundusze Europejskie</li>
+      </ol></nav>
+
+      <p class="fe__ben">Firma Sebastian Pażyszek uzyskała dotację z Unii Europejskiej na projekt:</p>
+      <h1 class="h1 fe__title">Rozwój działalności firmy Sebastian&nbsp;Pażyszek na terenach przygranicznych w wyniku wprowadzenia nowej usługi</h1>
+    </div>
+  </section>
+
+  <section class="fe">
+    <div class="wrap">
+      <div class="fe__logos">
+        <picture><source type="image/webp" srcset="assets/img/r/ue-logotypy-630.webp 630w, assets/img/r/ue-logotypy-1260.webp 1260w, assets/img/r/ue-logotypy-1890.webp 1890w" sizes="(min-width:768px) 760px, 100vw">
+        <img src="assets/img/r/ue-logotypy-1260.png" srcset="assets/img/r/ue-logotypy-630.png 630w, assets/img/r/ue-logotypy-1260.png 1260w, assets/img/r/ue-logotypy-1890.png 1890w" sizes="(min-width:768px) 760px, 100vw" width="1260" height="115" alt="Fundusze Europejskie dla Warmii i Mazur · Rzeczpospolita Polska · Dofinansowane przez Unię Europejską · Warmia Mazury" fetchpriority="high" decoding="async"></picture>
+      </div>
+
+      <div class="fe__body">
+        <section><h2>Cel projektu</h2>
+          <p>Celem projektu jest rozwój przedsiębiorstwa poprzez inwestycję na terenie przygranicznym. W wyniku realizacji projektu firma wprowadzi do swojej oferty nową usługę, tj. wynajem sprzętu na potrzeby wypraw dla nurków.</p></section>
+        <section><h2>Planowane efekty</h2>
+          <p>Efektem projektu będzie m.in. zniwelowanie zjawiska sezonowości, urozmaicenie pobytu dla potencjalnych klientów oraz zapewnienie możliwości korzystania ze zróżnicowanych atrakcji turystycznych.</p></section>
+      </div>
+
+      <div class="fe__nums num">
+        <p class="fe__n"><span>Wartość całkowita projektu</span><b>737 385,00 zł</b></p>
+        <p class="fe__n"><span>Wkład z Funduszy Europejskich</span><b>389 675,00 zł</b></p>
+      </div>
+
+      <p class="fe__tags">#FunduszeUE&nbsp; #FunduszeEuropejskie</p>
+    </div>
+  </section>
+</main>
+
+<footer class="inkband foot on-dark">
+  <div class="wrap">
+    <div class="g12">
+      <div class="c4"><img class="foot__logo" src="assets/img/logo-mono.png" width="450" height="76" alt="Jachtymazury.pl"><p>Czarter jachtów żaglowych, motorowych i houseboatów ze Stanicy Wodnej Stranda w Giżycku.</p></div>
+      <div class="c3"><span class="micro">Kontakt</span>
+        <ul class="foot__list"><li>Stanica Wodna Stranda</li><li>Pierkunowo 36</li><li class="num">11-500 Giżycko</li><li class="num"><a class="u" href="tel:+48511420100">+48 511 420 100</a></li><li><a class="u" href="mailto:info@jachtymazury.pl">info@jachtymazury.pl</a></li></ul></div>
+      <div class="c3"><span class="micro">Biuro</span><ul class="foot__list"><li class="num">8:00 – 20:00</li><li>siedem dni w tygodniu</li></ul></div>
+      <div class="c2"><span class="micro">Social</span><ul class="foot__list"><li><a class="u" href="https://www.facebook.com/jachtymazury/" rel="noopener" target="_blank">Facebook</a></li><li><a class="u" href="https://www.instagram.com/jachtymazury.pl/" rel="noopener" target="_blank">Instagram</a></li><li><a class="u" href="https://www.youtube.com/channel/UCGulH1SMSyk0Ihr2HQ8rfRA" rel="noopener" target="_blank">YouTube</a></li></ul></div>
+    </div>
+
+    <div class="ue">
+      <a class="ue__img" href="fundusze-europejskie.html" aria-label="Fundusze Europejskie — szczegóły dofinansowania">
+        <picture><source type="image/webp" srcset="assets/img/r/ue-logotypy-630.webp 630w, assets/img/r/ue-logotypy-1260.webp 1260w, assets/img/r/ue-logotypy-1890.webp 1890w" sizes="(min-width:768px) 560px, 100vw">
+        <img src="assets/img/r/ue-logotypy-630.png" srcset="assets/img/r/ue-logotypy-630.png 630w, assets/img/r/ue-logotypy-1260.png 1260w, assets/img/r/ue-logotypy-1890.png 1890w" sizes="(min-width:768px) 560px, 100vw" width="630" height="57" alt="Fundusze Europejskie dla Warmii i Mazur, Rzeczpospolita Polska, Dofinansowane przez Unię Europejską, Warmia Mazury" decoding="async"></picture>
+      </a>
+      <p class="ue__txt">Projekt dofinansowany ze środków Unii Europejskiej. <a class="u u--on" href="fundusze-europejskie.html">Szczegóły dofinansowania →</a></p>
+    </div>
+
+    <div class="foot__bot"><span>© 2026 jachtymazury.pl</span><span class="num">Pierkunowo 36, 11-500 Giżycko</span><span><a class="u" href="fundusze-europejskie.html">Fundusze Europejskie</a> · <a class="u" href="polityka-prywatnosci.html">Polityka prywatności</a></span></div>
+  </div>
+</footer>
+
+<a class="callfab" href="tel:+48511420100" aria-label="Zadzwoń: +48 511 420 100" title="+48 511 420 100">
+  <span class="callfab__ico" aria-hidden="true"><i data-lucide="phone" class="lucide"></i><span class="callfab__fb">✆</span></span>
+</a>
+
+<script src="https://unpkg.com/lucide@latest" defer></script>
+<script>document.documentElement.classList.add('js');function icons(){try{window.lucide&&lucide.createIcons()}catch(e){}}icons();addEventListener('load',icons);</script>
+<script src="assets/js/site.js?v=be51424c" defer></script>
+</body>
+</html>
