@@ -11,3 +11,5 @@ __pycache__/
 # oryginały zdjęć galerii jednostek (warianty są w assets/img/j)
 _img/u/
 _m/
+# materiały od klienta — tylko lokalnie
+Re_ Strona internetowa/
