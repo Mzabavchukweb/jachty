@@ -3,606 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jachty Mazury — czarter jachtów żaglowych i motorowych, Giżycko</title>
-<meta name="description" content="Czarter jachtów żaglowych i motorowych z mariny Stranda w Giżycku. Wybierz termin i sprawdź wolne jednostki online.">
+<title>Czarter jachtów Giżycko — jachty żaglowe i motorowe na Mazurach | Jachty Mazury</title>
+<meta name="description" content="Czarter jachtów żaglowych i motorowych z Giżycka. Stanica Wodna Stranda, flota Antila, Maxus, Nautic, Nexus. Cennik 2027, biuro codziennie 8:00–20:00.">
 <link rel="icon" href="assets/img/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/system.css?v=48b54e2b">
-<style>
-/* ---------- nagłówek ---------- */
-.head{position:fixed;inset:0 0 auto;z-index:60;transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease)}
-.head__bar{display:flex;align-items:center;gap:var(--s4);height:var(--head-h)}
-.head__logo{height:34px;width:auto}
-@media(min-width:1024px){.head__logo{height:42px}}.head__logo--color{display:none}
-.head.solid .head__logo--mono{display:none}.head.solid .head__logo--color{display:block}
-.nav{display:flex;align-items:center;gap:var(--s3);margin-left:auto}
-.nav a,.nav button{color:var(--paper);font-weight:500;font-size:var(--t0);background:none;border:0;padding:0;display:inline-flex;align-items:center;gap:4px}
-.nav .lucide{width:16px;height:16px}
-.head__lang{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:rgba(252,249,244,.75);white-space:nowrap}
-.head__lang [aria-current]{color:var(--paper);font-weight:600}
-.head .btn{min-height:44px}
-.burger{display:none;width:44px;height:44px;border:1px solid rgba(252,249,244,.55);background:transparent;color:var(--paper);place-items:center}
-.burger .lucide{width:22px;height:22px}
-.head.solid{background:var(--paper);border-bottom:1px solid var(--line)}
-.head.solid .nav a,.head.solid .nav button{color:var(--ink)}
-.head.solid .head__lang{color:var(--ink-80)}.head.solid .head__lang [aria-current]{color:var(--deep)}
-.head.solid .burger{border-color:var(--ink);color:var(--ink)}
-.nav a.u:hover{background-size:100% 1px}
-
-/* ---------- hero ---------- */
-.hero{position:relative;height:96svh;min-height:680px;max-height:1040px;display:flex;align-items:flex-end;color:var(--paper);overflow:hidden}
-.hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%}
-.hero__scrim{position:absolute;inset:0;background:
-  linear-gradient(180deg,rgba(48,64,68,.34) 0,transparent 32%,transparent 46%,rgba(48,64,68,.86) 100%),
-  linear-gradient(90deg,rgba(48,64,68,.66),rgba(48,64,68,.18) 50%,transparent 68%)}
-.hero__in{position:relative;z-index:2;width:100%;padding-bottom:var(--s7)}
-.hero__eyebrow{color:rgba(252,249,244,.82);margin-bottom:var(--s3)}
-html.js .hero__in>*{opacity:0;transform:translateY(var(--shift));animation:rise var(--dur-in) var(--ease-in) forwards}
-html.js .hero__in>*:nth-child(1){animation-delay:80ms}html.js .hero__in>*:nth-child(2){animation-delay:180ms}
-html.js .hero__in>*:nth-child(3){animation-delay:280ms}html.js .hero__in>*:nth-child(4){animation-delay:380ms}
-html.js .hero__in>*:nth-child(5){animation-delay:470ms}
-@keyframes rise{to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){html.js .hero__in>*{opacity:1;transform:none;animation:none}}
-.hero .display{color:var(--paper);max-width:12ch}
-.hero__lead{color:rgba(252,249,244,.9);font-size:var(--t1);line-height:1.5;max-width:46ch;margin:var(--s4) 0 var(--s5)}
-.hero__cta{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4);align-items:center}
-.hero__coords{position:absolute;right:var(--edge);bottom:var(--s7);z-index:2;writing-mode:vertical-rl;color:rgba(252,249,244,.78);
-  font-size:var(--t-1);letter-spacing:.26em;text-transform:uppercase}
-.hero__coords::before{content:"";display:inline-block;width:1px;height:48px;background:rgba(252,249,244,.5);margin-bottom:var(--s2);vertical-align:middle}
-@media(max-width:1023px){.hero__coords{display:none}}
-@media(max-width:767px){.hero__scrim{background:linear-gradient(180deg,rgba(48,64,68,.45) 0,rgba(48,64,68,.35) 30%,rgba(48,64,68,.78) 58%,rgba(48,64,68,.92) 100%)}
-  .hero{min-height:620px}.hero__in{padding-bottom:var(--s6)}.hero .display{max-width:none}.hero__img{object-position:22% 45%}
-  .hero__cta .btn{width:100%;white-space:normal;text-align:center;min-height:56px}}
-
-/* pasek danych pod hero */
-.legend{border-bottom:1px solid var(--line);background:var(--paper)}
-.legend__row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap)}
-.legend__i{padding:var(--s5) var(--s3) var(--s5) 0;border-left:1px solid var(--line);padding-left:var(--s4)}
-.legend__i:first-child{border-left:0;padding-left:0}
-.legend__k{display:block;font-size:var(--t-1);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-80);margin-bottom:10px}
-.legend__v{display:block;font-family:var(--f-display);font-weight:400;font-size:var(--t2);
-  line-height:1.05;letter-spacing:-.01em;color:var(--ink)}
-.legend__s{display:block;font-size:var(--t-1);color:var(--ink-80);margin-top:8px;line-height:1.45}
-@media(max-width:900px){.legend__row{grid-template-columns:1fr 1fr;row-gap:0}
-  .legend__i{padding-block:var(--s4)}
-  .legend__i:nth-child(odd){border-left:0;padding-left:0}
-  .legend__i:nth-child(n+3){border-top:1px solid var(--line)}}
-@media(max-width:480px){.legend__row{grid-template-columns:1fr}
-  .legend__i{border-left:0;padding-left:0;border-top:1px solid var(--line)}
-  .legend__i:first-child{border-top:0}}
-
-/* wyszukiwarka w hero */
-.srch{margin-top:var(--s5);max-width:660px;background:var(--paper);color:var(--ink);display:grid;grid-template-columns:1fr 1fr auto}
-.srch__f{display:grid;gap:2px;padding:var(--s2) var(--s3);border-right:1px solid var(--line);min-width:0}
-.srch__f label{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);font-weight:500}
-.srch__f input{border:0;background:none;font-family:var(--f-display);font-size:var(--t1);line-height:1.25;color:var(--ink);padding:0;width:100%;min-width:0}
-.srch__f input::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
-.srch__f:focus-within{background:var(--sand)}
-.srch__f input:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
-.srch .btn{padding-inline:var(--s4)}
-.srch.has-error .srch__f--bad{box-shadow:inset 0 -2px 0 var(--ink)}
-.srch__hint{margin-top:var(--s2);font-size:var(--t-1);color:rgba(252,249,244,.78);letter-spacing:.02em}
-@media(max-width:640px){.srch{grid-template-columns:1fr 1fr}.srch__f:nth-of-type(2){border-right:0}.srch .btn{grid-column:1/-1;min-height:56px}}
-
-/* hero: jedno działanie */
-.btn--lg{min-height:60px;padding-inline:var(--s5);font-size:var(--t1)}
-.hero__note{margin-top:var(--s3);font-size:var(--t-1);letter-spacing:.06em;color:rgba(252,249,244,.8)}
-@media(max-width:640px){.btn--lg{width:100%;white-space:normal;text-align:center;min-height:64px;font-size:var(--t0)}}
-
-/* kalendarz — makieta gniazda na HTML dostawcy */
-.cal{border:1px solid var(--line-strong);background:var(--paper)}
-.cal__hd{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;
-  border-bottom:1px solid var(--line);padding:6px}
-.cal__hd b{text-align:center;font-family:var(--f-display);font-weight:400;font-size:var(--t2);letter-spacing:-.01em}
-.cal__nav{width:44px;height:44px;display:grid;place-items:center;background:none;border:0;color:var(--ink)}
-.cal__nav:hover{background:var(--sand)}
-.cal__nav .lucide{width:18px;height:18px}
-.cal__dow{display:grid;grid-template-columns:repeat(7,1fr);padding:10px 6px 4px;
-  font-size:var(--t-1);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-80);text-align:center}
-.cal__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:0 6px 10px}
-.cal__d{aspect-ratio:1;min-height:40px;border:1px solid transparent;background:none;
-  font-variant-numeric:tabular-nums;font-size:var(--t0);color:var(--ink);display:grid;place-items:center}
-.cal__d:hover:not(:disabled){border-color:var(--ink)}
-.cal__d:disabled{color:var(--ink-80);opacity:.35;text-decoration:line-through;cursor:not-allowed}
-.cal__d.is-in{background:var(--sand)}
-.cal__d.is-start,.cal__d.is-end{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.cal__d.is-empty{visibility:hidden}
-.cal__sel{font-size:var(--t-1);color:var(--ink-80);letter-spacing:.04em;line-height:1.5}
-.cal__sel b{color:var(--ink);font-weight:500}
-
-/* pasek wybranego terminu */
-.termbar{position:sticky;top:var(--head-h);z-index:55;background:var(--ink);color:var(--paper)}
-.termbar__in{display:flex;align-items:center;gap:var(--s2) var(--s4);flex-wrap:wrap;padding-block:12px;font-size:var(--t-1);letter-spacing:.08em;text-transform:uppercase}
-.termbar__d{font-weight:600}
-.termbar__c{color:rgba(252,249,244,.75)}
-.termbar__edit{margin-left:auto;color:var(--paper);background:none;border:0;padding:0;font-size:var(--t-1);letter-spacing:.08em;text-transform:uppercase;
-  background-image:linear-gradient(currentColor,currentColor);background-size:100% 1px;background-repeat:no-repeat;background-position:0 100%}
-.termbar__edit:hover{background-size:0 1px;background-position:100% 100%}
-
-/* status floty */
-.fleet__status{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);flex-wrap:wrap;margin-bottom:var(--s5)}
-.fleet__status__t{font-size:var(--t1)}
-.fleet__status b{font-weight:500}
-.fleet__status button{background:none;border:0;padding:0;font:inherit;color:var(--ink);font-weight:500}
-.fleet__status .u{color:var(--ink);font-weight:500}
-.state__act{display:flex;gap:var(--s2);flex-wrap:wrap}
-
-/* stan pozycji floty */
-.fli.is-busy{display:none}
-.fl.show-busy .fli.is-busy{opacity:.55}
-.fl.show-busy .fli.is-busy .fli__ph img{filter:grayscale(1)}
-.fli__st{display:none;font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;font-weight:600}
-.fli.is-busy .fli__st,.fli.is-ask .fli__st{display:inline}
-.fli.is-busy .fli__st{color:var(--ink-80)}
-.fli.is-ask .fli__st{color:var(--deep)}
-.fleet__grp.is-empty{display:none}
-
-/* ---------- flota — rejestr: zdjęcie po lewej, dane po prawej; działy jeden pod drugim ----------
-   Ostrość: kadr ~300 × 330 px wypełniany z oryginału 800 × 600 (sizes deklaruje 440 px, żeby na ekranie 2×
-   przeglądarka wzięła pełny oryginał). Powiększenie ≤ 1,1×, czyli niewidoczne. */
-.fleet{padding-bottom:var(--s7)}
-.fleet__grp+.fleet__grp{margin-top:var(--s7)}
-.fleet__grp--sand{background:var(--sand);margin-inline:calc(-1*var(--edge));padding:var(--s6) var(--edge) var(--s5)}
-.fgh{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s3) var(--s5);flex-wrap:wrap;
-  padding-bottom:var(--s3);border-bottom:2px solid var(--ink)}
-.fgh__l{display:grid;gap:8px;min-width:0}
-.fgh__t{font-family:var(--f-display);font-weight:400;font-size:var(--t4);line-height:1;letter-spacing:-.012em}
-.fgh__s{color:var(--ink-80)}
-.fgh__r{display:flex;align-items:flex-end;gap:var(--s5)}
-.fgh__n{display:grid;font-family:var(--f-display);font-size:var(--t5);line-height:.85;letter-spacing:-.016em}
-.fgh__n small{font-family:var(--f-sans);font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);margin-top:8px}
-.fgh__a{color:var(--ink);font-weight:500;white-space:nowrap;padding-bottom:4px}
-
-.fl{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--s6);margin-top:var(--s2)}
-.fli{display:grid;grid-template-columns:310px minmax(0,1fr);column-gap:var(--s4);
-  padding-block:var(--s4);border-bottom:1px solid var(--line);align-items:stretch}
-.fleet__grp--sand .fli{border-bottom-color:rgba(48,64,68,.18)}
-.fli__ph{display:block;position:relative;overflow:hidden;background:var(--sand);min-width:0;min-height:280px;align-self:stretch}
-.fli__ph picture{display:block;width:100%;height:100%}
-.fli__ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.fli__body{display:flex;flex-direction:column;min-width:0}
-.fli__tag{display:none;font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);margin-bottom:6px}
-.fli.is-busy .fli__tag,.fli.is-ask .fli__tag{display:block}
-.fli__name{font-family:var(--f-display);font-weight:400;font-size:var(--t3);line-height:1;letter-spacing:-.012em}
-.fli__name a{color:var(--ink)}
-.fli__spec{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2) var(--s3);
-  margin-top:var(--s2);padding-top:var(--s2);border-top:1px solid var(--line)}
-.fleet__grp--sand .fli__spec,.fleet__grp--sand .meas{border-top-color:rgba(48,64,68,.18)}
-.fli__spec>div{display:grid;grid-template-columns:auto 1fr;column-gap:10px;row-gap:3px;align-items:center;min-width:0;align-content:start}
-.fli__spec dt{grid-column:1/-1}
-.fli__spec dt{font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80)}
-.fli__spec dd{font-weight:600;font-size:1.125rem;line-height:1.2;color:var(--ink);white-space:nowrap}
-.fli__spec dd:last-child{grid-column:1/-1}
-/* koje — pełne znaczniki w cenie, puste to miejsca dostawiane */
-.berth{display:flex;gap:3px;height:10px}
-.berth i{width:5px;height:10px;background:var(--ink);display:block}
-.berth i.x{background:transparent;box-shadow:inset 0 0 0 1px var(--sage)}
-/* skala długości — podziałka co metr do 11 m */
-.meas{margin-top:var(--s2);padding-top:var(--s2);border-top:1px solid var(--line)}
-.meas__hd{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s2);
-  font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80);margin-bottom:8px}
-.meas__hd b{font-family:var(--f-sans);font-weight:600;font-size:var(--t1);letter-spacing:0;text-transform:none;color:var(--ink)}
-.meas__t{position:relative;height:10px}
-.meas__t::before{content:"";position:absolute;inset:auto 0 0 0;height:7px;
-  background-image:repeating-linear-gradient(90deg,var(--sage) 0 1px,transparent 1px 9.0909%)}
-.meas__b{position:absolute;left:0;bottom:0;height:4px;background:var(--ink)}
-/* cena i akcja — jeden wiersz na dole kolumny */
-.fli__buy{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s2);
-  margin-top:auto;padding-top:var(--s2);border-top:1px solid var(--line)}
-.meas+.fli__buy{margin-top:var(--s2)}
-.fleet__grp--sand .fli__buy{border-top-color:rgba(48,64,68,.18)}
-.fli__price{display:grid;gap:2px;min-width:0}
-.fli__k{font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80)}
-.fli__pricev{font-family:var(--f-display);font-weight:400;font-size:var(--t3);letter-spacing:-.012em;line-height:1;color:var(--ink)}
-.fli__pricev .per{font-family:var(--f-sans);font-size:var(--t-1);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-80)}
-.fli__total{display:none}
-.fli__total.is-on{display:block;font-family:var(--f-sans);font-size:var(--t-1);letter-spacing:.04em;color:var(--ink-80);margin-top:6px}
-.fli__act{flex:none}
-.fli__act .btn{min-height:48px;min-width:132px}
-.fli__name a{background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size var(--dur) var(--ease)}
-.fli__name a:hover{background-size:100% 1px}
-.fli__cta{color:var(--ink);font-weight:500;white-space:nowrap}
-/* kaskada pozycji — sterowana przez rodzica */
-html.js .fleet__grp.reveal .fli{opacity:0;transform:translateY(var(--shift));
-  transition:opacity var(--dur-in) var(--ease-in) var(--d,0ms),transform var(--dur-in) var(--ease-in) var(--d,0ms)}
-html.js .fleet__grp.reveal.in .fli{opacity:1;transform:none}
-.fl .fli:nth-child(2){--d:90ms}.fl .fli:nth-child(3){--d:180ms}.fl .fli:nth-child(4){--d:270ms}
-.fl.show-busy .fli.is-busy{display:grid}
-
-@media(max-width:1199px){.fl{grid-template-columns:1fr;column-gap:0}}
-@media(max-width:640px){
-  .fgh{align-items:flex-start;flex-direction:column;gap:var(--s3)}
-  .fgh__t{font-size:var(--t3)}
-  .fgh__r{width:100%;justify-content:space-between;align-items:flex-end}
-  .fgh__n{font-size:var(--t4)}
-  .fli{grid-template-columns:1fr;row-gap:var(--s3);padding-block:var(--s4)}
-  .fli__ph{aspect-ratio:4/3;min-height:0}
-  .fli__act .btn{min-height:52px;min-width:150px}
-  .fli__pricev{font-size:var(--t4)}
-}
-
-/* o nas — prowadzą zdjęcia */
-.about__top{align-items:start;row-gap:var(--s6)}
-.about__t{display:grid;align-content:start}
-.about__lead{font-size:var(--t1);line-height:1.5;margin-top:var(--s3);color:var(--ink)}
-.about__txt{display:grid;gap:var(--s3);color:var(--ink-80);margin-top:var(--s4)}
-.about__txt p{max-width:46ch}
-.about__facts{display:grid;grid-template-columns:repeat(3,auto);gap:var(--s5);justify-content:start;
-  margin-top:var(--s5);padding-top:var(--s4);border-top:1px solid var(--line)}
-.about__facts dt{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);margin-bottom:6px}
-.about__facts dd{font-family:var(--f-display);font-weight:400;font-size:var(--t3);letter-spacing:-.01em;line-height:1}
-.about__ph{display:grid;gap:var(--s3);min-width:0}
-.about__ph1{position:relative;min-width:0}
-.about__ph1 picture{display:block;aspect-ratio:16/10;overflow:hidden}
-.about__ph1 img{width:100%;height:100%;object-fit:cover}
-.about__cap{margin-top:10px;font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80)}
-.about__ph2{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
-.about__ph2 figure{min-width:0}
-.about__ph2 picture{display:block;aspect-ratio:4/3;overflow:hidden}
-.about__ph2 img{width:100%;height:100%;object-fit:cover}
-@media(max-width:900px){.about__facts{gap:var(--s4)}.about__txt p{max-width:none}}
-@media(max-width:560px){.about__facts{grid-template-columns:1fr 1fr;gap:var(--s3) var(--s4)}}
-
-
-/* ---------- zespół — każda osoba osobno; monogram, bo zdjęć zespołu klient nie ma ---------- */
-.team-sec{background:var(--sand);padding-block:var(--s8)}
-.team__top{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:var(--s3);margin-bottom:var(--s6)}
-.team__top .h2{margin-top:var(--s2)}
-.team__meta{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);text-align:right;line-height:1.7}
-.team__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
-.mem{display:grid;align-content:start;min-width:0}
-.mem__ini{display:grid;place-items:center;aspect-ratio:4/5;width:100%;font-family:var(--f-display);
-  font-size:clamp(4.5rem,8vw,8rem);line-height:1;letter-spacing:-.02em}
-.mem--ink .mem__ini{background:var(--ink);color:var(--sand)}
-.mem--deep .mem__ini{background:var(--deep);color:var(--paper)}
-.mem--sage .mem__ini{background:var(--sage);color:var(--paper)}
-.mem--paper .mem__ini{background:var(--paper);color:var(--ink)}
-.mem__n{font-family:var(--f-display);font-weight:400;font-size:var(--t3);line-height:1.05;letter-spacing:-.01em;
-  margin-top:var(--s3);padding-top:var(--s2);border-top:2px solid var(--ink)}
-.mem__r{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);font-weight:600;margin-top:8px}
-.team__q{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);margin-top:var(--s6)}
-.tq{margin:0;padding-top:var(--s3);border-top:1px solid rgba(48,64,68,.22)}
-.tq--wide{grid-column:span 3}
-.tq__k{font-size:var(--t-1);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-80);margin-bottom:var(--s2)}
-.tq blockquote{margin:0}
-.tq blockquote p{font-family:var(--f-display);font-size:var(--t2);line-height:1.2;letter-spacing:-.006em;color:var(--ink);text-wrap:pretty}
-.tq--wide blockquote p{font-size:var(--t3);max-width:34ch}
-.tq__by{margin-top:var(--s2);font-size:var(--t-1);letter-spacing:.04em;color:var(--ink-80)}
-@media(max-width:900px){.team__grid{grid-template-columns:1fr 1fr;row-gap:var(--s5)}
-  .team__q{grid-template-columns:1fr;gap:var(--s4)}.tq--wide{grid-column:auto}}
-@media(max-width:560px){.team-sec{padding-block:var(--s7)}
-  .team__top{grid-template-columns:1fr;margin-bottom:var(--s5)}.team__meta{text-align:left}
-  .team__grid{gap:var(--s4) var(--s3)}
-  .mem__ini{font-size:4.5rem}.mem__n{font-size:var(--t2)}
-  .tq--wide blockquote p{font-size:var(--t2)}}
-
-/* ---------- pas ink: jedno zdanie, jedna liczba ---------- */
-.band{padding-block:var(--s8)}
-.band__num{font-family:var(--f-display);font-size:clamp(6rem,16vw,14rem);line-height:.85;letter-spacing:-.02em;color:var(--wave)}
-.band__num small{display:block;font-family:var(--f-sans);font-size:var(--t-1);letter-spacing:.16em;text-transform:uppercase;color:rgba(252,249,244,.72);margin-top:var(--s2)}
-.band__txt{font-family:var(--f-display);font-size:var(--t5);line-height:1.02;letter-spacing:-.01em;color:var(--sand);align-self:end}
-.band__txt b{font-weight:400;color:var(--paper)}
-@media(max-width:767px){.band__txt{font-size:var(--t4)}}
-
-/* ---------- opinie — widget Google (TrustIndex); barwy Google i złoto gwiazdek to kolory widgetu, nie palety ---------- */
-.reviews{background:#fff;border-block:1px solid var(--line)}
-.ti__title{text-align:center;margin-bottom:var(--s7)}
-.ti{display:grid;grid-template-columns:260px minmax(0,1fr);gap:var(--s6);align-items:center}
-.ti__sum{text-align:center;display:grid;justify-items:center;gap:var(--s3)}
-.ti__grade{font-family:var(--f-sans);font-weight:700;font-size:var(--t3);letter-spacing:.02em;text-transform:uppercase;color:#1b1b1b;line-height:1}
-
-.ti__count{color:#3c3c3c;font-size:var(--t0);line-height:1.5;max-width:22ch}
-.glogo{display:inline-flex;font-family:var(--f-sans);font-weight:500;font-size:2.4rem;line-height:1;letter-spacing:-.02em;margin-top:2px}
-.glogo i{font-style:normal}.glogo i:nth-child(1),.glogo i:nth-child(4){color:#4285F4}.glogo i:nth-child(2),.glogo i:nth-child(6){color:#EA4335}.glogo i:nth-child(3){color:#FBBC05}.glogo i:nth-child(5){color:#34A853}
-.ti__car{position:relative;min-width:0}
-.ti__track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 2*var(--s3))/3);gap:var(--s3);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 2px 10px}
-.ti__track::-webkit-scrollbar{display:none}
-.ti__card{scroll-snap-align:start;background:#fff;border:1px solid #ececec;border-radius:16px;padding:var(--s3);min-height:260px;display:grid;grid-template-rows:auto auto 1fr auto;gap:var(--s2);box-shadow:0 1px 3px rgba(0,0,0,.06);color:#1b1b1b}
-.ti__head{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center}
-.ti__av{position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:600;font-size:var(--t1)}
-.ti__who{min-width:0;display:grid;line-height:1.3}
-.ti__who b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:var(--t0)}
-.ti__who span{color:#6b6b6b;font-size:.9375rem}
-.ti__stars{color:#fbbc04;font-size:1.25rem;letter-spacing:2px;line-height:1;font-family:system-ui,"Segoe UI Symbol",sans-serif}
-.ti__txt{font-size:var(--t0);line-height:1.55;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
-.ti__more{justify-self:start;background:none;border:0;padding:0;color:#7a7a7a;font-size:.9375rem}
-.ti__more:hover{color:#1b1b1b}
-.ti__nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid #e3e3e3;box-shadow:0 2px 8px rgba(0,0,0,.08);display:grid;place-items:center;color:#1b1b1b}
-.ti__nav .lucide{width:20px;height:20px}
-.ti__nav--next{right:-22px}.ti__nav--prev{left:-22px}
-.ti__nav:disabled{opacity:0;pointer-events:none}
-@media(max-width:1023px){.ti{grid-template-columns:1fr;gap:var(--s4)}.ti__track{grid-auto-columns:calc((100% - var(--s3))/2)}.ti__nav--next{right:8px}.ti__nav--prev{left:8px}}
-@media(max-width:640px){.ti__track{grid-auto-columns:86%}}
-
-/* ---------- port ---------- */
-.port__ph{aspect-ratio:3/2;overflow:hidden;background:var(--sand)}
-.port__ph img{width:100%;height:100%;object-fit:cover}
-.port__data{align-self:center}
-.port__data .coords{display:block;margin-bottom:var(--s2)}
-.dl{border-top:1px solid var(--line);margin-top:var(--s4)}
-.dl div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:var(--s2);padding:var(--s2) 0;border-bottom:1px solid var(--line)}
-.dl dt{font-size:var(--t-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-80);padding-top:4px}
-.dl dd{font-weight:500}
-.dl dd a{color:var(--ink)}
-
-/* ---------- wiedza ---------- */
-.guide__ph{aspect-ratio:3/2;overflow:hidden;background:var(--sand);margin-bottom:var(--s3)}
-.guide__ph img{width:100%;height:100%;object-fit:cover}
-.guide .h3{margin-top:var(--s1);max-width:none}
-.guide p{margin-top:var(--s2);max-width:56ch;color:var(--ink-80)}
-.vids{border-top:1px solid var(--line-strong)}
-.vids li{display:grid;grid-template-columns:40px 1fr auto;gap:var(--s2);align-items:center;padding:var(--s2) 0;border-bottom:1px solid var(--line)}
-.vids .play{width:40px;height:40px;background:var(--ink);color:var(--paper);display:grid;place-items:center}
-.vids .play .lucide{width:16px;height:16px}
-.vids a{color:var(--ink);font-weight:500}
-.vids time{font-size:var(--t-1);color:var(--ink-80);letter-spacing:.08em}
-.vids__head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--s2)}
-.wiedza__l{display:grid;gap:var(--s3);align-content:start}.wiedza__l .vids__head{margin-top:var(--s2)}
-
-/* pas dofinansowania w stopce — logotypy obowiązkowe, na białym polu */
-.ue{display:flex;align-items:center;gap:var(--s4);flex-wrap:wrap;margin-top:var(--s6);
-  padding-top:var(--s5);border-top:1px solid rgba(252,249,244,.2)}
-.ue__img{display:block;background:#fff;padding:var(--s2) var(--s3);max-width:560px;flex:1 1 320px}
-.ue__img img{width:100%;height:auto}
-.ue__txt{flex:1 1 260px;font-size:var(--t-1);line-height:1.6;color:rgba(252,249,244,.78)}
-@media(max-width:640px){.ue{gap:var(--s3)}}
-
-/* warunki czarteru — dane z cennika */
-.war{row-gap:var(--s6)}
-.war__h{font-family:var(--f-display);font-weight:400;font-size:var(--t3);letter-spacing:-.01em;
-  padding-bottom:var(--s2);border-bottom:2px solid var(--ink);margin-bottom:var(--s3)}
-.war__l{display:grid;gap:0}
-.war__l li{padding:12px 0;border-bottom:1px solid var(--line);line-height:1.45}
-.war__l b{font-family:var(--f-display);font-weight:400;font-size:var(--t2);letter-spacing:-.01em;margin-right:8px}
-.war__d>div{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s2);
-  padding:12px 0;border-bottom:1px solid var(--line)}
-.war__d dt{color:var(--ink-80)}
-.war__d dd{font-weight:500;white-space:nowrap}
-.war__hours{display:flex;flex-wrap:wrap;gap:var(--s5);align-items:flex-end;
-  margin-top:var(--s6);padding-top:var(--s4);border-top:1px solid var(--line)}
-.war__hours b{display:block;font-family:var(--f-display);font-weight:400;font-size:var(--t3);letter-spacing:-.01em;margin-top:6px}
-.war__note{margin-left:auto;font-size:var(--t-1);color:var(--ink-80);max-width:28ch}
-@media(max-width:640px){.war__hours{gap:var(--s3) var(--s5)}.war__note{margin-left:0;flex:1 1 100%}}
-
-/* ---------- stopka ---------- */
-.foot{padding-block:var(--s7) var(--s4)}
-.foot__logo{height:38px;width:auto}
-.foot p{color:rgba(252,249,244,.72);max-width:32ch;margin-top:var(--s2)}
-.foot .micro{margin-bottom:var(--s2)}
-.foot__list li{padding:4px 0}
-.foot__list a{color:var(--paper)}
-.foot__bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s2);margin-top:var(--s6);padding-top:var(--s3);border-top:1px solid rgba(252,249,244,.2);
-  font-size:var(--t-1);letter-spacing:.06em;color:rgba(252,249,244,.6)}
-
-/* ---------- modal: wynik/stany ---------- */
-.result{margin-top:var(--s2)}
-.result .skeleton--line{height:14px}
-
-@media(max-width:1023px){.nav{display:none}.burger{display:grid;margin-left:auto}.head__lang{margin-left:auto}.head .btn{display:none}}
-
-/* ================= MOBILE — lekko i czytelnie ================= */
-@media(max-width:640px){
-  /* hero */
-  .hero__in{padding-bottom:var(--s5)}
-  .hero .display{font-size:3.4rem}
-  .hero__lead{font-size:1.0625rem;margin:var(--s3) 0 var(--s4)}
-  .hero__note{margin-top:var(--s2)}
-  /* pasek danych: 2 × 2, bez podpisów-drugich-linii poza najważniejszymi */
-  .legend__row{grid-template-columns:1fr 1fr!important}
-  .legend__i{padding:var(--s3) 0 var(--s3) var(--s2)!important;border-left:1px solid var(--line)!important;border-top:0!important}
-  .legend__i:nth-child(odd){border-left:0!important;padding-left:0!important}
-  .legend__i:nth-child(n+3){border-top:1px solid var(--line)!important}
-  .legend__k{margin-bottom:6px}
-  .legend__v{font-size:1.25rem}
-  .legend__s{font-size:.75rem;margin-top:4px}
-  /* flota: mniej linii, więcej powietrza */
-  .fleet{padding-bottom:var(--s6)}
-  .fleet__grp+.fleet__grp{margin-top:var(--s6)}
-  .fleet__grp--sand{padding-block:var(--s5) var(--s3)}
-  .fgh{padding-bottom:var(--s2);border-bottom-width:1px}
-  .fgh__t{font-size:1.875rem}
-  .fgh__n{font-size:var(--t3)}
-  .fli{padding-block:var(--s4) var(--s5);border-bottom:0;row-gap:var(--s2)}
-  .fli+.fli{border-top:1px solid var(--line)}
-  .fleet__grp--sand .fli+.fli{border-top-color:rgba(48,64,68,.18)}
-  .fli__spec{border-top:0;padding-top:0;margin-top:var(--s2);row-gap:var(--s2)}
-  .meas{border-top:0;padding-top:0;margin-top:var(--s2)}
-  .meas__t{display:none}
-  .meas__hd{margin-bottom:0}
-  .fli__buy{margin-top:var(--s3);padding-top:var(--s3)}
-  /* o nas */
-  .about__top{row-gap:var(--s5)}
-  .about__lead{font-size:1.125rem}
-  .about__txt{margin-top:var(--s3);font-size:.9375rem}
-  .about__facts{margin-top:var(--s4);padding-top:var(--s3)}
-  .about__facts dd{font-size:1.5rem}
-  .about__ph2{gap:var(--s2)}
-  /* zespół */
-  .team-sec{padding-block:var(--s6)}
-  .team__top{margin-bottom:var(--s4)}
-  .mem__ini{aspect-ratio:1/1;font-size:3.5rem}
-  .mem__n{font-size:1.375rem;margin-top:var(--s2)}
-  .team__q{margin-top:var(--s5);gap:var(--s4)}
-  .tq blockquote p,.tq--wide blockquote p{font-size:1.3125rem;line-height:1.25}
-  /* pas ink */
-  .band{padding-block:var(--s6)}
-  .band__num{font-size:5.5rem}
-  .band__txt{font-size:1.875rem}
-  /* opinie */
-  .ti__title{margin-bottom:var(--s4)}
-  .ti{gap:var(--s4)}
-  .ti__sum{gap:var(--s2)}
-  .glogo{font-size:2rem}
-  /* port */
-  .port__data .h2{margin-top:var(--s1)}
-  .dl{margin-top:var(--s3)}
-  .dl div{padding:12px 0}
-  /* warunki */
-  .war{row-gap:var(--s5)}
-  .war__h{font-size:1.5rem;border-bottom-width:1px;margin-bottom:var(--s1)}
-  .war__l li,.war__d>div{padding:10px 0;font-size:.9375rem}
-  .war__l b{font-size:1.25rem}
-  .war__hours{margin-top:var(--s5);gap:var(--s3) var(--s4)}
-  .war__hours b{font-size:1.5rem}
-  .war__note{flex:1 1 100%!important;margin-left:0!important;max-width:none!important}
-  /* zdjęcia od krawędzi do krawędzi — symetrycznie */
-  .bleed-l,.bleed-r,.port__ph{margin-inline:calc(-1*var(--gutter))!important}
-  .about__ph1{margin-inline:0!important}
-  .about__cap{padding-inline:var(--gutter)}
-  .about__ph2{margin-inline:0}
-  /* licznik jednostek w jednej linii */
-  .fgh__n{display:flex;align-items:baseline;gap:8px}
-  .fgh__n small{margin-top:0}
-}
-
-.fli__pricev{white-space:nowrap;font-size:1.75rem}
-.fli__buy{flex-wrap:nowrap}
-@media(max-width:640px){.fli__pricev{font-size:2.125rem}.mem__n{font-size:1.25rem}}
-
-/* skala długości — podpisane metry, znacznik wartości */
-.meas__t{position:relative;height:8px;background:rgba(113,132,111,.2)}
-.meas__t::before{content:none!important}
-.meas__b{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
-.meas__b::after{content:"";position:absolute;right:-1px;top:-5px;bottom:-5px;width:2px;background:var(--ink)}
-.meas__sc{position:relative;height:22px;margin-top:4px;font-size:.6875rem;color:var(--ink-80);font-variant-numeric:tabular-nums}
-.meas__sc i{position:absolute;top:0;font-style:normal;transform:translateX(-50%);padding-top:7px;white-space:nowrap}
-.meas__sc i::before{content:"";position:absolute;left:50%;top:0;width:1px;height:5px;background:var(--sage)}
-.meas__sc i:first-child{transform:none}.meas__sc i:first-child::before{left:0}
-.meas__sc i:last-child{transform:translateX(-100%)}.meas__sc i:last-child::before{left:auto;right:0}
-/* cena w jednym wierszu, pod nią dwa przyciski: Zobacz · Rezerwuj */
-.fli__buy{display:grid!important;grid-template-columns:minmax(0,1fr);justify-content:stretch!important;align-items:stretch!important;gap:var(--s2)}
-.fli__price{display:flex!important;align-items:baseline;gap:10px;flex-wrap:wrap}
-.fli__act{display:grid!important;grid-template-columns:1fr 1fr;gap:8px}
-.fli__act .btn{min-width:0!important;width:100%;min-height:44px}
-.fli__act .btn--outline{background:transparent;color:var(--ink)}
-.fli__act .btn--outline:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-@media(max-width:640px){.meas__t{display:block!important}.meas__hd{margin-bottom:8px!important}.fli__act .btn{min-height:50px}}
-
-/* „ponad 10 lat” — zakreślenie piaskiem + pogrubienie */
-.hl{font-weight:600;color:var(--deep);background:linear-gradient(transparent 58%,rgba(62,154,179,.26) 58%,rgba(62,154,179,.26) 94%,transparent 94%);padding:0 .14em;margin:0 -.05em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-/* hero: tekst ma odcinać się od zdjęcia */
-.hero__eyebrow{color:rgba(252,249,244,.96)!important}
-.hero__lead{color:#fff!important}
-.hero__eyebrow,.hero .display,.hero__lead,.hero__note{text-shadow:0 1px 2px rgba(20,30,34,.6),0 2px 10px rgba(20,30,34,.45),0 6px 36px rgba(20,30,34,.4)}
-.hero__scrim{background:
-  linear-gradient(180deg,rgba(30,42,46,.4) 0,transparent 28%,transparent 42%,rgba(30,42,46,.88) 100%),
-  linear-gradient(90deg,rgba(30,42,46,.8) 0,rgba(30,42,46,.55) 38%,rgba(30,42,46,.15) 62%,transparent 78%)!important}
-@media(max-width:767px){.hero__scrim{background:linear-gradient(180deg,rgba(30,42,46,.5) 0,rgba(30,42,46,.45) 30%,rgba(30,42,46,.82) 55%,rgba(30,42,46,.94) 100%)!important}}
-
-/* gwiazdki Google — warstwa złota przycinana do oceny (--r), pod nią szare */
-.gstars{position:relative;display:inline-block;font-family:system-ui,"Segoe UI Symbol",sans-serif;color:rgba(255,255,255,.35);
-  letter-spacing:2px;line-height:1;font-size:1.125rem;white-space:nowrap}
-.gstars__on{position:absolute;inset:0 auto 0 0;width:var(--r,100%);overflow:hidden;color:#fbbc04}
-.gstars--lg{font-size:1.625rem;color:#dadce0}
-.ti__score{display:grid;justify-items:center;gap:6px}
-.ti__num{font-family:var(--f-sans);font-weight:600;font-size:2.75rem;line-height:1;color:#1b1b1b;letter-spacing:-.02em}
-.ti__count b{font-weight:600;color:#1b1b1b}
-/* notka z oceną w hero */
-.hero__rev{display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap;margin:calc(-1*var(--s2)) 0 var(--s4);
-  color:#fff;text-decoration:none;text-shadow:0 1px 2px rgba(20,30,34,.6),0 2px 12px rgba(20,30,34,.5)}
-.hero__rev .gstars{text-shadow:0 1px 3px rgba(20,30,34,.5)}
-.hero__rev-t{font-size:.9375rem;letter-spacing:.01em}
-.hero__rev-n{font-weight:600;margin-right:6px}
-.hero__rev-n:empty{display:none}
-.hero__rev:hover .hero__rev-t{text-decoration:underline;text-underline-offset:3px}
-@media(max-width:640px){.hero__rev{margin:calc(-1*var(--s2)) 0 var(--s2);min-height:44px}}
-
-/* ---------- elementy graficzne: rastrowe PNG/WebP z kolorem palety wpalonym w plik — bez SVG, działa też z file:// ---------- */
-.deco{display:block;pointer-events:none;background:no-repeat center/contain}
-.deco--chart{background-image:url(assets/img/deco/chart-contours-c.webp)}
-.deco--compass{background-image:url(assets/img/deco/compass-rose-c.webp)}
-.deco--sail{background-image:url(assets/img/deco/sail-profile-c.webp)}
-.deco--motor{background-image:url(assets/img/deco/motor-profile-c.webp)}
-.deco--rope{background-image:url(assets/img/deco/rope-divider-c.webp)}
-.deco--anchor{background-image:url(assets/img/deco/anchor-ring-c.webp)}
-/* mapa: prawy górny róg sekcji floty, nad nagłówkiem grupy — z dala od leadu */
-.fleet{position:relative;overflow:hidden}
-.deco--chart{position:absolute;top:calc(var(--s8) + 40px);right:-16%;width:min(820px,60vw);aspect-ratio:2/1;opacity:.34;z-index:0}
-.fleet>.wrap{position:relative;z-index:1}
-.fleet .sec-head .lead{background:var(--paper);box-shadow:0 0 0 12px var(--paper)}
-/* łódki stoją na grubej linii nagłówka grupy */
-.fgh{position:relative}
-.deco--sail,.deco--motor{align-self:flex-end;opacity:.85;margin:0 auto calc(-1*var(--s3) - 2px) var(--s6)}
-.deco--sail{width:190px;aspect-ratio:1000/651}
-.deco--motor{width:250px;aspect-ratio:1000/224}
-/* róża wiatrów w pasie ink */
-.band{position:relative;overflow:hidden}
-.band>.wrap{position:relative;z-index:1}
-.deco--compass{position:absolute;right:-6%;top:50%;transform:translateY(-50%);width:min(560px,46vw);aspect-ratio:1;opacity:.2}
-/* lina — przerywnik nad zespołem */
-.deco--rope{width:100%;max-width:880px;height:44px;margin:0 auto var(--s6);opacity:.8}
-/* kotwica: w pustym polu między nagłówkiem a leadem sekcji warunków */
-.warunki .sec-head{position:relative}
-.warunki .deco--anchor{position:absolute;right:calc(41.667% + 48px);top:-8px;width:120px;aspect-ratio:560/681;opacity:.5}
-/* fale — tło sekcji opinii */
-.reviews{position:relative;overflow:hidden}
-.reviews::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;
-  background:url(assets/img/deco/waves-tile-c.webp) 0 0/280px repeat}
-.reviews>.wrap{position:relative;z-index:1}
-@media(max-width:1023px){.warunki .deco--anchor{right:var(--gutter);top:-4px;width:90px}}
-@media(max-width:640px){
-  .deco--chart{top:var(--s4);right:-40%;width:120vw;opacity:.16}
-  .fleet .sec-head .lead{box-shadow:none;background:none}
-  .deco--sail,.deco--motor{position:absolute;right:0;top:-6px;margin:0}
-  .deco--sail{width:104px}.deco--motor{width:140px;top:16px}
-  .fgh__l{padding-right:140px}
-  .deco--compass{right:-30%;width:90vw;opacity:.14}
-  .deco--rope{height:30px;margin-bottom:var(--s4)}
-  .warunki .deco--anchor{width:64px;opacity:.4;top:0}
-  .warunki .sec-head .h2{padding-right:76px}
-}
-
-/* Newsreader: małe teksty szeryfowe o pół stopnia grubsze — czytelność przy 18–31 px */
-.legend__v,.fli__name,.fli__pricev,.fgh__n,.mem__n,.mem__ini,.about__facts dd,.war__h,.war__l b,.war__hours b,.tq blockquote p,
-.cmp__name,.cmp__price .cmp__v,.book__price b,.price td.n,.h3,.meas__hd b,.cal__hd b,.mobilebar .amt,.fe__n b,.sim__name,.band__txt{font-weight:500;font-optical-sizing:auto}
-.display,.h1,.h2,.fgh__t,.band__num{font-optical-sizing:auto}
-/* legenda jako karta nachodząca na hero (jak formularz w kontakcie) */
-.hero{height:100svh;min-height:740px;max-height:1120px}
-.hero__in{padding-bottom:calc(var(--s7) + var(--legend-over))}
-.hero__coords{bottom:calc(var(--s7) + var(--legend-over))}
-:root{--legend-over:72px}
-.legend{position:relative;z-index:3;margin-top:calc(-1*var(--legend-over));background:none;border-bottom:0}
-.legend__row{background:#fff;padding:0 var(--s5);box-shadow:0 30px 60px -20px rgba(24,36,40,.35),0 0 0 1px rgba(48,64,68,.06)}
-html.js .legend__row{opacity:0;transform:translateY(var(--shift));animation:rise var(--dur-in) var(--ease-in) 560ms forwards}
-@media(prefers-reduced-motion:reduce){html.js .legend__row{opacity:1;transform:none;animation:none}}
-@media(max-width:900px){.legend__row{padding:0 var(--s4)}}
-@media(max-width:640px){
-  :root{--legend-over:40px}
-  .hero{min-height:680px}
-  .hero__in{padding-bottom:calc(var(--s5) + var(--legend-over))}
-  .legend .wrap{padding-inline:calc(var(--gutter) - 8px)}
-  .legend__row{padding:var(--s1) var(--s3)}
-}
-/* „na zapytanie” nie może ważyć więcej niż cena */
-.fli__pricev--ask b{font-family:var(--f-sans);font-size:1.0625rem;font-weight:500;letter-spacing:0;color:var(--ink-80)}
-</style>
-<link rel="stylesheet" href="assets/css/mobile.css?v=56ed7d9e">
+<link rel="stylesheet" href="assets/css/pages.css?v=d437ed9d">
+<link rel="stylesheet" href="assets/css/mobile.css?v=b43c191a">
 </head>
-<body>
+<body class="sub">
 <a class="skip" href="#main">Przejdź do treści</a>
 
-<header class="head on-photo" id="head">
+<header class="head head--dark" id="head">
   <div class="wrap head__bar">
     <a href="index.html" aria-label="Jachty Mazury — strona główna"><img class="head__logo head__logo--mono" src="assets/img/logo-mono.png" width="450" height="76" alt="Jachtymazury.pl"><img class="head__logo head__logo--color" src="assets/img/logo.png" width="450" height="76" alt=""></a>
     <nav class="nav" aria-label="Główne">
-      <div class="has"><button class="nav__b" type="button" aria-expanded="false" aria-controls="m-czarter">Czarter jachtów <i data-lucide="chevron-down" class="lucide"></i></button>
-        <div class="menu" id="m-czarter"><a href="jachty-zaglowe.html">Jachty żaglowe</a><a href="jachty-motorowe.html">Jachty motorowe</a><a href="czarter-bez-patentu.html">Czarter bez patentu</a></div></div>
-      <a class="u" href="jachty-na-sprzedaz.html">Na sprzedaż</a>
-      <a class="u" href="poradnik.html">Poradnik</a>
+      <div class="has has--mega"><button class="nav__b" type="button" aria-expanded="false" aria-controls="m-czarter">Czarter jachtów <i data-lucide="chevron-down" class="lucide"></i></button>
+        <div class="menu mm" id="m-czarter"><div class="mm__top"><a href="czarter-jachtow.html">Czarter jachtów — oferta i najczęstsze pytania</a><a href="czarter-bez-patentu.html">Czarter bez patentu</a></div><div class="mm__cols"><div class="mm__col"><a class="mm__h" href="jachty-zaglowe.html">Jachty żaglowe <i data-lucide="arrow-right" class="lucide"></i></a><ul class="mm__l"><li><a class="mm__m" href="model-antila-34.html">Antila 34</a><span class="mm__us"><a class="mm__u" href="antila-34-progresja.html">Progresja</a></span></li><li><a class="mm__m" href="model-antila-33-3.html">Antila 33.3</a><span class="mm__us"><a class="mm__u" href="antila-33-3-infinitum.html">Infinitum</a></span></li><li><a class="mm__m" href="model-antila-33.html">Antila 33</a><span class="mm__us"><a class="mm__u" href="antila-33-kassari.html">Kassari</a><a class="mm__u" href="antila-33-strega.html">Strega</a><a class="mm__u" href="antila-33-biala-perla.html">Biała Perła</a></span></li><li><a class="mm__m" href="model-antila-30-1-e.html">Antila 30.1 E</a><span class="mm__us"><a class="mm__u" href="antila-30-1-e-cleopatra.html">Cleopatra</a></span></li><li><a class="mm__m" href="model-antila-30.html">Antila 30</a><span class="mm__us"><a class="mm__u" href="antila-30-tutto-bene.html">Tutto Bene</a><a class="mm__u" href="antila-30-sarema.html">Sarema</a></span></li><li><a class="mm__m" href="model-antila-28-2.html">Antila 28.2</a><span class="mm__us"><a class="mm__u" href="antila-28-2-pakri.html">Pakri</a></span></li><li><a class="mm__m" href="model-antila-27.html">Antila 27</a><span class="mm__us"><a class="mm__u" href="antila-27-marmolada.html">Marmolada</a><a class="mm__u" href="antila-27-hiuma.html">Hiuma</a><a class="mm__u" href="antila-27-furaha.html">Furaha</a><a class="mm__u" href="antila-27-ramzesowa.html">Ramzesowa</a></span></li><li><a class="mm__m" href="model-maxus-28.html">Maxus 28</a><span class="mm__us"><a class="mm__u" href="maxus-28-prawy-hals.html">Prawy Hals</a></span></li><li><a class="mm__m" href="model-antila-24-4.html">Antila 24.4</a><span class="mm__us"><a class="mm__u" href="antila-24-4.html">Antila 24.4</a></span></li><li><a class="mm__m" href="model-maxus-24-evo.html">Maxus 24 Evo</a><span class="mm__us"><a class="mm__u" href="maxus-24-evo-waski.html">Wąski</a></span></li></ul></div><div class="mm__col"><a class="mm__h" href="jachty-motorowe.html">Jachty motorowe <i data-lucide="arrow-right" class="lucide"></i></a><ul class="mm__l"><li><a class="mm__m" href="model-stillo-31.html">Stillo 31</a><span class="mm__us"><a class="mm__u" href="stillo-31-star.html">Star</a></span></li><li><a class="mm__m" href="model-nautiner-38.html">Nautiner 38</a><span class="mm__us"><a class="mm__u" href="nautiner-38-black-stilo.html">Blask Stilo</a></span></li><li><a class="mm__m" href="model-nautic-880.html">Nautic 880</a><span class="mm__us"><a class="mm__u" href="nautic-880-cuba-libre.html">Cuba Libre</a><a class="mm__u" href="nautic-880-mojito.html">Mojito</a></span></li><li><a class="mm__m" href="model-nexus-870-revo.html">Nexus 870 Revo</a><span class="mm__us"><a class="mm__u" href="nexus-870-revo-wiktor.html">Wiktor</a><a class="mm__u" href="nexus-870-revo-bolek.html">Bolek</a></span></li><li><a class="mm__m" href="model-futura-860.html">Futura 860</a><span class="mm__us"><a class="mm__u" href="futura-860-eufemia.html">Eufemia</a></span></li><li><a class="mm__m" href="model-calipso-750.html">Calipso 750</a><span class="mm__us"><a class="mm__u" href="calipso-750-fire-cruiser.html">Fire Cruiser</a></span></li></ul></div></div></div></div>
+      <div class="has"><button class="nav__b" type="button" aria-expanded="false" aria-controls="m-wiedza">Wiedza <i data-lucide="chevron-down" class="lucide"></i></button>
+        <div class="menu" id="m-wiedza"><a href="poradnik.html">Poradnik czarterowy</a><a href="filmy-szkoleniowe.html">Filmy szkoleniowe</a><a href="aktualnosci.html">Aktualności</a></div></div>
       <a class="u" href="cennik.html">Cennik</a>
+      <a class="u" href="jachty-na-sprzedaz.html">Na sprzedaż</a>
       <a class="u" href="port.html">Port</a>
       <a class="u" href="wspolpraca.html">Współpraca</a>
       <a class="u" href="kontakt.html">Kontakt</a>
     </nav>
     <nav class="head__lang" aria-label="Wybór języka"><a href="#" aria-current="true" lang="pl">PL</a><span aria-hidden="true">·</span><a href="https://jachtymazury.pl/en/" lang="en" hreflang="en" aria-label="English version">EN</a></nav>
-    <a class="btn btn--outline" href="#rezerwuj" data-open-modal>Rezerwuj online</a>
+    <a class="btn" href="index.html#rezerwuj">Rezerwuj online</a>
     <button class="burger" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mnav"><i data-lucide="menu" class="lucide burger__m"></i><i data-lucide="x" class="lucide burger__x"></i></button>
   </div>
 </header>
 <div class="mnav" id="mnav" hidden>
   <nav class="mnav__in" aria-label="Menu">
-    <ul class="mnav__l"><li><a href="index.html" aria-current="page">Start</a></li><li><a href="jachty-zaglowe.html">Jachty żaglowe</a></li><li><a href="jachty-motorowe.html">Jachty motorowe</a></li><li><a href="czarter-bez-patentu.html">Czarter bez patentu</a></li><li><a href="jachty-na-sprzedaz.html">Na sprzedaż</a></li><li><a href="poradnik.html">Poradnik</a></li><li><a href="cennik.html">Cennik</a></li><li><a href="port.html">Port</a></li><li><a href="wspolpraca.html">Współpraca</a></li><li><a href="kontakt.html">Kontakt</a></li></ul>
+    <ul class="mnav__l"><li><a href="index.html" aria-current="page">Start</a></li><li><a href="czarter-jachtow.html">Czarter jachtów</a></li><li><a href="jachty-zaglowe.html">Jachty żaglowe</a></li><li><a href="jachty-motorowe.html">Jachty motorowe</a></li><li><a href="czarter-bez-patentu.html">Czarter bez patentu</a></li><li><a href="poradnik.html">Poradnik czarterowy</a></li><li><a href="filmy-szkoleniowe.html">Filmy szkoleniowe</a></li><li><a href="aktualnosci.html">Aktualności</a></li><li><a href="cennik.html">Cennik</a></li><li><a href="jachty-na-sprzedaz.html">Na sprzedaż</a></li><li><a href="port.html">Port</a></li><li><a href="wspolpraca.html">Współpraca</a></li><li><a href="kontakt.html">Kontakt</a></li></ul>
     <div class="mnav__cta">
       <a class="btn btn--block" href="index.html#rezerwuj">Sprawdź dostępność <i data-lucide="arrow-right" class="lucide"></i></a>
       <a class="btn btn--outline btn--block" href="tel:+48511420100"><i data-lucide="phone" class="lucide"></i> +48 511 420 100</a>
@@ -611,453 +45,94 @@ html.js .legend__row{opacity:0;transform:translateY(var(--shift));animation:rise
   </nav>
 </div>
 
-<main id="main" class="chart">
-
-<section class="hero on-photo">
-  <picture><source type="image/avif" srcset="assets/img/r/life1-640.avif 640w, assets/img/r/life1-960.avif 960w, assets/img/r/life1-1280.avif 1280w, assets/img/r/life1-1600.avif 1600w, assets/img/r/life1-2560.avif 2560w" sizes="100vw"><source type="image/webp" srcset="assets/img/r/life1-640.webp 640w, assets/img/r/life1-960.webp 960w, assets/img/r/life1-1280.webp 1280w, assets/img/r/life1-1600.webp 1600w, assets/img/r/life1-2560.webp 2560w" sizes="100vw"><img class="hero__img" src="assets/img/r/life1-2560.jpg" srcset="assets/img/r/life1-640.jpg 640w, assets/img/r/life1-960.jpg 960w, assets/img/r/life1-1280.jpg 1280w, assets/img/r/life1-1600.jpg 1600w, assets/img/r/life1-2560.jpg 2560w" sizes="100vw" width="2560" height="1920" alt="Antila 27 „Hiuma” przy kei" fetchpriority="high" decoding="async"></picture>
-  <div class="hero__scrim" aria-hidden="true"></div>
-  <div class="wrap hero__in">
-    <p class="micro hero__eyebrow">Czarter jachtów · Giżycko<span class="hide-m"> · Wielkie Jeziora Mazurskie</span></p>
-    <h1 class="display">Więcej niż<br>czarter</h1>
-    <p class="hero__lead">Jachty żaglowe i motorowe z jednej mariny. Wybierasz termin, my pokazujemy, co jest wolne. Reszta to woda.</p>
-    <!-- OCENA GOOGLE — źródło: panel „Podsumowanie opinii w Google” (zrzut od klienta, 24.09.2026): 4,8 / 57 opinii. -->
-    <a class="hero__rev" href="#opinie" data-rating="4,8" data-count="57">
-      <span class="gstars" aria-hidden="true"><span class="gstars__on">★★★★★</span>★★★★★</span>
-      <span class="hero__rev-t"><b class="hero__rev-n"></b>Opinie klientów w&nbsp;Google</span>
-    </a>
-    <div class="hero__cta">
-      <button class="btn btn--lg" data-open-modal><span class="btn__label">Sprawdź dostępność<span class="hide-m"> i zarezerwuj</span></span> <i data-lucide="arrow-right" class="lucide"></i></button>
-      <p class="hero__note">Cennik 2027 · wydanie jachtu 16:00 – 20:00</p>
-    </div>
+<main id="main">
+<section class="hh">
+  <figure class="hh__ph"><picture><source type="image/webp" srcset="assets/img/r/fl-a30-600.webp 600w, assets/img/r/fl-a30-1280.webp 1280w" sizes="100vw"><img src="assets/img/r/fl-a30-1280.jpg" srcset="assets/img/r/fl-a30-600.jpg 600w, assets/img/r/fl-a30-1280.jpg 1280w" sizes="100vw" width="1280" height="960" alt="Antila 30 pod żaglami na jeziorze" fetchpriority="high" decoding="async"></picture></figure>
+  <div class="hh__shade" aria-hidden="true"></div>
+  <div class="wrap hh__in">
+    <p class="micro hh__eye">Czarter jachtów · Giżycko</p>
+    <h1 class="hh__h">Mazury w&nbsp;najlepszym wydaniu</h1>
+    <p class="hh__lead">Wolność. Przygoda. Niezapomniane chwile.</p>
+    <a class="btn btn--lg hh__btn" href="#rezerwuj" data-open-modal>Sprawdź dostępność i zarezerwuj online <i data-lucide="arrow-right" class="lucide"></i></a>
   </div>
 </section>
-
-
-
-<!-- legenda -->
-<div class="legend"><div class="wrap"><div class="legend__row">
-  <div class="legend__i"><span class="legend__k">Port</span><b class="legend__v">Stanica Wodna Stranda</b><span class="legend__s">Pierkunowo 36, Giżycko</span></div>
-  <div class="legend__i"><span class="legend__k">Flota</span><b class="legend__v num">23 jednostki</b><span class="legend__s">16 żaglowych · 7 motorowych</span></div>
-  <div class="legend__i"><span class="legend__k">Czarter</span><b class="legend__v">min. 7 dób</b><span class="legend__s">krótszy termin — cena indywidualna</span></div>
-  <div class="legend__i"><span class="legend__k">Biuro</span><b class="legend__v num">8:00 – 20:00</b><span class="legend__s">siedem dni w tygodniu</span></div>
-</div></div></div>
-
-<!-- pasek wybranego terminu -->
-<div class="termbar" id="termbar" hidden><div class="wrap termbar__in">
-  <span class="termbar__d num" id="tb-dates"></span>
-  <span class="termbar__c num" id="tb-count"></span>
-  <button class="u termbar__edit" type="button" id="tb-edit">Zmień termin</button>
-</div></div>
-
-<!-- 01 / FLOTA -->
-<section class="sec fleet" id="flota">
-  <span class="deco deco--chart" aria-hidden="true"></span>
+<section class="hi">
+  <div class="wrap"><ul class="hi__l"><li><i data-lucide="calendar-days" class="lucide" aria-hidden="true"></i><b>Szybka rezerwacja</b><span>Sprawdź dostępność i zarezerwuj w kilka minut.</span></li><li><i data-lucide="sailboat" class="lucide" aria-hidden="true"></i><b>Sprawdzone jachty</b><span>Komfortowe i świetnie wyposażone.</span></li><li><i data-lucide="map" class="lucide" aria-hidden="true"></i><b>Lokalna wiedza</b><span>Doradzimy najlepsze trasy i miejsca.</span></li><li><i data-lucide="heart" class="lucide" aria-hidden="true"></i><b>Wsparcie na każdym etapie</b><span>Jesteśmy blisko – przed, w trakcie i po rejsie.</span></li></ul></div>
+</section>
+<section class="psec rec">
   <div class="wrap">
-    <div class="bearing"><span class="bearing__n">Flota</span><div class="ticks" aria-hidden="true"></div></div>
-    <div class="g12 sec-head">
-      <h2 class="h2 c7 reveal">Wybierz model</h2>
-      <p class="lead c5 reveal">Osiem modeli, które najczęściej wypływają z naszej mariny. Dane techniczne i cena za dobę prosto z cennika — od razu, bez klikania.</p>
-    </div>
-
-    <div class="fleet__status" id="fleet-status" aria-live="polite" hidden>
-      <p class="fleet__status__t"><b id="fs-head"></b> <span class="muted" id="fs-sub"></span></p>
-      <button class="u" type="button" id="fs-toggle" hidden></button>
-    </div>
-    <div class="state" id="fleet-empty" hidden>
-      <div class="state__tag">Brak wolnych jednostek</div>
-      <h3 class="h3">W tym terminie wszystko jest zajęte.</h3>
-      <p>Soboty w lipcu i sierpniu schodzą pierwsze. Przesuń start o dzień lub dwa albo zadzwoń — czasem zwalnia się na krótko przed rejsem.</p>
-      <div class="state__act"><button class="btn btn--outline" type="button" id="fe-reset">Pokaż całą flotę</button><a class="btn btn--outline" href="tel:+48511420100">+48 511 420 100</a></div>
-    </div>
-
-    <div class="fleet__grp reveal">
-      <header class="fgh">
-        <div class="fgh__l">
-          <h3 class="fgh__t">Jachty żaglowe</h3>
-          <p class="fgh__s">Maxus 24 i 28 · Antila 24 · 27 · 28 · 30 · 33 · 34</p>
-        </div>
-        <span class="deco deco--sail" aria-hidden="true"></span>
-        <div class="fgh__r">
-          <p class="fgh__n num">16<small>jednostek</small></p>
-          <a class="u u--on fgh__a" href="jachty-zaglowe.html">Wszystkie żaglowe →</a>
-        </div>
-      </header>
-      <div class="fl">
-      <article class="fli" data-yacht="Antila 33" data-base="650">
-        <a class="fli__ph" href="jacht.html" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/r/fl-a33-400.avif 400w, assets/img/r/fl-a33-600.avif 600w, assets/img/r/fl-a33-800.avif 800w" sizes="(min-width:641px) 440px, 100vw"><source type="image/webp" srcset="assets/img/r/fl-a33-400.webp 400w, assets/img/r/fl-a33-600.webp 600w, assets/img/r/fl-a33-800.webp 800w" sizes="(min-width:641px) 440px, 100vw"><img src="assets/img/r/fl-a33-600.jpg" srcset="assets/img/r/fl-a33-400.jpg 400w, assets/img/r/fl-a33-600.jpg 600w, assets/img/r/fl-a33-800.jpg 800w" sizes="(min-width:641px) 440px, 100vw" width="800" height="600" alt="Antila 33" decoding="async"></picture></a>
-        <div class="fli__body">
-          <span class="fli__tag"><span class="fli__st"></span></span>
-          <h4 class="fli__name"><a class="u" href="jacht.html">Antila 33</a></h4>
-          <dl class="fli__spec num">
-            <div><dt>Miejsca</dt><dd>10</dd><div class="berth" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i></div></div>
-            <div><dt>Kabiny</dt><dd>3</dd></div>
-            <div><dt>Szerokość</dt><dd>3,24 m</dd></div>
-            <div><dt>Zanurzenie</dt><dd>0,45 / 1,80 m</dd></div>
-          </dl>
-          <div class="meas"><div class="meas__hd"><span>Długość całkowita</span><b>10,79 m</b></div>
-            <div class="meas__t" aria-hidden="true"><span class="meas__b" style="width:89.9%"></span></div><div class="meas__sc" aria-hidden="true"><i style="left:0.0%">0</i><i style="left:16.67%">2</i><i style="left:33.33%">4</i><i style="left:50.0%">6</i><i style="left:66.67%">8</i><i style="left:83.33%">10</i><i style="left:100.0%">12 m</i></div></div>
-          <div class="fli__buy">
-            <div class="fli__price"><span class="fli__k" data-pfx>Cena od</span><span class="fli__pricev"><b data-price>650&nbsp;zł</b> <span class="per">/ doba</span><span class="fli__total" data-total></span></span></div>
-            <div class="fli__act"><a class="btn btn--outline btn--sm" href="jacht.html" aria-label="Zobacz Antila 33">Zobacz <i data-lucide="arrow-right" class="lucide"></i></a><button class="btn btn--sm" type="button" data-open-modal data-yacht="Antila 33">Rezerwuj</button></div>
-          </div>
-        </div>
-      </article>
-      <article class="fli" data-yacht="Antila 30" data-base="650">
-        <a class="fli__ph" href="jachty-zaglowe.html?model=Antila%2030" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/r/fl-a30-400.avif 400w, assets/img/r/fl-a30-600.avif 600w, assets/img/r/fl-a30-1280.avif 1280w" sizes="(min-width:641px) 440px, 100vw"><source type="image/webp" srcset="assets/img/r/fl-a30-400.webp 400w, assets/img/r/fl-a30-600.webp 600w, assets/img/r/fl-a30-1280.webp 1280w" sizes="(min-width:641px) 440px, 100vw"><img src="assets/img/r/fl-a30-600.jpg" srcset="assets/img/r/fl-a30-400.jpg 400w, assets/img/r/fl-a30-600.jpg 600w, assets/img/r/fl-a30-1280.jpg 1280w" sizes="(min-width:641px) 440px, 100vw" width="800" height="600" alt="Antila 30" decoding="async"></picture></a>
-        <div class="fli__body">
-          <span class="fli__tag"><span class="fli__st"></span></span>
-          <h4 class="fli__name"><a class="u" href="jachty-zaglowe.html?model=Antila%2030">Antila 30</a></h4>
-          <dl class="fli__spec num">
-            <div><dt>Miejsca</dt><dd>8</dd><div class="berth" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i></div></div>
-            <div><dt>Kabiny</dt><dd>3</dd></div>
-            <div><dt>Szerokość</dt><dd>3,20 m</dd></div>
-            <div><dt>Zanurzenie</dt><dd>0,44 / 1,79 m</dd></div>
-          </dl>
-          <div class="meas"><div class="meas__hd"><span>Długość całkowita</span><b>9,99 m</b></div>
-            <div class="meas__t" aria-hidden="true"><span class="meas__b" style="width:83.2%"></span></div><div class="meas__sc" aria-hidden="true"><i style="left:0.0%">0</i><i style="left:16.67%">2</i><i style="left:33.33%">4</i><i style="left:50.0%">6</i><i style="left:66.67%">8</i><i style="left:83.33%">10</i><i style="left:100.0%">12 m</i></div></div>
-          <div class="fli__buy">
-            <div class="fli__price"><span class="fli__k" data-pfx>Cena od</span><span class="fli__pricev"><b data-price>650&nbsp;zł</b> <span class="per">/ doba</span><span class="fli__total" data-total></span></span></div>
-            <div class="fli__act"><a class="btn btn--outline btn--sm" href="jachty-zaglowe.html?model=Antila%2030" aria-label="Zobacz Antila 30">Zobacz <i data-lucide="arrow-right" class="lucide"></i></a><button class="btn btn--sm" type="button" data-open-modal data-yacht="Antila 30">Rezerwuj</button></div>
-          </div>
-        </div>
-      </article>
-<article class="fli" data-yacht="Antila 28.2" data-base="550">
-        <a class="fli__ph" href="jachty-zaglowe.html?model=Antila%2028.2" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/r/fl-a28-400.avif 400w, assets/img/r/fl-a28-600.avif 600w, assets/img/r/fl-a28-800.avif 800w" sizes="(min-width:641px) 440px, 100vw"><source type="image/webp" srcset="assets/img/r/fl-a28-400.webp 400w, assets/img/r/fl-a28-600.webp 600w, assets/img/r/fl-a28-800.webp 800w" sizes="(min-width:641px) 440px, 100vw"><img src="assets/img/r/fl-a28-600.jpg" srcset="assets/img/r/fl-a28-400.jpg 400w, assets/img/r/fl-a28-600.jpg 600w, assets/img/r/fl-a28-800.jpg 800w" sizes="(min-width:641px) 440px, 100vw" width="800" height="600" alt="Antila 28.2" decoding="async"></picture></a>
-        <div class="fli__body">
-          <span class="fli__tag"><span class="fli__st"></span></span>
-          <h4 class="fli__name"><a class="u" href="jachty-zaglowe.html?model=Antila%2028.2">Antila 28.2</a></h4>
-          <dl class="fli__spec num">
-            <div><dt>Miejsca</dt><dd>8</dd><div class="berth" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-            <div><dt>Kabiny</dt><dd>3</dd></div>
-            <div><dt>Szerokość</dt><dd>3,07 m</dd></div>
-            <div><dt>Zanurzenie</dt><dd>0,43 / 1,75 m</dd></div>
-          </dl>
-          <div class="meas"><div class="meas__hd"><span>Długość całkowita</span><b>8,85 m</b></div>
-            <div class="meas__t" aria-hidden="true"><span class="meas__b" style="width:73.8%"></span></div><div class="meas__sc" aria-hidden="true"><i style="left:0.0%">0</i><i style="left:16.67%">2</i><i style="left:33.33%">4</i><i style="left:50.0%">6</i><i style="left:66.67%">8</i><i style="left:83.33%">10</i><i style="left:100.0%">12 m</i></div></div>
-          <div class="fli__buy">
-            <div class="fli__price"><span class="fli__k" data-pfx>Cena od</span><span class="fli__pricev"><b data-price>550&nbsp;zł</b> <span class="per">/ doba</span><span class="fli__total" data-total></span></span></div>
-            <div class="fli__act"><a class="btn btn--outline btn--sm" href="jachty-zaglowe.html?model=Antila%2028.2" aria-label="Zobacz Antila 28.2">Zobacz <i data-lucide="arrow-right" class="lucide"></i></a><button class="btn btn--sm" type="button" data-open-modal data-yacht="Antila 28.2">Rezerwuj</button></div>
-          </div>
-        </div>
-      </article>
-<article class="fli" data-yacht="Maxus 28" data-base="330">
-        <a class="fli__ph" href="jachty-zaglowe.html?model=Maxus%2028" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/r/fl-maxus-400.avif 400w, assets/img/r/fl-maxus-600.avif 600w, assets/img/r/fl-maxus-1280.avif 1280w" sizes="(min-width:641px) 440px, 100vw"><source type="image/webp" srcset="assets/img/r/fl-maxus-400.webp 400w, assets/img/r/fl-maxus-600.webp 600w, assets/img/r/fl-maxus-1280.webp 1280w" sizes="(min-width:641px) 440px, 100vw"><img src="assets/img/r/fl-maxus-600.jpg" srcset="assets/img/r/fl-maxus-400.jpg 400w, assets/img/r/fl-maxus-600.jpg 600w, assets/img/r/fl-maxus-1280.jpg 1280w" sizes="(min-width:641px) 440px, 100vw" width="1280" height="960" alt="Maxus 28" decoding="async"></picture></a>
-        <div class="fli__body">
-          <span class="fli__tag"><span class="fli__st"></span></span>
-          <h4 class="fli__name"><a class="u" href="jachty-zaglowe.html?model=Maxus%2028">Maxus 28</a></h4>
-          <dl class="fli__spec num">
-            <div><dt>Miejsca</dt><dd>6 + 2</dd><div class="berth" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i></div></div>
-            <div><dt>Kabiny</dt><dd>2</dd></div>
-            <div><dt>Szerokość</dt><dd>2,92 m</dd></div>
-            <div><dt>Zanurzenie</dt><dd>0,40 / 1,60 m</dd></div>
-          </dl>
-          <div class="meas"><div class="meas__hd"><span>Długość całkowita</span><b>9,44 m</b></div>
-            <div class="meas__t" aria-hidden="true"><span class="meas__b" style="width:78.7%"></span></div><div class="meas__sc" aria-hidden="true"><i style="left:0.0%">0</i><i style="left:16.67%">2</i><i style="left:33.33%">4</i><i style="left:50.0%">6</i><i style="left:66.67%">8</i><i style="left:83.33%">10</i><i style="left:100.0%">12 m</i></div></div>
-          <div class="fli__buy">
-            <div class="fli__price"><span class="fli__k" data-pfx>Cena od</span><span class="fli__pricev"><b data-price>330&nbsp;zł</b> <span class="per">/ doba</span><span class="fli__total" data-total></span></span></div>
-            <div class="fli__act"><a class="btn btn--outline btn--sm" href="jachty-zaglowe.html?model=Maxus%2028" aria-label="Zobacz Maxus 28">Zobacz <i data-lucide="arrow-right" class="lucide"></i></a><button class="btn btn--sm" type="button" data-open-modal data-yacht="Maxus 28">Rezerwuj</button></div>
-          </div>
-        </div>
-      </article>
-      </div>
-    </div>
-
-    <div class="fleet__grp fleet__grp--sand reveal">
-      <header class="fgh">
-        <div class="fgh__l">
-          <h3 class="fgh__t">Jachty motorowe</h3>
-          <p class="fgh__s">Nautic 880 · Nexus 870 Revo · Futura 860 · Stillo 31</p>
-        </div>
-        <span class="deco deco--motor" aria-hidden="true"></span>
-        <div class="fgh__r">
-          <p class="fgh__n num">7<small>jednostek</small></p>
-          <a class="u u--on fgh__a" href="jachty-motorowe.html">Wszystkie motorowe →</a>
-        </div>
-      </header>
-      <div class="fl">
-      <article class="fli" data-yacht="Nexus 870 Revo" data-base="330">
-        <a class="fli__ph" href="jachty-motorowe.html?model=Nexus%20870%20Revo" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/r/fl-nexus-400.avif 400w, assets/img/r/fl-nexus-600.avif 600w, assets/img/r/fl-nexus-800.avif 800w" sizes="(min-width:641px) 440px, 100vw"><source type="image/webp" srcset="assets/img/r/fl-nexus-400.webp 400w, assets/img/r/fl-nexus-600.webp 600w, assets/img/r/fl-nexus-800.webp 800w" sizes="(min-width:641px) 440px, 100vw"><img src="assets/img/r/fl-nexus-600.jpg" srcset="assets/img/r/fl-nexus-400.jpg 400w, assets/img/r/fl-nexus-600.jpg 600w, assets/img/r/fl-nexus-800.jpg 800w" sizes="(min-width:641px) 440px, 100vw" width="800" height="600" alt="Nexus 870 Revo" decoding="async"></picture></a>
-        <div class="fli__body">
-          <span class="fli__tag"><span class="fli__st"></span></span>
-          <h4 class="fli__name"><a class="u" href="jachty-motorowe.html?model=Nexus%20870%20Revo">Nexus 870 Revo</a></h4>
-          <dl class="fli__spec num">
-            <div><dt>Miejsca</dt><dd>4 + 2</dd><div class="berth" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i></div></div>
-            <div><dt>Kabiny</dt><dd>2</dd></div>
-            <div><dt>Szerokość</dt><dd>2,90 m</dd></div>
-            <div><dt>Zanurzenie</dt><dd>0,40 m</dd></div>
-          </dl>
-          <div class="meas"><div class="meas__hd"><span>Długość całkowita</span><b>8,70 m</b></div>
-            <div class="meas__t" aria-hidden="true"><span class="meas__b" style="width:72.5%"></span></div><div class="meas__sc" aria-hidden="true"><i style="left:0.0%">0</i><i style="left:16.67%">2</i><i style="left:33.33%">4</i><i style="left:50.0%">6</i><i style="left:66.67%">8</i><i style="left:83.33%">10</i><i style="left:100.0%">12 m</i></div></div>
-          <div class="fli__buy">
-            <div class="fli__price"><span class="fli__k" data-pfx>Cena od</span><span class="fli__pricev"><b data-price>330&nbsp;zł</b> <span class="per">/ doba</span><span class="fli__total" data-total></span></span></div>
-            <div class="fli__act"><a class="btn btn--outline btn--sm" href="jachty-motorowe.html?model=Nexus%20870%20Revo" aria-label="Zobacz Nexus 870 Revo">Zobacz <i data-lucide="arrow-right" class="lucide"></i></a><button class="btn btn--sm" type="button" data-open-modal data-yacht="Nexus 870 Revo">Rezerwuj</button></div>
-          </div>
-        </div>
-      </article>
-      <article class="fli" data-yacht="Nautic 880" data-base="0">
-        <a class="fli__ph" href="jachty-motorowe.html?model=Nautic%20880" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/r/fl-nautic-400.avif 400w, assets/img/r/fl-nautic-600.avif 600w, assets/img/r/fl-nautic-800.avif 800w" sizes="(min-width:641px) 440px, 100vw"><source type="image/webp" srcset="assets/img/r/fl-nautic-400.webp 400w, assets/img/r/fl-nautic-600.webp 600w, assets/img/r/fl-nautic-800.webp 800w" sizes="(min-width:641px) 440px, 100vw"><img src="assets/img/r/fl-nautic-600.jpg" srcset="assets/img/r/fl-nautic-400.jpg 400w, assets/img/r/fl-nautic-600.jpg 600w, assets/img/r/fl-nautic-800.jpg 800w" sizes="(min-width:641px) 440px, 100vw" width="800" height="600" alt="Nautic 880" decoding="async"></picture></a>
-        <div class="fli__body">
-          <span class="fli__tag"><span class="fli__st"></span></span>
-          <h4 class="fli__name"><a class="u" href="jachty-motorowe.html?model=Nautic%20880">Nautic 880</a></h4>
-          <dl class="fli__spec num">
-            <div><dt>Miejsca</dt><dd>6</dd><div class="berth" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-            <div><dt>Kabiny</dt><dd>2</dd></div>
-            <div><dt>Szerokość</dt><dd>3,00 m</dd></div>
-            <div><dt>Zanurzenie</dt><dd>0,65 m</dd></div>
-          </dl>
-          <div class="meas"><div class="meas__hd"><span>Długość całkowita</span><b>9,17 m</b></div>
-            <div class="meas__t" aria-hidden="true"><span class="meas__b" style="width:76.4%"></span></div><div class="meas__sc" aria-hidden="true"><i style="left:0.0%">0</i><i style="left:16.67%">2</i><i style="left:33.33%">4</i><i style="left:50.0%">6</i><i style="left:66.67%">8</i><i style="left:83.33%">10</i><i style="left:100.0%">12 m</i></div></div>
-          <div class="fli__buy">
-            <div class="fli__price"><span class="fli__k" data-pfx>Cena</span><span class="fli__pricev fli__pricev--ask"><b data-price>na zapytanie</b><span class="fli__total" data-total></span></span></div>
-            <div class="fli__act"><a class="btn btn--outline btn--sm" href="jachty-motorowe.html?model=Nautic%20880" aria-label="Zobacz Nautic 880">Zobacz <i data-lucide="arrow-right" class="lucide"></i></a><button class="btn btn--sm" type="button" data-open-modal data-yacht="Nautic 880">Rezerwuj</button></div>
-          </div>
-        </div>
-      </article>
-<article class="fli" data-yacht="Stillo 31" data-base="900">
-        <a class="fli__ph" href="jachty-motorowe.html?model=Stillo%2031" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/r/fl-stillo-400.avif 400w, assets/img/r/fl-stillo-600.avif 600w, assets/img/r/fl-stillo-711.avif 711w" sizes="(min-width:641px) 440px, 100vw"><source type="image/webp" srcset="assets/img/r/fl-stillo-400.webp 400w, assets/img/r/fl-stillo-600.webp 600w, assets/img/r/fl-stillo-711.webp 711w" sizes="(min-width:641px) 440px, 100vw"><img src="assets/img/r/fl-stillo-600.jpg" srcset="assets/img/r/fl-stillo-400.jpg 400w, assets/img/r/fl-stillo-600.jpg 600w, assets/img/r/fl-stillo-711.jpg 711w" sizes="(min-width:641px) 440px, 100vw" width="711" height="533" alt="Stillo 31" decoding="async"></picture></a>
-        <div class="fli__body">
-          <span class="fli__tag"><span class="fli__st"></span></span>
-          <h4 class="fli__name"><a class="u" href="jachty-motorowe.html?model=Stillo%2031">Stillo 31</a></h4>
-          <dl class="fli__spec num">
-            <div><dt>Miejsca</dt><dd>8</dd><div class="berth" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-            <div><dt>Kabiny</dt><dd>3</dd></div>
-            <div><dt>Szerokość</dt><dd>3,20 m</dd></div>
-            <div><dt>Zanurzenie</dt><dd>0,50 m</dd></div>
-          </dl>
-          <div class="meas"><div class="meas__hd"><span>Długość całkowita</span><b>9,80 m</b></div>
-            <div class="meas__t" aria-hidden="true"><span class="meas__b" style="width:81.7%"></span></div><div class="meas__sc" aria-hidden="true"><i style="left:0.0%">0</i><i style="left:16.67%">2</i><i style="left:33.33%">4</i><i style="left:50.0%">6</i><i style="left:66.67%">8</i><i style="left:83.33%">10</i><i style="left:100.0%">12 m</i></div></div>
-          <div class="fli__buy">
-            <div class="fli__price"><span class="fli__k" data-pfx>Cena od</span><span class="fli__pricev"><b data-price>900&nbsp;zł</b> <span class="per">/ doba</span><span class="fli__total" data-total></span></span></div>
-            <div class="fli__act"><a class="btn btn--outline btn--sm" href="jachty-motorowe.html?model=Stillo%2031" aria-label="Zobacz Stillo 31">Zobacz <i data-lucide="arrow-right" class="lucide"></i></a><button class="btn btn--sm" type="button" data-open-modal data-yacht="Stillo 31">Rezerwuj</button></div>
-          </div>
-        </div>
-      </article>
-<article class="fli" data-yacht="Futura 860" data-base="0">
-        <a class="fli__ph" href="jachty-motorowe.html?model=Futura%20860" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="assets/img/r/fl-futura-400.avif 400w, assets/img/r/fl-futura-600.avif 600w, assets/img/r/fl-futura-800.avif 800w" sizes="(min-width:641px) 440px, 100vw"><source type="image/webp" srcset="assets/img/r/fl-futura-400.webp 400w, assets/img/r/fl-futura-600.webp 600w, assets/img/r/fl-futura-800.webp 800w" sizes="(min-width:641px) 440px, 100vw"><img src="assets/img/r/fl-futura-600.jpg" srcset="assets/img/r/fl-futura-400.jpg 400w, assets/img/r/fl-futura-600.jpg 600w, assets/img/r/fl-futura-800.jpg 800w" sizes="(min-width:641px) 440px, 100vw" width="800" height="600" alt="Futura 860" decoding="async"></picture></a>
-        <div class="fli__body">
-          <span class="fli__tag"><span class="fli__st"></span></span>
-          <h4 class="fli__name"><a class="u" href="jachty-motorowe.html?model=Futura%20860">Futura 860</a></h4>
-          <dl class="fli__spec num">
-            <div><dt>Miejsca</dt><dd>6 + 2</dd><div class="berth" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i></div></div>
-            <div><dt>Kabiny</dt><dd>3</dd></div>
-            <div><dt>Szerokość</dt><dd>3,25 m</dd></div>
-            <div><dt>Zanurzenie</dt><dd>0,50 m</dd></div>
-          </dl>
-          <div class="meas"><div class="meas__hd"><span>Długość całkowita</span><b>8,60 m</b></div>
-            <div class="meas__t" aria-hidden="true"><span class="meas__b" style="width:71.7%"></span></div><div class="meas__sc" aria-hidden="true"><i style="left:0.0%">0</i><i style="left:16.67%">2</i><i style="left:33.33%">4</i><i style="left:50.0%">6</i><i style="left:66.67%">8</i><i style="left:83.33%">10</i><i style="left:100.0%">12 m</i></div></div>
-          <div class="fli__buy">
-            <div class="fli__price"><span class="fli__k" data-pfx>Cena</span><span class="fli__pricev fli__pricev--ask"><b data-price>na zapytanie</b><span class="fli__total" data-total></span></span></div>
-            <div class="fli__act"><a class="btn btn--outline btn--sm" href="jachty-motorowe.html?model=Futura%20860" aria-label="Zobacz Futura 860">Zobacz <i data-lucide="arrow-right" class="lucide"></i></a><button class="btn btn--sm" type="button" data-open-modal data-yacht="Futura 860">Rezerwuj</button></div>
-          </div>
-        </div>
-      </article>
-      </div>
-    </div>
+    <div class="sech"><h2 class="h2">Polecane jachty</h2>
+      <div class="sech__a"><a class="u u--on" href="czarter-jachtow.html">Zobacz wszystkie jachty →</a>
+        <button class="rec__nav" type="button" data-dir="-1" aria-label="Poprzednie jachty"><i data-lucide="arrow-left" class="lucide"></i></button>
+        <button class="rec__nav" type="button" data-dir="1" aria-label="Następne jachty"><i data-lucide="arrow-right" class="lucide"></i></button></div></div>
+    <div class="rec__t" id="rec-t"><a class="rc" href="model-antila-34.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-antila-34-progresja-400.webp 400w, assets/img/r/u-antila-34-progresja-600.webp 600w, assets/img/r/u-antila-34-progresja-711.webp 711w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-antila-34-progresja-600.jpg" srcset="assets/img/r/u-antila-34-progresja-400.jpg 400w, assets/img/r/u-antila-34-progresja-600.jpg 600w, assets/img/r/u-antila-34-progresja-711.jpg 711w" sizes="(min-width:1024px) 22vw, 70vw" width="711" height="533" alt="Antila 34" decoding="async"></picture><span class="rc__tag">Jacht żaglowy</span></figure><span class="rc__b"><span class="rc__t">Antila 34</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 10 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 3 kab.</span></span></span></a><a class="rc" href="model-stillo-31.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-stillo-31-star-400.webp 400w, assets/img/r/u-stillo-31-star-600.webp 600w, assets/img/r/u-stillo-31-star-711.webp 711w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-stillo-31-star-600.jpg" srcset="assets/img/r/u-stillo-31-star-400.jpg 400w, assets/img/r/u-stillo-31-star-600.jpg 600w, assets/img/r/u-stillo-31-star-711.jpg 711w" sizes="(min-width:1024px) 22vw, 70vw" width="711" height="533" alt="Stillo 31" decoding="async"></picture><span class="rc__tag">Jacht motorowy</span></figure><span class="rc__b"><span class="rc__t">Stillo 31</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 8 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 3 kab.</span></span></span></a><a class="rc" href="model-antila-33-3.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-antila-33-3-infinitum-400.webp 400w, assets/img/r/u-antila-33-3-infinitum-600.webp 600w, assets/img/r/u-antila-33-3-infinitum-800.webp 800w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-antila-33-3-infinitum-600.jpg" srcset="assets/img/r/u-antila-33-3-infinitum-400.jpg 400w, assets/img/r/u-antila-33-3-infinitum-600.jpg 600w, assets/img/r/u-antila-33-3-infinitum-800.jpg 800w" sizes="(min-width:1024px) 22vw, 70vw" width="800" height="600" alt="Antila 33.3" decoding="async"></picture><span class="rc__tag">Jacht żaglowy</span></figure><span class="rc__b"><span class="rc__t">Antila 33.3</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 10 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 3 kab.</span></span></span></a><a class="rc" href="model-nautiner-38.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-nautiner-38-black-stilo-400.webp 400w, assets/img/r/u-nautiner-38-black-stilo-600.webp 600w, assets/img/r/u-nautiner-38-black-stilo-689.webp 689w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-nautiner-38-black-stilo-600.jpg" srcset="assets/img/r/u-nautiner-38-black-stilo-400.jpg 400w, assets/img/r/u-nautiner-38-black-stilo-600.jpg 600w, assets/img/r/u-nautiner-38-black-stilo-689.jpg 689w" sizes="(min-width:1024px) 22vw, 70vw" width="689" height="517" alt="Nautiner 38" decoding="async"></picture><span class="rc__tag">Jacht motorowy</span></figure><span class="rc__b"><span class="rc__t">Nautiner 38</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 6 + 2 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 3 kab.</span></span></span></a><a class="rc" href="model-antila-33.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-antila-33-kassari-400.webp 400w, assets/img/r/u-antila-33-kassari-600.webp 600w, assets/img/r/u-antila-33-kassari-800.webp 800w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-antila-33-kassari-600.jpg" srcset="assets/img/r/u-antila-33-kassari-400.jpg 400w, assets/img/r/u-antila-33-kassari-600.jpg 600w, assets/img/r/u-antila-33-kassari-800.jpg 800w" sizes="(min-width:1024px) 22vw, 70vw" width="800" height="600" alt="Antila 33" decoding="async"></picture><span class="rc__tag">Jacht żaglowy</span></figure><span class="rc__b"><span class="rc__t">Antila 33</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 10 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 3 kab.</span></span></span></a><a class="rc" href="model-nautic-880.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-nautic-880-cuba-libre-400.webp 400w, assets/img/r/u-nautic-880-cuba-libre-600.webp 600w, assets/img/r/u-nautic-880-cuba-libre-800.webp 800w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-nautic-880-cuba-libre-600.jpg" srcset="assets/img/r/u-nautic-880-cuba-libre-400.jpg 400w, assets/img/r/u-nautic-880-cuba-libre-600.jpg 600w, assets/img/r/u-nautic-880-cuba-libre-800.jpg 800w" sizes="(min-width:1024px) 22vw, 70vw" width="800" height="600" alt="Nautic 880" decoding="async"></picture><span class="rc__tag">Jacht motorowy</span></figure><span class="rc__b"><span class="rc__t">Nautic 880</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 4 + 2 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> – kab.</span></span></span></a><a class="rc" href="model-antila-30-1-e.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-antila-30-1-e-cleopatra-400.webp 400w, assets/img/r/u-antila-30-1-e-cleopatra-600.webp 600w, assets/img/r/u-antila-30-1-e-cleopatra-711.webp 711w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-antila-30-1-e-cleopatra-600.jpg" srcset="assets/img/r/u-antila-30-1-e-cleopatra-400.jpg 400w, assets/img/r/u-antila-30-1-e-cleopatra-600.jpg 600w, assets/img/r/u-antila-30-1-e-cleopatra-711.jpg 711w" sizes="(min-width:1024px) 22vw, 70vw" width="711" height="533" alt="Antila 30.1 E" decoding="async"></picture><span class="rc__tag">Jacht żaglowy</span></figure><span class="rc__b"><span class="rc__t">Antila 30.1 E</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 8 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 3 kab.</span></span></span></a><a class="rc" href="model-nexus-870-revo.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-nexus-870-revo-wiktor-400.webp 400w, assets/img/r/u-nexus-870-revo-wiktor-600.webp 600w, assets/img/r/u-nexus-870-revo-wiktor-800.webp 800w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-nexus-870-revo-wiktor-600.jpg" srcset="assets/img/r/u-nexus-870-revo-wiktor-400.jpg 400w, assets/img/r/u-nexus-870-revo-wiktor-600.jpg 600w, assets/img/r/u-nexus-870-revo-wiktor-800.jpg 800w" sizes="(min-width:1024px) 22vw, 70vw" width="800" height="600" alt="Nexus 870 Revo" decoding="async"></picture><span class="rc__tag">Jacht motorowy</span></figure><span class="rc__b"><span class="rc__t">Nexus 870 Revo</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 4 + 2 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 1 kab.</span></span></span></a><a class="rc" href="model-antila-30.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-antila-30-tutto-bene-400.webp 400w, assets/img/r/u-antila-30-tutto-bene-600.webp 600w, assets/img/r/u-antila-30-tutto-bene-800.webp 800w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-antila-30-tutto-bene-600.jpg" srcset="assets/img/r/u-antila-30-tutto-bene-400.jpg 400w, assets/img/r/u-antila-30-tutto-bene-600.jpg 600w, assets/img/r/u-antila-30-tutto-bene-800.jpg 800w" sizes="(min-width:1024px) 22vw, 70vw" width="800" height="600" alt="Antila 30" decoding="async"></picture><span class="rc__tag">Jacht żaglowy</span></figure><span class="rc__b"><span class="rc__t">Antila 30</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 8 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 3 kab.</span></span></span></a><a class="rc" href="model-futura-860.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-futura-860-eufemia-400.webp 400w, assets/img/r/u-futura-860-eufemia-600.webp 600w, assets/img/r/u-futura-860-eufemia-800.webp 800w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-futura-860-eufemia-600.jpg" srcset="assets/img/r/u-futura-860-eufemia-400.jpg 400w, assets/img/r/u-futura-860-eufemia-600.jpg 600w, assets/img/r/u-futura-860-eufemia-800.jpg 800w" sizes="(min-width:1024px) 22vw, 70vw" width="800" height="600" alt="Futura 860" decoding="async"></picture><span class="rc__tag">Jacht motorowy</span></figure><span class="rc__b"><span class="rc__t">Futura 860</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 6 + 2 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 3 kab.</span></span></span></a><a class="rc" href="model-antila-28-2.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-antila-28-2-pakri-400.webp 400w, assets/img/r/u-antila-28-2-pakri-600.webp 600w, assets/img/r/u-antila-28-2-pakri-800.webp 800w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-antila-28-2-pakri-600.jpg" srcset="assets/img/r/u-antila-28-2-pakri-400.jpg 400w, assets/img/r/u-antila-28-2-pakri-600.jpg 600w, assets/img/r/u-antila-28-2-pakri-800.jpg 800w" sizes="(min-width:1024px) 22vw, 70vw" width="800" height="600" alt="Antila 28.2" decoding="async"></picture><span class="rc__tag">Jacht żaglowy</span></figure><span class="rc__b"><span class="rc__t">Antila 28.2</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 8 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 3 kab.</span></span></span></a><a class="rc" href="model-calipso-750.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-calipso-750-fire-cruiser-400.webp 400w, assets/img/r/u-calipso-750-fire-cruiser-580.webp 580w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-calipso-750-fire-cruiser-580.jpg" srcset="assets/img/r/u-calipso-750-fire-cruiser-400.jpg 400w, assets/img/r/u-calipso-750-fire-cruiser-580.jpg 580w" sizes="(min-width:1024px) 22vw, 70vw" width="580" height="435" alt="Calipso 750" decoding="async"></picture><span class="rc__tag">Jacht motorowy</span></figure><span class="rc__b"><span class="rc__t">Calipso 750</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 4 + 2 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 2 kab.</span></span></span></a><a class="rc" href="model-antila-27.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-antila-27-marmolada-400.webp 400w, assets/img/r/u-antila-27-marmolada-600.webp 600w, assets/img/r/u-antila-27-marmolada-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-antila-27-marmolada-600.jpg" srcset="assets/img/r/u-antila-27-marmolada-400.jpg 400w, assets/img/r/u-antila-27-marmolada-600.jpg 600w, assets/img/r/u-antila-27-marmolada-1280.jpg 1280w" sizes="(min-width:1024px) 22vw, 70vw" width="1280" height="960" alt="Antila 27" decoding="async"></picture><span class="rc__tag">Jacht żaglowy</span></figure><span class="rc__b"><span class="rc__t">Antila 27</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 8 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 3 kab.</span></span></span></a><a class="rc" href="model-maxus-28.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-maxus-28-prawy-hals-400.webp 400w, assets/img/r/u-maxus-28-prawy-hals-600.webp 600w, assets/img/r/u-maxus-28-prawy-hals-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-maxus-28-prawy-hals-600.jpg" srcset="assets/img/r/u-maxus-28-prawy-hals-400.jpg 400w, assets/img/r/u-maxus-28-prawy-hals-600.jpg 600w, assets/img/r/u-maxus-28-prawy-hals-1280.jpg 1280w" sizes="(min-width:1024px) 22vw, 70vw" width="1280" height="960" alt="Maxus 28" decoding="async"></picture><span class="rc__tag">Jacht żaglowy</span></figure><span class="rc__b"><span class="rc__t">Maxus 28</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 8 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 2 kab.</span></span></span></a><a class="rc" href="model-antila-24-4.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-antila-24-4-400.webp 400w, assets/img/r/u-antila-24-4-600.webp 600w, assets/img/r/u-antila-24-4-800.webp 800w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-antila-24-4-600.jpg" srcset="assets/img/r/u-antila-24-4-400.jpg 400w, assets/img/r/u-antila-24-4-600.jpg 600w, assets/img/r/u-antila-24-4-800.jpg 800w" sizes="(min-width:1024px) 22vw, 70vw" width="800" height="600" alt="Antila 24.4" decoding="async"></picture><span class="rc__tag">Jacht żaglowy</span></figure><span class="rc__b"><span class="rc__t">Antila 24.4</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 6 + 2 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 0 kab.</span></span></span></a><a class="rc" href="model-maxus-24-evo.html"><figure class="rc__ph"><picture><source type="image/webp" srcset="assets/img/r/u-maxus-24-evo-waski-400.webp 400w, assets/img/r/u-maxus-24-evo-waski-600.webp 600w, assets/img/r/u-maxus-24-evo-waski-800.webp 800w" sizes="(min-width:1024px) 22vw, 70vw"><img src="assets/img/r/u-maxus-24-evo-waski-600.jpg" srcset="assets/img/r/u-maxus-24-evo-waski-400.jpg 400w, assets/img/r/u-maxus-24-evo-waski-600.jpg 600w, assets/img/r/u-maxus-24-evo-waski-800.jpg 800w" sizes="(min-width:1024px) 22vw, 70vw" width="800" height="600" alt="Maxus 24 Evo" decoding="async"></picture><span class="rc__tag">Jacht żaglowy</span></figure><span class="rc__b"><span class="rc__t">Maxus 24 Evo</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span><span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> 6 + 2 os.</span><span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> 0 kab.</span></span></span></a></div>
   </div>
 </section>
-
-<!-- pas ink: liczba z listy floty, zdanie z opisu firmy na jachtymazury.pl -->
-<section class="inkband band on-dark">
-  <span class="deco deco--compass" aria-hidden="true"></span>
+<section class="kt">
+  <a class="kt__i kt__i--film" href="filmy-szkoleniowe.html">
+    <figure class="kt__ph"><picture><source type="image/webp" srcset="assets/img/j/antila-30-1-e-cleopatra/04-480.webp 480w, assets/img/j/antila-30-1-e-cleopatra/04-800.webp 800w" sizes="(min-width:1024px) 50vw, 100vw"><img src="assets/img/j/antila-30-1-e-cleopatra/04-800.jpg" srcset="assets/img/j/antila-30-1-e-cleopatra/04-480.jpg 480w, assets/img/j/antila-30-1-e-cleopatra/04-800.jpg 800w" sizes="(min-width:1024px) 50vw, 100vw" width="800" height="533" alt="" decoding="async"></picture></figure>
+    <span class="kt__b"><span class="kt__play" aria-hidden="true"><i data-lucide="play" class="lucide"></i></span><span class="kt__t">Filmy szkoleniowe na naszym YouTube</span><span class="kt__d">Praktyczne porady, manewry, trasy i życie na jachcie. Zobacz, zanim wyruszysz!</span><span class="btn kt__btn">Zobacz filmy <i data-lucide="arrow-right" class="lucide"></i></span></span>
+  </a>
+  <a class="kt__i kt__i--guide" href="poradnik.html">
+    <figure class="kt__ph"><picture><source type="image/webp" srcset="assets/img/r/art-czarter-jachtu-kompletny-przewodnik-400.webp 400w, assets/img/r/art-czarter-jachtu-kompletny-przewodnik-600.webp 600w, assets/img/r/art-czarter-jachtu-kompletny-przewodnik-711.webp 711w" sizes="(min-width:1024px) 50vw, 100vw"><img src="assets/img/r/art-czarter-jachtu-kompletny-przewodnik-600.jpg" srcset="assets/img/r/art-czarter-jachtu-kompletny-przewodnik-400.jpg 400w, assets/img/r/art-czarter-jachtu-kompletny-przewodnik-600.jpg 600w, assets/img/r/art-czarter-jachtu-kompletny-przewodnik-711.jpg 711w" sizes="(min-width:1024px) 50vw, 100vw" width="711" height="533" alt="Poradnik czarterowy" decoding="async"></picture></figure>
+    <span class="kt__b"><span class="kt__t">Poradnik czarterowy</span><span class="kt__d">Praktyczna wiedza, inspiracje i sprawdzone trasy po Mazurach.</span><span class="btn kt__btn">Przejdź do poradnika <i data-lucide="arrow-right" class="lucide"></i></span></span>
+  </a>
+</section>
+<section class="psec news">
+  <div class="wrap">
+    <div class="sech"><h2 class="h2">Aktualności</h2><div class="sech__a"><a class="u u--on" href="aktualnosci.html">Zobacz wszystkie aktualności →</a></div></div>
+    <div class="ncs"><a class="nc" href="czarter-jachtu-kompletny-przewodnik.html"><figure class="nc__ph"><picture><source type="image/webp" srcset="assets/img/r/art-czarter-jachtu-kompletny-przewodnik-400.webp 400w, assets/img/r/art-czarter-jachtu-kompletny-przewodnik-600.webp 600w, assets/img/r/art-czarter-jachtu-kompletny-przewodnik-711.webp 711w" sizes="(min-width:1024px) 30vw, 100vw"><img src="assets/img/r/art-czarter-jachtu-kompletny-przewodnik-600.jpg" srcset="assets/img/r/art-czarter-jachtu-kompletny-przewodnik-400.jpg 400w, assets/img/r/art-czarter-jachtu-kompletny-przewodnik-600.jpg 600w, assets/img/r/art-czarter-jachtu-kompletny-przewodnik-711.jpg 711w" sizes="(min-width:1024px) 30vw, 100vw" width="711" height="533" alt="Czarter jachtu – kompletny przewodnik" decoding="async"></picture></figure><span class="nc__k micro">Poradnik</span><span class="nc__t">Czarter jachtu – kompletny przewodnik</span><span class="nc__l">Czarter jachtu na Mazurach to jeden z najlepszych sposobów na spędzenie urlopu blisko natury, z dala od tłumów i w swoim własnym tempie. Jednocześnie dla wielu osób — zwłaszcza przy pierwszym rejsie — jest to temat pełen pytań, niepewności i obaw: jaki jacht wybrać, ile to naprawdę kosztuje, jakie formalności trzeba spełnić i jak uniknąć typowych błędów.</span><span class="nc__go">Czytaj więcej <i data-lucide="arrow-right" class="lucide"></i></span></a><a class="nc" href="jaki-jacht-wybrac-dla-pary-rodziny-lub-grupy.html"><figure class="nc__ph"><picture><source type="image/webp" srcset="assets/img/r/art-jaki-jacht-wybrac-dla-pary-rodziny-lub-grupy-400.webp 400w, assets/img/r/art-jaki-jacht-wybrac-dla-pary-rodziny-lub-grupy-600.webp 600w, assets/img/r/art-jaki-jacht-wybrac-dla-pary-rodziny-lub-grupy-1280.webp 1280w" sizes="(min-width:1024px) 30vw, 100vw"><img src="assets/img/r/art-jaki-jacht-wybrac-dla-pary-rodziny-lub-grupy-600.jpg" srcset="assets/img/r/art-jaki-jacht-wybrac-dla-pary-rodziny-lub-grupy-400.jpg 400w, assets/img/r/art-jaki-jacht-wybrac-dla-pary-rodziny-lub-grupy-600.jpg 600w, assets/img/r/art-jaki-jacht-wybrac-dla-pary-rodziny-lub-grupy-1280.jpg 1280w" sizes="(min-width:1024px) 30vw, 100vw" width="1280" height="960" alt="Jaki jacht wybrać dla pary, rodziny lub grupy" decoding="async"></picture></figure><span class="nc__k micro">Poradnik</span><span class="nc__t">Jaki jacht wybrać dla pary, rodziny lub grupy</span><span class="nc__l">Wybór jachtu ma realny wpływ na to, jak będzie wyglądał cały rejs po Mazurach. Zbyt mała jednostka ogranicza komfort, zbyt duża potrafi generować niepotrzebny stres, szczególnie przy manewrach portowych.</span><span class="nc__go">Czytaj więcej <i data-lucide="arrow-right" class="lucide"></i></span></a><a class="nc" href="co-zabrac-na-rejs-zeglarski-na-mazurach.html"><figure class="nc__ph"><picture><source type="image/webp" srcset="assets/img/r/art-co-zabrac-na-rejs-zeglarski-na-mazurach-400.webp 400w, assets/img/r/art-co-zabrac-na-rejs-zeglarski-na-mazurach-600.webp 600w, assets/img/r/art-co-zabrac-na-rejs-zeglarski-na-mazurach-1280.webp 1280w" sizes="(min-width:1024px) 30vw, 100vw"><img src="assets/img/r/art-co-zabrac-na-rejs-zeglarski-na-mazurach-600.jpg" srcset="assets/img/r/art-co-zabrac-na-rejs-zeglarski-na-mazurach-400.jpg 400w, assets/img/r/art-co-zabrac-na-rejs-zeglarski-na-mazurach-600.jpg 600w, assets/img/r/art-co-zabrac-na-rejs-zeglarski-na-mazurach-1280.jpg 1280w" sizes="(min-width:1024px) 30vw, 100vw" width="1280" height="960" alt="Co zabrać na rejs żeglarski na Mazurach? Praktyczny poradnik" decoding="async"></picture></figure><span class="nc__k micro">Poradnik</span><span class="nc__t">Co zabrać na rejs żeglarski na Mazurach? Praktyczny poradnik</span><span class="nc__l">Przestrzeń na pokładzie podczas rejsu żaglówką jest ograniczona. Jak to rozplanować, aby nie zabrać za ani dużo ani za mało? Sprawdź, co naprawdę mieć ze sobą na rejsie żeglarskim po Mazurach.</span><span class="nc__go">Czytaj więcej <i data-lucide="arrow-right" class="lucide"></i></span></a></div>
+  </div>
+</section>
+<section class="psec psec--sand ab">
   <div class="wrap g12">
-    <p class="band__num c5 num reveal">23<small>jachty w jednej marinie</small></p>
-    <p class="band__txt c7 reveal">Dbamy o to, aby wynajem był przewidywalny i dobrze zorganizowany — <b>niezależnie od doświadczenia sternika.</b></p>
+    <div class="c5 ab__t">
+      <p class="micro muted">O nas</p>
+      <h2 class="h2">Ludzie. Pasja. Mazury.</h2>
+      <p class="ab__lead">Od <strong>ponad 10&nbsp;lat</strong> oferujemy czarter jachtów na Mazurach, zapewniając bezpieczny i spokojny wypoczynek na wodzie. Stawiamy na jakość techniczną, niezawodność i realny komfort załogi.</p>
+      <p>Nasza flota to starannie przygotowane jachty żaglowe, motorowe i houseboaty, regularnie serwisowane i w pełni wyposażone. Zapewniamy szkolenie przed rejsem, pomoc w planowaniu trasy oraz wsparcie techniczne na Szlaku Wielkich Jezior Mazurskich.</p>
+    </div>
+    <ul class="c7 ab__team"><li class="mem mem--ink"><span class="mem__ini" aria-hidden="true">SP</span><b class="mem__n">Sebastian Pażyszek</b><span class="mem__r">Właściciel</span></li><li class="mem mem--deep"><span class="mem__ini" aria-hidden="true">B</span><b class="mem__n">Beata</b><span class="mem__r">Obsługa czarteru</span></li><li class="mem mem--sage"><span class="mem__ini" aria-hidden="true">K</span><b class="mem__n">Kamil</b><span class="mem__r">Obsługa czarteru</span></li><li class="mem mem--paper"><span class="mem__ini" aria-hidden="true">P</span><b class="mem__n">Patrycja</b><span class="mem__r">Obsługa czarteru</span></li></ul>
   </div>
 </section>
-
-<!-- 02 / O NAS -->
-<section class="sec about" id="o-nas">
-  <div class="wrap">
-    <div class="bearing"><span class="bearing__n">O nas</span><div class="ticks" aria-hidden="true"></div></div>
-    <div class="g12 about__top">
-      <div class="c5 about__t reveal">
-        <h2 class="h2">Lokalna firma<br>z Giżycka</h2>
-        <p class="about__lead">Od <strong class="hl">ponad 10&nbsp;lat</strong> oferujemy czarter jachtów na Mazurach, zapewniając bezpieczny i spokojny wypoczynek na wodzie. Stawiamy na jakość techniczną, niezawodność i realny komfort załogi.</p>
-        <div class="about__txt">
-          <p>Nasza flota to starannie przygotowane jachty żaglowe, motorowe i houseboaty, regularnie serwisowane i w pełni wyposażone. Dbamy o to, aby wynajem był przewidywalny — niezależnie od doświadczenia sternika.</p>
-          <p>Zapewniamy szkolenie przed rejsem, pomoc w planowaniu trasy oraz wsparcie techniczne na Szlaku Wielkich Jezior Mazurskich.</p>
-        </div>
-        <dl class="about__facts num">
-          <div><dt>Na wodzie</dt><dd>ponad 10 lat</dd></div>
-          <div><dt>Jednostek</dt><dd>23</dd></div>
-          <div><dt>Biuro</dt><dd>7 dni</dd></div>
-        </dl>
-      </div>
-
-      <div class="c7 about__ph bleed-r reveal">
-        <figure class="about__ph1"><picture><source type="image/avif" srcset="assets/img/r/marmolada-640.avif 640w, assets/img/r/marmolada-960.avif 960w, assets/img/r/marmolada-1280.avif 1280w, assets/img/r/marmolada-1600.avif 1600w" sizes="(min-width:1024px) 58vw, 100vw"><source type="image/webp" srcset="assets/img/r/marmolada-640.webp 640w, assets/img/r/marmolada-960.webp 960w, assets/img/r/marmolada-1280.webp 1280w, assets/img/r/marmolada-1600.webp 1600w" sizes="(min-width:1024px) 58vw, 100vw"><img src="assets/img/r/marmolada-1600.jpg" srcset="assets/img/r/marmolada-640.jpg 640w, assets/img/r/marmolada-960.jpg 960w, assets/img/r/marmolada-1280.jpg 1280w, assets/img/r/marmolada-1600.jpg 1600w" sizes="(min-width:1024px) 58vw, 100vw" width="1600" height="1200" alt="Antila 27 „Marmolada” przy kei o zachodzie słońca" decoding="async"></picture><figcaption class="about__cap">Antila 27 „Marmolada”</figcaption></figure>
-        <div class="about__ph2">
-          <figure><picture><source type="image/avif" srcset="assets/img/r/life-640.avif 640w, assets/img/r/life-960.avif 960w, assets/img/r/life-1280.avif 1280w" sizes="(min-width:1024px) 28vw, 50vw"><source type="image/webp" srcset="assets/img/r/life-640.webp 640w, assets/img/r/life-960.webp 960w, assets/img/r/life-1280.webp 1280w" sizes="(min-width:1024px) 28vw, 50vw"><img src="assets/img/r/life-1280.jpg" srcset="assets/img/r/life-640.jpg 640w, assets/img/r/life-960.jpg 960w, assets/img/r/life-1280.jpg 1280w" sizes="(min-width:1024px) 28vw, 50vw" width="960" height="640" alt="Antila 27 „Hiuma” w porcie" decoding="async"></picture></figure>
-          <figure><picture><source type="image/avif" srcset="assets/img/r/int-salon-640.avif 640w, assets/img/r/int-salon-800.avif 800w" sizes="(min-width:1024px) 28vw, 50vw"><source type="image/webp" srcset="assets/img/r/int-salon-640.webp 640w, assets/img/r/int-salon-800.webp 800w" sizes="(min-width:1024px) 28vw, 50vw"><img src="assets/img/r/int-salon-800.jpg" srcset="assets/img/r/int-salon-640.jpg 640w, assets/img/r/int-salon-800.jpg 800w" sizes="(min-width:1024px) 28vw, 50vw" width="800" height="600" alt="Salon pod pokładem" decoding="async"></picture></figure>
-        </div>
-      </div>
+<section class="loc on-dark">
+  <figure class="loc__ph"><picture><source type="image/webp" srcset="assets/img/r/port-400.webp 400w, assets/img/r/port-600.webp 600w, assets/img/r/port-1280.webp 1280w" sizes="(min-width:1024px) 60vw, 100vw"><img src="assets/img/r/port-600.jpg" srcset="assets/img/r/port-400.jpg 400w, assets/img/r/port-600.jpg 600w, assets/img/r/port-1280.jpg 1280w" sizes="(min-width:1024px) 60vw, 100vw" width="1280" height="960" alt="Stanica Wodna Stranda w Giżycku z lotu ptaka" decoding="async"></picture></figure>
+  <div class="wrap loc__in">
+    <div class="loc__t">
+      <h2 class="h2">Nasza lokalizacja</h2>
+      <p class="loc__sub">Giżycko – serce Mazur</p>
+      <p>Stacjonujemy w Giżycku w porcie Stranda, położonym nad zatoką Tracz na jeziorze Kisajno. Stranda to nowoczesny kompleks wypoczynkowy znajdujący się ok. 2 km od centrum Giżycka.</p>
+      <a class="btn loc__btn" href="https://www.google.com/maps/search/?api=1&amp;query=Stanica+Wodna+Stranda+Pierkunowo+36+Gi%C5%BCycko" rel="noopener" target="_blank">Zobacz na mapie <i data-lucide="arrow-up-right" class="lucide"></i></a>
     </div>
-
+    <ul class="loc__bar">
+      <li><i data-lucide="map-pin" class="lucide" aria-hidden="true"></i><span><b>Stanica Wodna Stranda</b>Pierkunowo 36, 11-500 Giżycko</span></li>
+      <li><i data-lucide="clock" class="lucide" aria-hidden="true"></i><span><b>Biuro</b>Codziennie 8:00 – 20:00</span></li>
+      <li><i data-lucide="phone" class="lucide" aria-hidden="true"></i><a class="num" href="tel:+48511420100">+48 511 420 100</a></li>
+      <li><i data-lucide="mail" class="lucide" aria-hidden="true"></i><a href="mailto:info@jachtymazury.pl">info@jachtymazury.pl</a></li>
+    </ul>
   </div>
 </section>
-
-<!-- ZESPÓŁ — imiona i role ze źródeł; cytaty z opinii Google -->
-<section class="team-sec" id="zespol">
-  <div class="wrap">
-    <span class="deco deco--rope" aria-hidden="true"></span>
-    <div class="team__top reveal">
-      <div><span class="micro muted">Zespół</span><h2 class="h2">Ludzie, z&nbsp;którymi<br>się umawiasz</h2></div>
-      <p class="team__meta">Stanica Wodna Stranda<br>Pierkunowo 36, Giżycko</p>
-    </div>
-    <div class="team__grid">
-      <article class="mem mem--ink reveal"><span class="mem__ini" aria-hidden="true">SP</span>
-        <h3 class="mem__n">Sebastian Pażyszek</h3><p class="mem__r">Właściciel</p></article>
-      <article class="mem mem--deep reveal"><span class="mem__ini" aria-hidden="true">B</span>
-        <h3 class="mem__n">Beata</h3><p class="mem__r">Obsługa czarteru</p></article>
-      <article class="mem mem--sage reveal"><span class="mem__ini" aria-hidden="true">K</span>
-        <h3 class="mem__n">Kamil</h3><p class="mem__r">Obsługa czarteru</p></article>
-      <article class="mem mem--paper reveal"><span class="mem__ini" aria-hidden="true">P</span>
-        <h3 class="mem__n">Patrycja</h3><p class="mem__r">Obsługa czarteru</p></article>
-    </div>
-    <div class="team__q">
-      <figure class="tq reveal">
-        <figcaption class="tq__k">O właścicielach</figcaption>
-        <blockquote><p>„Uczciwi właściciele, wzorowy kontakt.”</p></blockquote>
-        <p class="tq__by">Bartosz Borecki · opinia w Google</p>
-      </figure>
-      <figure class="tq tq--wide reveal">
-        <figcaption class="tq__k">O obsłudze</figcaption>
-        <blockquote lang="en"><p>„Staff English speaking, friendly, helpful, doing their best. Answering calls quickly, 24/7. Thank you Beata, Kamil &amp; Patrycja.”</p></blockquote>
-        <p class="tq__by">Pavel Kantor · opinia w Google, po angielsku</p>
-      </figure>
-    </div>
+<div class="bk" id="rezerwuj-okno" role="dialog" aria-modal="true" aria-labelledby="bk-h" hidden>
+  <div class="bk__bg" data-close-modal></div>
+  <div class="bk__p">
+    <button class="bk__x" type="button" data-close-modal aria-label="Zamknij"><i data-lucide="x" class="lucide"></i></button>
+    <p class="micro muted">Rezerwacja online</p><h2 class="h3" id="bk-h">Sprawdź dostępność</h2>
+    <div class="slot" data-slot="okno-rezerwacji"><i data-lucide="calendar-days" class="lucide" aria-hidden="true"></i><p><b>Okno rezerwacji</b>Tu wyświetli się kalendarz z systemu rezerwacji.</p></div>
+    <div class="bk__a"><a class="btn" href="czarter-jachtow.html">Zobacz jachty</a><a class="btn btn--outline" href="tel:+48511420100"><i data-lucide="phone" class="lucide"></i> +48 511 420 100</a></div>
   </div>
-</section>
-
-<!-- 03 / OPINIE — realne recenzje Google; gniazdo na widget TrustIndex -->
-<section class="sec reviews" id="opinie">
-  <div class="wrap">
-    <h2 class="h2 ti__title">Poznaj opinie naszych klientów</h2>
-    <div class="ti" data-slot="widget-trustindex">
-      <div class="ti__sum">
-        <span class="glogo" aria-label="Google"><i>G</i><i>o</i><i>o</i><i>g</i><i>l</i><i>e</i></span>
-        <div class="ti__score" aria-label="Ocena 4,8 na 5 na podstawie 57 opinii w Google">
-          <b class="ti__num num">4,8</b>
-          <span class="gstars gstars--lg" style="--r:96%" aria-hidden="true"><span class="gstars__on">★★★★★</span>★★★★★</span>
-        </div>
-        <p class="ti__count">Na podstawie <b class="num">57&nbsp;opinii</b> w&nbsp;Google</p>
-        <a class="btn btn--outline btn--sm" href="https://share.google/dC6VqBSRLYOjmESdY" rel="noopener" target="_blank">Zobacz wszystkie opinie <i data-lucide="arrow-up-right" class="lucide"></i></a>
-      </div>
-      <div class="ti__car">
-        <div class="ti__track" id="ti-track" tabindex="0" aria-label="Opinie klientów, przewijaj poziomo">
-      <article class="ti__card">
-        <div class="ti__head"><span class="ti__av" style="background:#137396">S</span><div class="ti__who"><b>Sergiusz Makowski</b><span>Opublikowano na Google</span></div></div>
-        <span class="ti__stars" role="img" aria-label="Ocena 5 na 5">★★★★★</span>
-        <p class="ti__txt">Czarterowaliśmy Nautic 880 „Cuba Libre”. Od samego początku współpraca układała się bardzo dobrze. Wszystko mieliśmy wcześniej omówione i przy wydaniu łodzi nie było problemu. Co najważniejsze: zdawanie łodzi przebiegło w bardzo przyjemnej atmosferze, bez szukania dziury w całym. Polecam gorąco firmę i mam nadzieję, że spotkamy się za rok.</p><button class="ti__more" type="button">Czytaj więcej</button>
-      </article>
-      <article class="ti__card">
-        <div class="ti__head"><span class="ti__av" style="background:#71846F">P</span><div class="ti__who"><b>Piotr Szeptyński</b><span>Opublikowano na Google</span></div></div>
-        <span class="ti__stars" role="img" aria-label="Ocena 5 na 5">★★★★★</span>
-        <p class="ti__txt">Zawsze profesjonalnie i miło. Od lat!</p>
-      </article>
-      <article class="ti__card">
-        <div class="ti__head"><span class="ti__av" style="background:#3E9AB3">B</span><div class="ti__who"><b>Bartosz Borecki</b><span>Opublikowano na Google</span></div></div>
-        <span class="ti__stars" role="img" aria-label="Ocena 5 na 5">★★★★★</span>
-        <p class="ti__txt">Jachty dobrze przygotowane, odbiór łódki przed czasem, uczciwi właściciele, wzorowy kontakt.</p>
-      </article>
-      <article class="ti__card">
-        <div class="ti__head"><span class="ti__av" style="background:#304044">M</span><div class="ti__who"><b>Maksymiliana Józefowska</b><span>Opublikowano na Google</span></div></div>
-        <span class="ti__stars" role="img" aria-label="Ocena 5 na 5">★★★★★</span>
-        <p class="ti__txt">Polecam z ręką na sercu. Nie da się napisać niczego złego. Super jachty, super ludzie, super port.</p>
-      </article>
-      <article class="ti__card">
-        <div class="ti__head"><span class="ti__av" style="background:#137396">M</span><div class="ti__who"><b>Maciej Sieradzki</b><span>Opublikowano na Google</span></div></div>
-        <span class="ti__stars" role="img" aria-label="Ocena 5 na 5">★★★★★</span>
-        <p class="ti__txt">Pierwszy raz czarterowałem łódź na Mazurach i muszę przyznać, że lepiej nie mogłem trafić — przemiła obsługa, wszystko na czas. Niezdecydowanym gorąco polecam!</p>
-      </article>
-      <article class="ti__card">
-        <div class="ti__head"><span class="ti__av" style="background:#3E9AB3">D</span><div class="ti__who"><b>DW YT</b><span>Opublikowano na Google</span></div></div>
-        <span class="ti__stars" role="img" aria-label="Ocena 5 na 5">★★★★★</span>
-        <p class="ti__txt">Z pełnym przekonaniem polecam. Proces rezerwacji przebiegł sprawnie i bezproblemowo, a kontakt z obsługą był bardzo profesjonalny i pomocny na każdym etapie. Jacht był doskonale przygotowany do rejsu — czysty, zadbany i w świetnym stanie technicznym.</p><button class="ti__more" type="button">Czytaj więcej</button>
-      </article>
-        </div>
-        <button class="ti__nav ti__nav--prev" type="button" data-dir="-1" aria-label="Poprzednie opinie" disabled><i data-lucide="chevron-left" class="lucide"></i></button>
-        <button class="ti__nav ti__nav--next" type="button" data-dir="1" aria-label="Następne opinie"><i data-lucide="chevron-right" class="lucide"></i></button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 04 / PORT -->
-<section class="sec" id="port">
-  <div class="wrap">
-    <div class="bearing"><span class="bearing__n">Port</span><div class="ticks" aria-hidden="true"></div></div>
-    <div class="g12">
-      <figure class="port__ph c7 bleed-l reveal"><picture><source type="image/avif" srcset="assets/img/r/flota-640.avif 640w, assets/img/r/flota-960.avif 960w, assets/img/r/flota-1280.avif 1280w, assets/img/r/flota-1600.avif 1600w, assets/img/r/flota-2560.avif 2560w" sizes="(min-width:1024px) 60vw, 100vw"><source type="image/webp" srcset="assets/img/r/flota-640.webp 640w, assets/img/r/flota-960.webp 960w, assets/img/r/flota-1280.webp 1280w, assets/img/r/flota-1600.webp 1600w, assets/img/r/flota-2560.webp 2560w" sizes="(min-width:1024px) 60vw, 100vw"><img src="assets/img/r/flota-2560.jpg" srcset="assets/img/r/flota-640.jpg 640w, assets/img/r/flota-960.jpg 960w, assets/img/r/flota-1280.jpg 1280w, assets/img/r/flota-1600.jpg 1600w, assets/img/r/flota-2560.jpg 2560w" sizes="(min-width:1024px) 60vw, 100vw" width="1200" height="480" alt="Jachty przy kei, widok z lotu ptaka" decoding="async"></picture></figure>
-      <div class="port__data c5 reveal">
-        <span class="coords">Pierkunowo 36 · Giżycko</span>
-        <h2 class="h2">Stanica Wodna<br>Stranda</h2>
-        <p class="body muted" style="margin-top:var(--s3)">Pierkunowo pod Giżyckiem, u progu Szlaku Wielkich Jezior Mazurskich. Odbiór jachtu, szkolenie przed rejsem i mapa na stole — wszystko w jednym miejscu.</p>
-        <dl class="dl">
-          <div><dt>Adres</dt><dd>Pierkunowo 36<br><span class="num">11-500 Giżycko</span></dd></div>
-          <div><dt>Biuro</dt><dd class="num">8:00 – 20:00, siedem dni w tygodniu</dd></div>
-          <div><dt>Telefon</dt><dd class="num"><a class="u" href="tel:+48511420100">+48 511 420 100</a></dd></div>
-          
-        </dl>
-        <a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Stanica+Wodna+Stranda+Pierkunowo+36+Gi%C5%BCycko" rel="noopener" target="_blank" style="margin-top:var(--s4)">Pokaż na mapie <i data-lucide="arrow-up-right" class="lucide"></i></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 05 / WARUNKI -->
-<section class="sec warunki" id="warunki">
-  <div class="wrap">
-    <div class="bearing"><span class="bearing__n">Warunki czarteru</span><div class="ticks" aria-hidden="true"></div></div>
-    <div class="g12 sec-head">
-      <span class="deco deco--anchor" aria-hidden="true"></span>
-      <h2 class="h2 c6 reveal">Co jest w cenie,<br>a co dopłacasz</h2>
-      <p class="lead c5 o8 reveal">Cena za dobę obowiązuje przy czarterze minimum tygodniowym. Przy krótszych terminach ustalamy ją indywidualnie.</p>
-    </div>
-    <div class="g12 war">
-      <section class="c4 war__b reveal"><h3 class="war__h">W cenie</h3>
-        <ul class="war__l">
-          <li>Ubezpieczenie</li><li>Serwis na szlaku przy awarii z winy armatora</li>
-          <li>Nabita butla gazowa</li><li>Zatankowany zbiornik wody</li>
-          <li>Zatankowany zbiornik paliwa</li><li>Pusty zbiornik na fekalia</li>
-        </ul></section>
-      <section class="c4 war__b reveal"><h3 class="war__h">Rabaty</h3>
-        <ul class="war__l num">
-          <li><b>5%</b> — klienci pływający z nami co najmniej dwa sezony</li>
-          <li><b>5%</b> — czarter dwutygodniowy</li>
-          <li><b>5%</b> — studenci w maju, czerwcu i wrześniu, od poniedziałku do czwartku</li>
-        </ul></section>
-      <section class="c4 war__b reveal"><h3 class="war__h">Dopłaty</h3>
-        <dl class="war__d num">
-          <div><dt>Wynajem sternika</dt><dd>od 300 zł / dzień</dd></div>
-          <div><dt>Wypożyczenie SUP-a</dt><dd>200 zł / tydzień</dd></div>
-          <div><dt>Rejs one way</dt><dd>od 500 zł</dd></div>
-          <div><dt>Pościel</dt><dd>70 zł / komplet</dd></div>
-          <div><dt>Opróżnienie fekaliów</dt><dd>250 zł</dd></div>
-          <div><dt>Pies lub kot</dt><dd>150 zł</dd></div>
-        </dl></section>
-    </div>
-    <div class="war__hours reveal">
-      <div><span class="micro muted">Wydanie jachtu</span><b class="num">16:00 – 20:00</b></div>
-      <div><span class="micro muted">Zdanie jachtu</span><b class="num">8:00 – 10:00</b></div>
-      <div><span class="micro muted">Inne godziny</span><b>do ustalenia</b></div>
-      <p class="war__note">Wszystkie ceny są cenami brutto i nie zawierają rabatów.</p>
-    </div>
-  </div>
-</section>
-
+</div>
 </main>
 
 <footer class="inkband foot on-dark" id="kontakt">
   <div class="wrap">
-    <div class="g12">
-      <div class="c4"><img class="foot__logo" src="assets/img/logo-mono.png" width="450" height="76" alt="Jachtymazury.pl"><p>Czarter jachtów żaglowych, motorowych i houseboatów ze Stanicy Wodnej Stranda w Giżycku.</p></div>
-      <div class="c3"><span class="micro">Kontakt</span>
-        <ul class="foot__list"><li>Stanica Wodna Stranda</li><li>Pierkunowo 36</li><li class="num">11-500 Giżycko</li><li class="num"><a class="u" href="tel:+48511420100">+48 511 420 100</a></li><li><a class="u" href="mailto:info@jachtymazury.pl">info@jachtymazury.pl</a></li></ul></div>
-      <div class="c3"><span class="micro">Biuro</span><ul class="foot__list"><li class="num">8:00 – 20:00</li><li>siedem dni w tygodniu</li></ul></div>
-      <div class="c2"><span class="micro">Social</span><ul class="foot__list"><li><a class="u" href="https://www.facebook.com/jachtymazury/" rel="noopener" target="_blank">Facebook</a></li><li><a class="u" href="https://www.instagram.com/jachtymazury.pl/" rel="noopener" target="_blank">Instagram</a></li><li><a class="u" href="https://www.youtube.com/channel/UCGulH1SMSyk0Ihr2HQ8rfRA" rel="noopener" target="_blank">YouTube</a></li></ul></div>
+    <div class="foot__g">
+      <div class="foot__brand"><img class="foot__logo" src="assets/img/logo-mono.png" width="450" height="76" alt="Jachtymazury.pl">
+        <p>Czarter jachtów żaglowych, motorowych i houseboatów ze Stanicy Wodnej Stranda w Giżycku.</p>
+        <p class="foot__soc"><a class="u" href="https://www.facebook.com/jachtymazury/" rel="noopener" target="_blank">Facebook</a><a class="u" href="https://www.instagram.com/jachtymazury.pl/" rel="noopener" target="_blank">Instagram</a></p></div>
+      <div><span class="micro">Szybkie linki</span><ul class="foot__list"><li><a class="u" href="czarter-jachtow.html">Czarter jachtów</a></li><li><a class="u" href="poradnik.html">Poradnik czarterowy</a></li><li><a class="u" href="cennik.html">Cennik</a></li><li><a class="u" href="wspolpraca.html">Współpraca</a></li><li><a class="u" href="kontakt.html">Kontakt</a></li><li><a class="u" href="polityka-prywatnosci.html">Polityka prywatności</a></li></ul></div>
+      <div><span class="micro">Czarter jachtów</span><ul class="foot__list"><li><a class="u" href="jachty-zaglowe.html">Jachty żaglowe</a></li><li><a class="u" href="jachty-motorowe.html">Jachty motorowe</a></li><li><a class="u" href="czarter-bez-patentu.html">Czarter bez patentu</a></li><li><a class="u" href="jachty-na-sprzedaz.html">Jachty na sprzedaż</a></li></ul></div>
+      <div><span class="micro">Kontakt</span><ul class="foot__list"><li>Stanica Wodna Stranda</li><li>Pierkunowo 36, 11-500 Giżycko</li><li class="num"><a class="u" href="tel:+48511420100">+48 511 420 100</a></li><li><a class="u" href="mailto:info@jachtymazury.pl">info@jachtymazury.pl</a></li><li class="num">Biuro 8:00 – 20:00, codziennie</li></ul></div>
     </div>
-
     <div class="ue">
       <a class="ue__img" href="fundusze-europejskie.html" aria-label="Fundusze Europejskie — szczegóły dofinansowania">
         <picture><source type="image/webp" srcset="assets/img/r/ue-logotypy-630.webp 630w, assets/img/r/ue-logotypy-1260.webp 1260w, assets/img/r/ue-logotypy-1890.webp 1890w" sizes="(min-width:768px) 560px, 100vw">
@@ -1065,249 +140,29 @@ html.js .legend__row{opacity:0;transform:translateY(var(--shift));animation:rise
       </a>
       <p class="ue__txt">Projekt dofinansowany ze środków Unii Europejskiej. <a class="u u--on" href="fundusze-europejskie.html">Szczegóły dofinansowania →</a></p>
     </div>
-
-    <div class="foot__bot"><span>© 2026 jachtymazury.pl</span><span class="num">Pierkunowo 36, 11-500 Giżycko</span><span><a class="u" href="fundusze-europejskie.html">Fundusze Europejskie</a> · <a class="u" href="polityka-prywatnosci.html">Polityka prywatności</a></span></div>
+    <div class="foot__bot"><span>© 2026 jachtymazury.pl</span><span><a class="u" href="fundusze-europejskie.html">Fundusze Europejskie</a> · <a class="u" href="polityka-prywatnosci.html">Polityka prywatności</a></span></div>
   </div>
 </footer>
-
-<!-- MODAL rezerwacji: tylko daty -->
-<div class="modal" id="booking" role="dialog" aria-modal="true" aria-labelledby="booking-title" hidden>
-  <div class="modal__bg" data-close-modal></div>
-  <div class="modal__panel">
-    <button class="modal__close" data-close-modal aria-label="Zamknij"><i data-lucide="x" class="lucide"></i></button>
-    <div class="modal__head"><span class="micro muted" id="booking-yacht">Rezerwacja online</span><h2 class="h3" id="booking-title">Kiedy płyniesz?</h2></div>
-    <div class="modal__form">
-      <!-- GNIAZDO: tu wchodzi HTML kalendarza od dostawcy. Poniżej makieta docelowego wyglądu. -->
-      <div class="cal" id="cal" data-slot="kalendarz-dostawcy">
-        <div class="cal__hd">
-          <button class="cal__nav" type="button" data-m="-1" aria-label="Poprzedni miesiąc"><i data-lucide="chevron-left" class="lucide"></i></button>
-          <b id="cal-title">lipiec 2027</b>
-          <button class="cal__nav" type="button" data-m="1" aria-label="Następny miesiąc"><i data-lucide="chevron-right" class="lucide"></i></button>
-        </div>
-        <div class="cal__dow" aria-hidden="true"><span>pn</span><span>wt</span><span>śr</span><span>cz</span><span>pt</span><span>sb</span><span>nd</span></div>
-        <div class="cal__grid" id="cal-grid"></div>
-      </div>
-      <p class="cal__sel" id="cal-sel" aria-live="polite">Wskaż dzień rozpoczęcia czarteru.</p>
-      <button class="btn btn--block" type="button" id="cal-go" disabled><span class="btn__label">Pokaż wolne jachty</span> <i data-lucide="arrow-right" class="lucide"></i></button>
-      <p class="modal__note">Wybór terminu to jeszcze nie rezerwacja. Po wskazaniu jachtu potwierdzimy dostępność mailem.</p>
-    </div>
-  </div>
-</div>
 
 <a class="callfab" href="tel:+48511420100" aria-label="Zadzwoń: +48 511 420 100" title="+48 511 420 100">
   <span class="callfab__ico" aria-hidden="true"><i data-lucide="phone" class="lucide"></i><span class="callfab__fb">✆</span></span>
 </a>
 
 <script src="https://unpkg.com/lucide@latest" defer></script>
-<script>
-document.documentElement.classList.add('js');
-function icons(){try{window.lucide&&lucide.createIcons()}catch(e){}}
-icons();addEventListener('load',icons);
-
-/* nagłówek: przezroczysty nad hero, papierowy po przewinięciu */
-const head=document.getElementById('head');
-const onScroll=()=>{const s=scrollY>8;head.classList.toggle('solid',s);head.classList.toggle('on-photo',!s)};onScroll();addEventListener('scroll',onScroll,{passive:true});
-
-
-/* ============================================================
-   DOSTĘPNOŚĆ — prototyp na danych demo.
-   `busy` i mnożniki sezonowe podmienić na odpowiedź systemu rezerwacji.
-   ============================================================ */
-/* CENNIK 2027 — stawki wprost z jachtymazury.pl/cennik/ (zł).
-   Okresy: [od, do) w formacie MM-DD; typ 'd' = za dobę, 'o' = cena za cały okres (pakiet). */
-const OKRESY=[['01-01','04-29','d'],['04-29','05-03','o'],['05-03','05-26','d'],['05-26','05-30','o'],['05-30','06-26','d'],
-  ['06-26','07-10','d'],['07-10','07-17','d'],['07-17','08-21','d'],['08-21','08-28','d'],['08-28','09-12','d'],['09-12','12-31','d']];
-const CENNIK={
-  'Antila 33':[650,2990,680,4840,750,850,900,950,850,850,700],
-  'Antila 30':[650,2990,680,4840,750,800,850,900,800,800,700],
-  'Nexus 870 Revo':[330,1840,380,650,450,600,600,600,600,420,400],
-  'Antila 28.2':[550,2770,615,3900,680,750,800,800,750,750,650],   /* pierwszy wiersz Antili 28.2 w cenniku */
-  'Maxus 28':[330,1840,380,2860,450,500,550,580,500,420,400],
-  'Stillo 31':[900,5280,1000,5500,1100,1150,1200,1250,1200,1100,1000]
-  /* Nautic 880 — w cenniku brak stawek (tylko kaucja i sprzątanie) → cena indywidualna */
-};
-/* Zajęte terminy przyjdą z kalendarza dostawcy. Do tego czasu pusto — niczego nie zgadujemy. */
-const FLOTA={};
-const DAY=864e5, d2=s=>new Date(s+'T00:00:00');
-const zl=n=>n.toLocaleString('pl-PL').replace(/ /g,' ')+' zł';
-const md=d=>String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-const okres=d=>{const k=md(d);return OKRESY.findIndex(([a,b])=>k>=a&&k<b)};
-const fmtDay=new Intl.DateTimeFormat('pl-PL',{day:'numeric',month:'long'});
-function fmtRange(a,b){ /* pokazujemy wjazd–wyjazd, tak jak wpisał użytkownik */
-  if(a.getMonth()===b.getMonth())return a.getDate()+'–'+fmtDay.format(b);
-  return fmtDay.format(a)+' – '+fmtDay.format(b);
-}
-/* suma za pobyt z cennika; dni w okresach pakietowych ('o') → cena indywidualna */
-function stay(model,a,b){
-  const t=CENNIK[model];if(!t)return null;
-  let sum=0,n=0;
-  for(let d=new Date(a);d<b;d=new Date(+d+DAY)){const i=okres(d);if(i<0||OKRESY[i][2]==='o')return null;sum+=t[i];n++}
-  const rabat=n>=14?Math.round(sum*0.05):0;          // 5% — czarter dwutygodniowy (cennik)
-  return{total:sum-rabat,nights:n,avg:Math.round((sum-rabat)/n),rabat};
-}
-function statusOf(model,a,b){
-  if((FLOTA[model]||[]).some(([x,y])=>a<d2(y)&&d2(x)<b))return'busy';
-  const n=Math.round((b-a)/DAY);
-  if(n<7||!stay(model,a,b))return'ask';                 // krótszy niż tydzień lub pakiet → cena indywidualna (cennik)
-  return'free';
-}
-
-/* --- kalendarz: makieta gniazda; docelowo dane przychodzą z widgetu dostawcy --- */
-const TODAY=new Date();TODAY.setHours(0,0,0,0);
-const SEZON_OD=d2('2027-04-01'), SEZON_DO=d2('2027-10-31');   // zakres przewijania kalendarza, cennik 2027
-const MC=['styczeń','luty','marzec','kwiecień','maj','czerwiec','lipiec','sierpień','wrzesień','październik','listopad','grudzień'];
-const calEl=document.getElementById('cal'),grid=document.getElementById('cal-grid'),
-      calTitle=document.getElementById('cal-title'),calSel=document.getElementById('cal-sel'),calGo=document.getElementById('cal-go');
-let view=d2('2027-07-01'),selA=null,selB=null;
-const iso=d=>d.toISOString().slice(0,10);
-
-function drawCal(){
-  calTitle.textContent=MC[view.getMonth()]+' '+view.getFullYear();
-  const first=new Date(view.getFullYear(),view.getMonth(),1);
-  const lead=(first.getDay()+6)%7;                     // tydzień od poniedziałku
-  const days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
-  let h='';
-  for(let i=0;i<lead;i++)h+='<span class="cal__d is-empty"></span>';
-  for(let n=1;n<=days;n++){
-    const d=new Date(view.getFullYear(),view.getMonth(),n);
-    const out=d<TODAY||d<SEZON_OD||d>SEZON_DO;
-    let c='cal__d';
-    if(selA&&+d===+selA)c+=' is-start';
-    else if(selB&&+d===+selB)c+=' is-end';
-    else if(selA&&selB&&d>selA&&d<selB)c+=' is-in';
-    h+=`<button type="button" class="${c}" data-d="${iso(d)}"${out?' disabled':''}>${n}</button>`;
-  }
-  grid.innerHTML=h;
-  const min=new Date(SEZON_OD.getFullYear(),SEZON_OD.getMonth(),1),
-        max=new Date(SEZON_DO.getFullYear(),SEZON_DO.getMonth(),1);
-  calEl.querySelector('[data-m="-1"]').disabled=+view<=+min;
-  calEl.querySelector('[data-m="1"]').disabled=+view>=+max;
-}
-function sayCal(){
-  if(selA&&selB){
-    const n=Math.round((selB-selA)/DAY);
-    calSel.innerHTML='Wybrano <b>'+fmtRange(selA,selB)+'</b> · '+n+(n<5?' doby':' dób');
-    calGo.disabled=false;
-  }else if(selA){
-    calSel.innerHTML='Początek: <b>'+fmtDay.format(selA)+'</b>. Wskaż dzień zakończenia.';
-    calGo.disabled=true;
-  }else{calSel.textContent='Wskaż dzień rozpoczęcia czarteru.';calGo.disabled=true}
-}
-grid.addEventListener('click',e=>{
-  const b=e.target.closest('.cal__d');if(!b||b.disabled)return;
-  const d=d2(b.dataset.d);
-  if(!selA||selB){selA=d;selB=null}
-  else if(+d===+selA){selA=null}
-  else if(d<selA){selA=d}
-  else{selB=d}
-  drawCal();sayCal();
-});
-calEl.querySelectorAll('.cal__nav').forEach(b=>b.addEventListener('click',()=>{
-  view=new Date(view.getFullYear(),view.getMonth()+ +b.dataset.m,1);drawCal();
-}));
-calGo.addEventListener('click',()=>{if(selA&&selB){closeModal();setTimeout(()=>apply(selA,selB),260)}});
-drawCal();sayCal();
-
-const termbar=document.getElementById('termbar'),fstat=document.getElementById('fleet-status'),fempty=document.getElementById('fleet-empty');
-const items=[...document.querySelectorAll('.fli')];
-let TERM=null;
-
-function resetFleet(){
-  TERM=null;termbar.hidden=true;fstat.hidden=true;fempty.hidden=true;
-  document.querySelectorAll('.fleet__grp').forEach(g=>g.classList.remove('is-empty'));
-  document.querySelectorAll('.fl').forEach(f=>f.classList.remove('show-busy'));
-  items.forEach(el=>{
-    el.classList.remove('is-busy','is-ask');
-    el.querySelector('.fli__st').textContent='';
-    el.querySelector('[data-pfx]').textContent='Cena od';
-    if(+el.dataset.base)el.querySelector('[data-price]').innerHTML=zl(+el.dataset.base).replace(' ','\u00a0');
-    const t=el.querySelector('[data-total]');t.textContent='';t.classList.remove('is-on');
-    const b=el.querySelector('.fli__act .btn');b.disabled=false;b.textContent='Rezerwuj';
-  });
-}
-
-function apply(a,b){
-  TERM={a,b};
-  let free=0,busy=0;
-  items.forEach(el=>{
-    const name=el.dataset.yacht,base=+el.dataset.base,st=statusOf(name,a,b),sy=stay(name,a,b);
-    el.classList.toggle('is-busy',st==='busy');
-    el.classList.toggle('is-ask',st==='ask');
-    el.querySelector('.fli__st').textContent=st==='busy'?'Zajęty':(st==='ask'?'Cena ustalana indywidualnie':'');
-    el.querySelector('[data-pfx]').textContent=st==='free'?'Średnio za dobę':(base?'Cena od':'Cena');
-    if(base)el.querySelector('[data-price]').innerHTML=zl(st==='free'&&sy?sy.avg:base).replace(' ','\u00a0');
-    const t=el.querySelector('[data-total]');
-    if(st!=='free'||!sy){t.textContent='';t.classList.remove('is-on')}
-    else{t.textContent=sy.nights+(sy.nights<5?' doby · ':' dób · ')+'razem '+zl(sy.total)+(sy.rabat?' (w tym −5%)':'');t.classList.add('is-on')}
-    const btn=el.querySelector('.fli__act .btn');
-    btn.disabled=st==='busy';btn.textContent=st==='ask'?'Zapytaj':'Rezerwuj';
-    st==='busy'?busy++:free++;
-  });
-  document.querySelectorAll('.fleet__grp').forEach(g=>{
-    const vis=[...g.querySelectorAll('.fli')].some(el=>!el.classList.contains('is-busy'));
-    g.classList.toggle('is-empty',!vis);
-  });
-  const range=fmtRange(a,b),nights=Math.round((b-a)/DAY);
-  document.getElementById('tb-dates').textContent=range+' · '+nights+(nights<5?' doby':' dób');
-  document.getElementById('tb-count').textContent='ceny z cennika 2027';
-  termbar.hidden=false;
-  fstat.hidden=false;
-  document.getElementById('fs-head').textContent='Ceny dla terminu '+range;
-  document.getElementById('fs-sub').textContent=nights<7?'· krótszy termin niż tydzień — cenę ustalamy indywidualnie':'· dostępność potwierdza kalendarz rezerwacji';
-  const tg=document.getElementById('fs-toggle');
-  tg.hidden=!busy;tg.textContent='Pokaż zajęte ('+busy+')';
-  document.querySelectorAll('.fl').forEach(f=>f.classList.remove('show-busy'));
-  fempty.hidden=free>0;
-  document.getElementById('flota').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-document.getElementById('fs-toggle').addEventListener('click',e=>{
-  const on=!document.querySelector('.fl').classList.contains('show-busy');
-  document.querySelectorAll('.fl').forEach(f=>f.classList.toggle('show-busy',on));
-  document.querySelectorAll('.fleet__grp').forEach(g=>g.classList.toggle('is-empty',on?false:![...g.querySelectorAll('.fli')].some(el=>!el.classList.contains('is-busy'))));
-  e.target.textContent=(on?'Ukryj zajęte (':'Pokaż zajęte (')+items.filter(el=>el.classList.contains('is-busy')).length+')';
-});
-document.getElementById('fe-reset').addEventListener('click',resetFleet);
-document.getElementById('tb-edit').addEventListener('click',()=>openModal(document.getElementById('tb-edit')));
-
-
-/* ocena Google w hero: liczby tylko z data-atrybutów (źródło: Profil Firmy w Google) */
-document.querySelectorAll('.hero__rev').forEach(el=>{
-  const r=parseFloat((el.dataset.rating||'').replace(',','.')),c=parseInt(el.dataset.count||'',10);
-  if(!isNaN(r)){el.querySelector('.gstars').style.setProperty('--r',Math.max(0,Math.min(100,r/5*100))+'%');
-    el.querySelector('.hero__rev-n').textContent=String(r).replace('.',',')+(isNaN(c)?'':' · '+c+(c===1?' opinia':(c%10>=2&&c%10<=4&&(c%100<10||c%100>=20)?' opinie':' opinii')));
-    el.querySelector('.hero__rev-t').lastChild.textContent=' w\u00a0Google';
-    el.setAttribute('aria-label','Ocena '+String(r).replace('.',',')+' na 5'+(isNaN(c)?'':', '+c+' opinii')+' w Google');}
-});
-
-/* opinie: karuzela */
-const tt=document.getElementById('ti-track');
-document.querySelectorAll('.ti__nav').forEach(b=>b.addEventListener('click',()=>{const step=tt.firstElementChild.getBoundingClientRect().width+24;tt.scrollBy({left:step*+b.dataset.dir,behavior:'smooth'})}));
-const tiSync=()=>{const max=tt.scrollWidth-tt.clientWidth-2;document.querySelector('.ti__nav--prev').disabled=tt.scrollLeft<=2;document.querySelector('.ti__nav--next').disabled=tt.scrollLeft>=max};
-tt.addEventListener('scroll',tiSync,{passive:true});addEventListener('resize',tiSync);tiSync();
-
-/* pojawianie: 12px + opacity, 400ms */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-/* modal z pułapką focusu */
-const modal=document.getElementById('booking');let lastFocus=null;
-const focusables=()=>[...modal.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])')];
-function openModal(trigger){lastFocus=trigger||document.activeElement;const y=trigger&&trigger.dataset.yacht;document.getElementById('booking-yacht').textContent=y?('Rezerwacja · '+y):'Rezerwacja online';modal.hidden=false;requestAnimationFrame(()=>modal.classList.add('is-open'));
-  document.body.classList.add('modal-open');setTimeout(()=>calEl.querySelector('.cal__d:not(:disabled)').focus(),50);}
-function closeModal(){modal.classList.remove('is-open');document.body.classList.remove('modal-open');
-  setTimeout(()=>{modal.hidden=true;lastFocus&&lastFocus.focus()},400);}
-document.querySelectorAll('[data-open-modal]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();openModal(b)}));
-document.querySelectorAll('[data-close-modal]').forEach(b=>b.addEventListener('click',closeModal));
-if(location.hash==='#rezerwuj')setTimeout(()=>openModal(),300);
-modal.addEventListener('keydown',e=>{
-  if(e.key==='Escape')return closeModal();
-  if(e.key!=='Tab')return;const f=focusables();const first=f[0],last=f[f.length-1];
-  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
-  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
-});
-
-</script>
 <script src="assets/js/site.js?v=be51424c" defer></script>
+<script>
+(function(){
+ var m=document.getElementById('rezerwuj-okno'),last=null;
+ function open(e){if(e)e.preventDefault();last=document.activeElement;m.hidden=false;document.body.classList.add('lb-open');m.querySelector('.bk__x').focus()}
+ function close(){m.hidden=true;document.body.classList.remove('lb-open');if(last)last.focus()}
+ [].forEach.call(document.querySelectorAll('[data-open-modal],a[href="index.html#rezerwuj"],a[href="#rezerwuj"]'),function(a){a.addEventListener('click',open)});
+ [].forEach.call(m.querySelectorAll('[data-close-modal]'),function(b){b.addEventListener('click',close)});
+ m.addEventListener('keydown',function(e){if(e.key==='Escape')close();if(e.key!=='Tab')return;var f=[].slice.call(m.querySelectorAll('a,button')),a=f[0],z=f[f.length-1];
+  if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}});
+ if(location.hash==='#rezerwuj')setTimeout(open,200);
+ var t=document.getElementById('rec-t');
+ [].forEach.call(document.querySelectorAll('.rec__nav'),function(b){b.addEventListener('click',function(){var c=t.querySelector('.rc');t.scrollBy({left:+b.dataset.dir*(c?c.getBoundingClientRect().width+20:300),behavior:'smooth'})})});
+})();
+</script>
 </body>
 </html>

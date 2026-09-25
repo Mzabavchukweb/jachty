@@ -10,3 +10,4 @@ __pycache__/
 .DS_Store
 # oryginały zdjęć galerii jednostek (warianty są w assets/img/j)
 _img/u/
+_m/

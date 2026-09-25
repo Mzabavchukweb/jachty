@@ -136,6 +136,8 @@ FOOT = f'''<footer class="inkband foot on-dark" id="kontakt">
   </div>
 </footer>'''
 
+exec(open(os.path.join(ROOT, '_build/nawigacja.py'), encoding='utf-8').read())   # nowa nawigacja i stopka
+
 CALL = f'''<a class="callfab" href="{TEL_H}" aria-label="Zadzwoń: {TEL}" title="{TEL}">
   <span class="callfab__ico" aria-hidden="true"><i data-lucide="phone" class="lucide"></i><span class="callfab__fb">✆</span></span>
 </a>'''
@@ -300,7 +302,7 @@ print('Podstrony:')
 # ---- jachty żaglowe
 page('jachty-zaglowe.html', 'Jachty żaglowe — czarter na Mazurach, Giżycko | Jachty Mazury',
  'Czarter jachtów żaglowych Antila i Maxus ze Stanicy Wodnej Stranda w Giżycku. Dane techniczne i ceny z cennika 2027.',
- phead([('index.html#flota', 'Czarter jachtów'), ('jachty-zaglowe.html', 'Jachty żaglowe')], f'{len(SAIL)} jednostek', 'Jachty żaglowe',
+ phead([('czarter-jachtow.html', 'Czarter jachtów'), ('jachty-zaglowe.html', 'Jachty żaglowe')], f'{len(SAIL)} jednostek', 'Jachty żaglowe',
        'W ofercie znajdują się zarówno jachty motorowe, jak i klasyczne konstrukcje pod żagle, a nasza flota jest regularnie serwisowana i przygotowana do sezonu. W katalogu dostępne są modele takie jak Antila czy Maxus.')
  + fleet_list(SAIL)
  + cta('Nie wiesz, który jacht wybrać?', 'Zadzwoń — pomożemy dobrać jednostkę do liczby osób i planowanej trasy.'),
@@ -309,7 +311,7 @@ page('jachty-zaglowe.html', 'Jachty żaglowe — czarter na Mazurach, Giżycko |
 # ---- jachty motorowe
 page('jachty-motorowe.html', 'Jachty motorowe i houseboaty — czarter na Mazurach | Jachty Mazury',
  'Czarter jachtów motorowych i houseboatów z Giżycka. Wiele jednostek można prowadzić bez patentu.',
- phead([('index.html#flota', 'Czarter jachtów'), ('jachty-motorowe.html', 'Jachty motorowe')], f'{len(MOTOR)} jednostek, w tym houseboaty', 'Jachty motorowe',
+ phead([('czarter-jachtow.html', 'Czarter jachtów'), ('jachty-motorowe.html', 'Jachty motorowe')], f'{len(MOTOR)} jednostek, w tym houseboaty', 'Jachty motorowe',
        'Nie trzeba być zawodowym sternikiem ani posiadać wieloletniego doświadczenia. Wiele jednostek można prowadzić nawet bez formalnych uprawnień, a przed wypłynięciem zapewniamy szczegółowe szkolenie z obsługi.')
  + fleet_list(MOTOR)
  + cta('Pierwszy rejs motorówką?', 'Przed wypłynięciem przeszkolimy Cię z obsługi jednostki i zasad bezpieczeństwa.'),
@@ -319,7 +321,7 @@ page('jachty-motorowe.html', 'Jachty motorowe i houseboaty — czarter na Mazura
 BEZ = [u for u in MOTOR if u[0] != 'stillo-31-star']
 page('czarter-bez-patentu.html', 'Czarter bez patentu na Mazurach — houseboaty i motorówki | Jachty Mazury',
  'Jachty motorowe i houseboaty, które można prowadzić bez patentu: silnik do 75 kW, kadłub do 13 m, prędkość do 15 km/h.',
- phead([('index.html#flota', 'Czarter jachtów'), ('czarter-bez-patentu.html', 'Czarter bez patentu')], 'Czarter jachtów', 'Czarter bez patentu',
+ phead([('czarter-jachtow.html', 'Czarter jachtów'), ('czarter-bez-patentu.html', 'Czarter bez patentu')], 'Czarter jachtów', 'Czarter bez patentu',
        'Oferta dla osób, które chcą wypocząć na wodzie bez konieczności posiadania uprawnień: jachty motorowe oraz houseboaty, które można prowadzić legalnie i bezpiecznie bez patentu motorowodnego.')
  + f'''<section class="psec">
   <div class="wrap g12">
@@ -724,102 +726,8 @@ for i, a in enumerate(ART):
      + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'),
      'poradnik.html')
 
-# ---- strony jednostek (treść i zdjęcia z obecnych stron jednostek, 1:1)
-import jednostki
-GAL = json.load(open('_img/galerie-ws.json'))
-def gpic(slug, n, ws, W, H, sizes, big=False, eager=False):
-    src = lambda e: ', '.join(f'assets/img/j/{slug}/{n}-{w}.{e} {w}w' for w in ws)
-    w0 = ws[-1] if big else ws[0]
-    return (f'<picture><source type="image/webp" srcset="{src("webp")}" sizes="{sizes}">'
-            f'<img src="assets/img/j/{slug}/{n}-{w0}.jpg" srcset="{src("jpg")}" sizes="{sizes}" width="{W}" height="{H}" alt=""'
-            f'{" fetchpriority=\"high\"" if eager else ""} decoding="async"></picture>')
-
-SPEC_ORDER = ['Długość', 'Szerokość', 'Zanurzenie', 'Liczba osób', 'Zamykane kabiny', 'Wysokość kabiny', 'Typ miecza', 'Typ steru', 'Typ silnika', 'Moc silnika', 'Powierzchnia żagli', 'Rok produkcji']
-def spec_val(k, v):
-    v = v.replace('-', ' – ') if k == 'Zanurzenie' else v
-    v = re.sub(r'(\d)\.(\d)', r'\1,\2', v)
-    if k == 'Powierzchnia żagli' and re.search(r'\d m$', v): v += '²'
-    return esc(v).replace('²', '²')
-
-def unit_page(u, kind):
-    slug, model, name, row = u
-    full = f'{model} „{name}”' if name else model
-    x = jednostki.extract(slug); sp = UNITS[slug]['spec']; g = GAL.get(slug, [])
-    lst, lst_name = ('jachty-zaglowe.html', 'Jachty żaglowe') if kind == 'sail' else ('jachty-motorowe.html', 'Jachty motorowe')
-    # galeria
-    main = gpic(slug, g[0][0], g[0][1], g[0][2], g[0][3], '(min-width:1024px) 60vw, 100vw', big=True, eager=True) if g else ''
-    thumbs = ''.join(f'<button type="button" data-i="{i}" aria-label="Zdjęcie {i+1} z {len(g)}"{" aria-current=\"true\"" if i == 0 else ""}>'
-                     f'{gpic(slug, n, ws, W, H, "(min-width:1024px) 12vw, 25vw")}</button>' for i, (n, ws, W, H) in enumerate(g))
-    # fakty
-    mj, a, b = berths(sp.get('Liczba osób', '–'))
-    facts = [('Miejsca', mj), ('Kabiny', sp.get('Zamykane kabiny', '–')), ('Długość', spec_val('Długość', sp.get('Długość', '–'))), ('Rok', sp.get('Rok produkcji', '–'))]
-    facts_h = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in facts)
-    # opis
-    desc = ''.join(f'<h2 class="unit__h2">{esc(t)}</h2>' if tag == 'h2' else f'<p>{esc(t)}</p>' for tag, t in x['desc'])
-    equip = ''.join(f'<li>{esc(e)}</li>' for e in x['equip'])
-    keys = [k for k in SPEC_ORDER if k in sp] + [k for k in sp if k not in SPEC_ORDER]
-    spec = ''.join(f'<div><dt>{esc(k)}</dt><dd>{spec_val(k, sp[k])}</dd></div>' for k in keys)
-    terms = ''.join(f'<li>{esc(t)}</li>' for t in x['terms'])
-    v = ROWS.get(row); p = od(row)
-    price = (f'<span class="micro muted">Cena od</span><p class="unit__price num"><b>{zl(p)}</b> <span>/ doba</span></p>' if p
-             else '<span class="micro muted">Cena</span><p class="unit__price unit__price--ask">na zapytanie</p>')
-    ptab = ''
-    if v:
-        lis = ''.join(f'<li><span>{r}{t}</span><b class="num">{zl(int(val)) if val.strip().isdigit() else "—"} <small>{un}</small></b></li>' for (r, un, t), val in zip(periods, v[:11]))
-        ptab = (f'<h2 class="unit__h2">Cennik 2027</h2><ul class="unit__prices">{lis}'
-                f'<li class="unit__px"><span>Kaucja</span><b class="num">{zl(int(v[11]))}</b></li><li class="unit__px"><span>Sprzątanie</span><b class="num">{zl(int(v[12]))}</b></li></ul>'
-                f'<p class="unit__note">Cena za dobę obowiązuje przy czarterze minimum tygodniowym. Przy krótszych terminach cena ustalana jest indywidualnie.</p>')
-    book = f'''{price}
-        <a class="btn btn--block" href="index.html#rezerwuj">Sprawdź dostępność <i data-lucide="arrow-right" class="lucide"></i></a>
-        <a class="btn btn--outline btn--block" href="{TEL_H}"><i data-lucide="phone" class="lucide"></i> {TEL}</a>'''
-    same = [w for w in SAIL + MOTOR if w[0] != slug and w[1] == model]
-    other = [w for w in (SAIL if kind == 'sail' else MOTOR) if w[0] != slug and w[1] != model]
-    more = (same + other)[:4]
-    body = f'''<section class="dtop utop">
-  <div class="wrap">
-    {crumbs([(lst, lst_name), (f"{slug}.html", full)])}
-    <div class="ugal" data-n="{len(g)}">
-      <figure class="ugal__main">{main}
-        <button class="ugal__zoom" type="button" aria-label="Powiększ zdjęcie"></button>
-        <span class="ugal__count num" aria-hidden="true"><i data-lucide="maximize-2" class="lucide"></i><span class="ugal__n">1</span> / {len(g)}</span>
-      </figure>
-      <div class="ugal__thumbs" role="group" aria-label="Zdjęcia jachtu">{thumbs}</div>
-    </div>
-  </div>
-</section>
-<section class="psec unit">
-  <div class="wrap g12">
-    <div class="c7 unit__main">
-      <p class="micro unit__type">{"Jacht żaglowy" if kind == "sail" else "Jacht motorowy"} · {esc(model)}</p>
-      <h1 class="h1 unit__h">{esc(full)}</h1>
-      <dl class="unit__facts num">{facts_h}</dl>
-      <div class="unit__mbook">{book}</div>
-      <div class="unit__desc">{desc}</div>
-      {f'<h2 class="unit__h2">Wyposażenie</h2><ul class="unit__eq">{equip}</ul>' if equip else ''}
-      <h2 class="unit__h2">Dane techniczne</h2><dl class="unit__spec num">{spec}</dl>
-      {ptab}
-      {f'<h2 class="unit__h2">Warunki rezerwacji</h2><ul class="unit__terms">{terms}</ul>' if terms else ''}
-    </div>
-    <aside class="c4 o9 unit__book" aria-label="Rezerwacja">
-      <div class="unit__bookin">{book}
-        <p class="unit__hours">Wydanie jachtu 16:00 – 20:00 · zdanie 8:00 – 10:00</p>
-        <a class="u unit__all" href="{lst}?model={model.replace(" ", "%20")}">Wszystkie jednostki {esc(model)} →</a>
-      </div>
-    </aside>
-  </div>
-</section>
-<section class="psec psec--sand fleet">
-  <div class="wrap">
-    <h2 class="h3 psec__h">Inne jednostki</h2>
-    <div class="fl">
-{''.join(card(*w) for w in more)}    </div>
-  </div>
-</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.')
-    first = next((t for tag, t in x['desc'] if tag == 'p'), f'{full} — czarter z Giżycka, Stanica Wodna Stranda.')
-    page(f'{slug}.html', f'{full} — czarter na Mazurach, Giżycko | Jachty Mazury', first[:155], body, lst)
-
-for u in SAIL: unit_page(u, 'sail')
-for u in MOTOR: unit_page(u, 'motor')
+# ---- strony wg uwag klientki: jednostki, modele, hub, Wiedza, strona główna
+exec(open(os.path.join(ROOT, '_build/serwis.py'), encoding='utf-8').read())
 
 # ---- 404
 page('404.html', 'Nie ma takiej strony | Jachty Mazury', 'Strona nie istnieje albo zmieniła adres.',
@@ -862,34 +770,8 @@ def patch(fname, cur, photo=False, own_booking=False, dark=False):
     open(fname, 'w').write(s); print('  ✎', fname)
 
 print('Nawigacja na istniejących stronach:')
-patch('index.html', 'index.html', photo=True)
-patch('jacht.html', 'jachty-zaglowe.html', own_booking=True, dark=True)
+open('jacht.html', 'w').write('<!doctype html><html lang="pl"><head><meta charset="utf-8"><title>Antila 33 | Jachty Mazury</title><meta http-equiv="refresh" content="0; url=model-antila-33.html"><link rel="canonical" href="model-antila-33.html"></head><body><a href="model-antila-33.html">Antila 33</a></body></html>')
 patch('fundusze-europejskie.html', '', dark=True)
-
-# strona główna: linki do nowych podstron, #rezerwuj, skala 12 m, e-mail w sekcji port
-s = open('index.html').read()
-s = s.replace('<a class="u u--on fgh__a" href="#">Wszystkie żaglowe →</a>', '<a class="u u--on fgh__a" href="jachty-zaglowe.html">Wszystkie żaglowe →</a>')
-s = s.replace('<a class="u u--on fgh__a" href="#">Wszystkie motorowe →</a>', '<a class="u u--on fgh__a" href="jachty-motorowe.html">Wszystkie motorowe →</a>')
-s = s.replace('<a class="btn btn--outline" href="#" style="margin-top:var(--s4)">Pokaż na mapie', '<a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Stanica+Wodna+Stranda+Pierkunowo+36+Gi%C5%BCycko" rel="noopener" target="_blank" style="margin-top:var(--s4)">Pokaż na mapie')
-s = s.replace('<a class="btn btn--outline btn--sm" href="#">Zobacz wszystkie opinie</a>', f'<a class="btn btn--outline btn--sm" href="{GREV}" rel="noopener" target="_blank">Zobacz wszystkie opinie <i data-lucide="arrow-up-right" class="lucide"></i></a>')
-if f'mailto:{MAIL}' not in s.split('<footer')[0]:
-    s = s.replace('<div><dt>Telefon</dt><dd class="num"><a class="u" href="tel:+48511420100">+48 511 420 100</a></dd></div>',
-                  f'<div><dt>Telefon</dt><dd class="num"><a class="u" href="tel:+48511420100">+48 511 420 100</a></dd></div>\n          <div><dt>E-mail</dt><dd><a class="u" href="mailto:{MAIL}">{MAIL}</a></dd></div>', 1)
-if "location.hash==='#rezerwuj'" not in s:
-    s = s.replace("document.querySelectorAll('[data-close-modal]').forEach(b=>b.addEventListener('click',closeModal));",
-                  "document.querySelectorAll('[data-close-modal]').forEach(b=>b.addEventListener('click',closeModal));\nif(location.hash==='#rezerwuj')setTimeout(()=>openModal(),300);", 1)
-def rescale(m):
-    blk = m.group(0)
-    L = float(re.search(r'<span>Długość całkowita</span><b>([\d,]+) m</b>', blk).group(1).replace(',', '.'))
-    blk = re.sub(r'class="meas__b" style="width:[\d.]+%"', f'class="meas__b" style="width:{round(L/MAXM*100,1)}%"', blk)
-    blk = re.sub(r'<div class="meas__sc" aria-hidden="true">.*?</div>', SCALE, blk, flags=re.S)
-    return blk
-s = re.sub(r'<article class="fli".*?</article>', rescale, s, flags=re.S)
-open('index.html', 'w').write(s)
-
-j = open('jacht.html').read()
-j = j.replace('<li><a class="u" href="#">Jachty żaglowe</a></li>', '<li><a class="u" href="jachty-zaglowe.html">Jachty żaglowe</a></li>')
-open('jacht.html', 'w').write(j)
 
 # ================================================================= pages.css
 def _styles(p):
@@ -919,10 +801,9 @@ def _pick(css):
             out.append(f'{p}{{{body}}}')
     return '\n'.join(out)
 def build_pages_css():
-    j = open('jacht.html').read()
-    jh = j[j.index('/* nagłówek — na podstronie od razu papierowy */'):j.index('/* okruszki + galeria */')]
+    jh = open('_build/legacy-head.css').read()        # zamrożone style z dawnej karty jachtu
     css = ('/* jachtymazury.pl — style podstron. Generowane przez _build/podstrony.py z CSS strony głównej i karty jachtu + _build/pages-extra.css */\n\n'
-           '/* nagłówek papierowy */\n' + jh + '\n/* komponenty ze strony głównej */\n' + _pick(_styles('index.html')) + '\n\n' + open('_build/head-dark.css').read() + '\n' + open('_build/pages-extra.css').read())
+           '/* nagłówek papierowy */\n' + jh + '\n/* komponenty ze strony głównej */\n' + _pick(open('_build/legacy-index.css').read()) + '\n\n' + open('_build/head-dark.css').read() + '\n' + open('_build/pages-extra.css').read())
     css = css.replace('url(assets/', 'url(../')   # plik leży w assets/css/
     open('assets/css/pages.css', 'w').write(css); print('  pages.css', len(css))
     hd = open('_build/head-dark.css').read().replace('url(assets/', 'url(../')

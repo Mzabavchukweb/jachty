@@ -318,6 +318,17 @@ Na telefonie grafika w nagłówku stoi pod tekstem. Róża wiatrów w pasie „W
 - Cennik 2027 jednostki z wiersza przypisanego w cenniku; brak wiersza → „na zapytanie”.
 - Antila 30.1 „Bradl” nie ma strony, bo nie ma jej na liście floty (patrz niezgodności wyżej).
 
+**Przebudowa wg uwag klientki (25.09.2026)** — źródło: wizualizacje `Re_ Strona internetowa/jachtymazury.pl-1/2/3.png` i lista uwag. Moduły generatora: `_build/nawigacja.py` (menu, stopka), `_build/serwis.py` (strony).
+- Strona główna: hero ze zdjęciem jachtu pod żaglami (-2), bez filmu, napis „Mazury w najlepszym wydaniu”, bez „Więcej niż czarter”; 4 ikony pod zdjęciem (-3); „Polecane jachty” jako karuzela modeli (-3); kafle „Filmy szkoleniowe” i „Poradnik czarterowy” (-2); „Aktualności” (-3); „O nas” (-3) bez „Razem tworzymy lepsze rejsy”; „Nasza lokalizacja” (-2); stopka (-2) bez newslettera.
+- Treści z wizualizacji, których nie ma w źródle, pominięte: zdjęcia i imiona zespołu (Michał, Kasia…) — zostaje prawdziwy zespół z inicjałami; adres „Port Ekomarina”, telefon 123 456 789, godziny 8–18, e-mail biuro@ — zostają dane z obecnej strony (Stanica Wodna Stranda, 8:00–20:00, info@).
+- Strona jednostki (-1): na zdjęciu tylko model i nazwa, bez opisu i przycisków; miniatury w jednej linii z powiększeniem; ikony: długość, szerokość, zanurzenie, miejsca, kabiny, toaleta (morska/chemiczna), prysznic, ster (koło/rumpel), silnik (stacjonarny/zaburtowy + moc), ster strumieniowy (1/2), rok — każda tylko gdy wynika z tabeli danych albo listy wyposażenia jednostki; opis + jedno większe zdjęcie po prawej; kalendarz (miejsce na kod dostawcy) + formularz, którego temat zawiera nazwę jednostki („Zapytanie o czarter: Antila 33 „Kassari””).
+- Strony modeli (`model-<model>.html`, 12 szt.) z listą jednostek i opisem modelu 1:1 z obecnych stron `/czarter-jachtow-…/<model>/` — do wysyłania ofert. Generowane z listy floty, więc nowa jednostka pojawia się automatycznie na stronie modelu, liście rodzaju i w menu.
+- „Czarter jachtów” (`czarter-jachtow.html`): treść i FAQ 1:1 z `/czarter-jachtow-gizycko/`, dane strukturalne FAQPage; kafle do żaglowych, motorowych i bez patentu.
+- Menu „Czarter jachtów” rozwija listę modeli i jednostek (żaglowe | motorowe), generowaną z floty. Nowe menu „Wiedza”: Poradnik czarterowy, Filmy szkoleniowe, Aktualności.
+- „Filmy szkoleniowe”: miejsce na listę filmów. **Kanał YouTube, do którego linkuje obecna strona (UCGulH1SMSyk0Ihr2HQ8rfRA), nie istnieje** — link YouTube usunięty ze stopki. Do potwierdzenia: adres kanału.
+- „Aktualności”: na razie wpisy poradnika (obecna strona nie ma działu aktualności ani dat wpisów).
+- `jacht.html` przekierowuje na stronę modelu Antila 33.
+
 **Pas „Wybrałeś termin?"** nad stopką ma od dołu cienką jasną linię (`rgba(252,249,244,.5)`), bo oba bloki są ciemne i zlewały się w jeden.
 
 **Cennik na telefonie**: szeroka tabela (13 kolumn) zamienia się w listę rozwijanych pozycji (`<details>`) — nazwa jachtu i „od … zł / doba", po rozwinięciu wszystkie okresy, kaucja i sprzątanie.
