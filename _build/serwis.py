@@ -65,8 +65,23 @@ def unit_page(u):
     thumbs = ''.join(f'<button type="button" data-i="{i}" aria-label="Powiększ zdjęcie {i+1} z {len(g)}"{" aria-current=\"true\"" if i == 0 else ""}>'
                      f'{gpic(slug, n, ws, W, H, "180px")}</button>' for i, (n, ws, W, H) in enumerate(g))
     facts = ''.join(f'<li><i data-lucide="{ic}" class="lucide" aria-hidden="true"></i><span class="uic__k">{k}</span><b>{v}</b></li>' for ic, k, v in unit_facts(slug))
-    desc = ''.join(f'<h3 class="udesc__h">{esc(t)}</h3>' if tag == 'h2' else f'<p>{t}</p>' for tag, t in x['desc'])
-    side = gpic(slug, *g[1], '(min-width:1024px) 40vw, 100vw', big=True) if len(g) > 1 else ''
+    cut = next((i for i, (tag, t) in enumerate(x['desc']) if tag == 'h2'), len(x['desc']))
+    cut = max(cut, 1)
+    blk = lambda part: ''.join(f'<h3 class="udesc__h">{esc(t)}</h3>' if tag == 'h2' else f'<p>{t}</p>' for tag, t in part)
+    lead_d, more_d = blk(x['desc'][:cut]), blk(x['desc'][cut:])
+    # suwak: najpierw zdjęcia wnętrza (rozpoznane po opisie zdjęcia na obecnej stronie), potem reszta
+    INSIDE = ('wnętrz', 'wnetrz', 'mes', 'kambuz', 'kabin', 'salon', 'łazien', 'toalet', 'kuchni', 'sterówk', 'koj')
+    order = list(range(len(g)))
+    inside = [i for i in order if any(k in gal_alt(slug, g[i][0]).lower() for k in INSIDE)]
+    start = inside[0] if inside else min(1, len(g) - 1) if g else 0
+    order = order[start:] + order[:start]
+    slides = ''.join(f'<figure class="usl__s{" is-on" if k == 0 else ""}" data-i="{i}"{"" if k == 0 else " hidden"}>{gpic(slug, *g[i], "(min-width:1024px) 58vw, 100vw", big=True)}'
+                     f'{f"<figcaption>{esc(gal_alt(slug, g[i][0]))}</figcaption>" if gal_alt(slug, g[i][0]) else ""}</figure>' for k, i in enumerate(order))
+    side = (f'<div class="usl" data-n="{len(order)}">{slides}'
+            f'<button class="usl__nav usl__nav--prev" type="button" data-dir="-1" aria-label="Poprzednie zdjęcie"><i data-lucide="arrow-left" class="lucide"></i></button>'
+            f'<button class="usl__nav usl__nav--next" type="button" data-dir="1" aria-label="Następne zdjęcie"><i data-lucide="arrow-right" class="lucide"></i></button>'
+            f'<button class="usl__zoom" type="button" aria-label="Powiększ zdjęcie"></button>'
+            f'<span class="usl__n num" aria-hidden="true"><b>1</b> / {len(order)}</span></div>') if g else ''
     equip = ''.join(f'<li>{esc(e)}</li>' for e in x['equip'])
     keys = [k for k in SPEC_ORDER if k in sp] + [k for k in sp if k not in SPEC_ORDER]
     spec = ''.join(f'<div><dt>{esc(k)}</dt><dd>{spec_val(k, sp[k])}</dd></div>' for k in keys)
@@ -88,9 +103,8 @@ def unit_page(u):
   <button class="uh__arrow uh__arrow--next" type="button" data-dir="1" aria-label="Następne zdjęcie"><i data-lucide="arrow-right" class="lucide"></i></button>
   <div class="wrap uh__in">
     {crumbs([(lst, lst_name), (murl(model), model), (f"{slug}.html", name or model)])}
-    <p class="micro uh__type">{"Jacht żaglowy" if kind == "sail" else "Jacht motorowy"}</p>
     <h1 class="uh__h unit__h"><span class="uh__m">{esc(model)}</span>{f'<span class="uh__n"><span class="sr"> „</span>{esc(name)}<span class="sr">”</span></span>' if name else ''}</h1>
-    <span class="uh__count num" aria-hidden="true"><i data-lucide="images" class="lucide"></i><span class="ugal__n">1</span> / {len(g)}</span>
+    <span class="uh__count num" aria-hidden="true"><span class="ugal__n">1</span> / {len(g)}</span>
   </div>
   <div class="ustrip">
     <div class="wrap ustrip__in">
@@ -103,38 +117,30 @@ def unit_page(u):
 <section class="uic">
   <div class="wrap"><ul class="uic__l num">{facts}</ul></div>
 </section>
-<section class="psec udesc">
-  <div class="wrap g12">
-    <div class="c6 udesc__t">
-      <p class="micro muted">{esc(model)}{f" · {esc(name)}" if name else ""}</p>
-      <h2 class="h2">O jachcie</h2>
-      {desc}
+<section class="udesc2">
+  <div class="udesc2__g">
+    <div class="udesc2__t">
+      <p class="micro udesc2__eye">{esc(model)}{f" · {esc(name)}" if name else ""}</p>
+      <h2 class="h2 sec-line">O jachcie</h2>
+      <div class="udesc2__lead">{lead_d}</div>
+      {f'<div class="udesc2__more" id="opis-{slug}">{more_d}</div><button class="udesc2__btn" type="button" aria-expanded="false" aria-controls="opis-{slug}"><span>Czytaj cały opis</span> <i data-lucide="chevron-down" class="lucide"></i></button>' if more_d else ''}
     </div>
-    {f'<div class="c5 o8 udesc__vt"><div class="vt" data-src="{esc(SPACERY[slug])}"><button class="vt__play" type="button"><i data-lucide="rotate-3d" class="lucide" aria-hidden="true"></i> Spacer wirtualny po jachcie</button></div></div>' if slug in SPACERY else f'<figure class="c5 o8 udesc__ph">{side}</figure>'}
+    <div class="udesc2__m">{f'<div class="vt" data-src="{esc(SPACERY[slug])}"><button class="vt__play" type="button"><i data-lucide="rotate-3d" class="lucide" aria-hidden="true"></i> Spacer wirtualny po jachcie</button></div>' if slug in SPACERY else side}</div>
   </div>
 </section>
-<section class="psec psec--sand udet">
-  <div class="wrap">
-    <div class="udet__g">
-      {f'<details class="udet__i" open><summary><h2 class="h3">Wyposażenie</h2></summary><ul class="unit__eq">{equip}</ul></details>' if equip else ''}
-      <details class="udet__i" open><summary><h2 class="h3">Dane techniczne</h2></summary><dl class="unit__spec num">{spec}</dl></details>
-      {f'<details class="udet__i" open><summary><h2 class="h3">Cennik 2027</h2></summary>{ptab}</details>' if ptab else ''}
-      {f'<details class="udet__i" open><summary><h2 class="h3">Warunki rezerwacji</h2></summary><ul class="unit__terms">{terms}</ul></details>' if terms else ''}
-    </div>
-  </div>
-</section>
+
 <section class="psec uav" id="dostepnosc">
   <div class="wrap g12">
     <div class="c6 uav__cal">
-      <h2 class="h2">Dostępność i&nbsp;rezerwacja</h2>
+      <h2 class="h2 sec-line">Dostępność i&nbsp;rezerwacja</h2>
       <div class="uav__price">{price_html(row)}</div>
-      <div class="slot" data-slot="kalendarz-dostawcy"><i data-lucide="calendar-days" class="lucide" aria-hidden="true"></i>
-        <p><b>Kalendarz dostępności</b>Tu wyświetli się kalendarz tej jednostki z systemu rezerwacji.</p></div>
+      <div class="ucal" data-slot="kalendarz-dostawcy"><div class="ucal__m"></div><div class="ucal__m"></div></div>
+      <p class="ucal__note"><i data-lucide="info" class="lucide" aria-hidden="true"></i> Wolne i zajęte terminy pokaże kalendarz systemu rezerwacji. Kliknij dzień, żeby wpisać go w formularz.</p>
       <p class="uav__hours">Wydanie jachtu 16:00 – 20:00 · zdanie 8:00 – 10:00</p>
     </div>
     <div class="c5 o8">
       <form class="kf uform" novalidate data-subject="{esc(subject)}">
-        <h2 class="h3 kf__h">Zapytaj o czarter</h2>
+        <h2 class="h2 sec-line kf__h">Zapytaj o czarter</h2>
         <p class="uform__about">Zapytanie dotyczy: <b>{esc(full)}</b></p>
         <input type="hidden" name="subject" value="{esc(subject)}">
         <div class="kf__f" data-f="name"><label for="u-name">Imię i nazwisko</label><input id="u-name" name="name" autocomplete="name" required><span class="kf__err">Podaj imię i nazwisko.</span></div>
@@ -153,6 +159,16 @@ def unit_page(u):
       </form>
       <div class="kf kf--ok" hidden tabindex="-1" role="status"><i data-lucide="check" class="lucide kf__ic"></i><h2 class="h3">Zapytanie wysłane</h2>
         <p>Dotyczy: {esc(full)}. Odpowiemy telefonicznie albo e-mailem.</p></div>
+    </div>
+  </div>
+</section>
+<section class="psec udet">
+  <div class="wrap">
+    <div class="udet__g">
+      {f'<details class="udet__i udet__i--eq" open><summary><h2 class="h3">Wyposażenie</h2></summary><ul class="unit__eq">{equip}</ul></details>' if equip else ''}
+      <details class="udet__i" open><summary><h2 class="h3">Dane techniczne</h2></summary><dl class="unit__spec num">{spec}</dl></details>
+      {f'<details class="udet__i" open><summary><h2 class="h3">Cennik 2027</h2></summary>{ptab}</details>' if ptab else ''}
+      {f'<details class="udet__i" open><summary><h2 class="h3">Warunki rezerwacji</h2></summary><ul class="unit__terms">{terms}</ul></details>' if terms else ''}
     </div>
   </div>
 </section>
@@ -181,6 +197,35 @@ UFORM_JS = '''<script>
   if(first){first.focus();return}
   var b=f.querySelector('.btn');b.classList.add('is-loading');
   setTimeout(function(){b.classList.remove('is-loading');f.hidden=true;ok.hidden=false;ok.focus();window.lucide&&lucide.createIcons()},900)});
+})();
+/* suwak zdjęć przy opisie */
+(function(){var w=document.querySelector('.usl');if(!w)return;var ss=[].slice.call(w.querySelectorAll('.usl__s')),n=w.querySelector('.usl__n b'),c=0;
+ function go(k){ss[c].hidden=true;ss[c].classList.remove('is-on');c=(k+ss.length)%ss.length;ss[c].hidden=false;ss[c].classList.add('is-on');n.textContent=c+1}
+ [].forEach.call(w.querySelectorAll('.usl__nav'),function(b){b.addEventListener('click',function(){go(c+(+b.dataset.dir))})});
+ var tx=null;w.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+ w.addEventListener('touchend',function(e){if(tx===null)return;var d=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(d)>45)go(c+(d<0?1:-1))});
+ w.querySelector('.usl__zoom').addEventListener('click',function(){var t=document.querySelectorAll('.ustrip__t button')[+ss[c].dataset.i];if(t)t.click()});
+})();
+/* telefon: szczegóły domyślnie zwinięte */
+if(matchMedia('(max-width:640px)').matches)[].forEach.call(document.querySelectorAll('.udet__i'),function(d){d.open=false});
+/* opis: rozwiń / zwiń */
+(function(){var b=document.querySelector('.udesc2__btn');if(!b)return;var m=document.getElementById(b.getAttribute('aria-controls'));
+ b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',o);m.classList.toggle('is-open',o);b.querySelector('span').textContent=o?'Zwiń opis':'Czytaj cały opis'})})();
+/* kalendarz: dwa miesiące, kliknięty dzień trafia do formularza */
+(function(){var ms=document.querySelectorAll('.ucal__m');if(!ms.length)return;var now=new Date(),M=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],off=0;
+ var from=document.getElementById('u-od'),to=document.getElementById('u-do');
+ function pad(x){return(x<10?'0':'')+x}
+ function draw(){[].forEach.call(ms,function(el,k){var d=new Date(now.getFullYear(),now.getMonth()+off+k,1),y=d.getFullYear(),m=d.getMonth(),first=(d.getDay()+6)%7,days=new Date(y,m+1,0).getDate();
+  var h='<div class="ucal__hd"><button type="button" class="ucal__nav" data-d="-1" aria-label="Poprzedni miesiąc">‹</button><b>'+M[m]+' '+y+'</b><button type="button" class="ucal__nav" data-d="1" aria-label="Następny miesiąc">›</button></div><div class="ucal__g"><span>Pn</span><span>Wt</span><span>Śr</span><span>Cz</span><span>Pt</span><span>So</span><span>Nd</span>';
+  for(var i=0;i<first;i++)h+='<i></i>';
+  var t=new Date();t.setHours(0,0,0,0);
+  for(var dd=1;dd<=days;dd++){var iso=y+'-'+pad(m+1)+'-'+pad(dd),past=new Date(y,m,dd)<t,sel=(from&&from.value===iso)||(to&&to.value===iso),inr=from&&to&&from.value&&to.value&&iso>from.value&&iso<to.value;
+   h+='<button type="button" class="ucal__d'+(sel?' is-sel':'')+(inr?' is-in':'')+'" data-iso="'+iso+'"'+(past?' disabled':'')+'>'+dd+'</button>'}
+  el.innerHTML=h+'</div>'})}
+ document.querySelector('.ucal').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.d){off+=+b.dataset.d;return draw()}
+  var iso=b.dataset.iso;if(!from.value||(from.value&&to.value)||iso<=from.value){from.value=iso;to.value=''}else to.value=iso;draw()});
+ [from,to].forEach(function(i){i&&i.addEventListener('change',draw)});draw();
 })();
 /* pasek miniatur: strzałki */
 [].forEach.call(document.querySelectorAll('.ustrip__nav'),function(b){b.addEventListener('click',function(){var t=document.querySelector('.ustrip__t');t.scrollBy({left:+b.dataset.dir*t.clientWidth*.8,behavior:'smooth'})})});
