@@ -21,12 +21,13 @@ def _mcol(title, href, units):
     return f'<div class="mm__col"><a class="mm__h" href="{href}">{title} <i data-lucide="arrow-right" class="lucide"></i></a><ul class="mm__l">{rows}</ul></div>'
 
 def nav(cur):
-    cz_pages = [h for h, _ in CZ_ITEMS] + [murl(m) for m in models(SAIL + MOTOR)] + [u[0] + '.html' for u in SAIL + MOTOR]
+    cz_pages = [h for h, _ in CZ_ITEMS] + ['houseboat-mazury.html'] + [murl(m) for m in models(SAIL + MOTOR)] + [u[0] + '.html' for u in SAIL + MOTOR]
     w_pages = [h for h, _ in WIEDZA] + [a['slug'] + '.html' for a in ART]
     cc = lambda h: ' aria-current="page"' if h == cur else ''
     mega = (f'<div class="menu mm" id="m-czarter">'
             f'<div class="mm__top"><a href="czarter-jachtow.html"{cc("czarter-jachtow.html")}>Czarter jachtów — oferta i najczęstsze pytania</a>'
-            f'<a href="czarter-bez-patentu.html"{cc("czarter-bez-patentu.html")}>Czarter bez patentu</a></div>'
+            f'<a href="czarter-bez-patentu.html"{cc("czarter-bez-patentu.html")}>Czarter bez patentu</a>'
+            f'<a href="houseboat-mazury.html"{cc("houseboat-mazury.html")}>Houseboaty</a></div>'
             f'<div class="mm__cols">{_mcol("Jachty żaglowe", "jachty-zaglowe.html", SAIL)}{_mcol("Jachty motorowe", "jachty-motorowe.html", MOTOR)}</div></div>')
     wm = ''.join(f'<a href="{h}"{cc(h)}>{t}</a>' for h, t in WIEDZA)
     items = ''.join(f'\n      <a class="u{" u--on" if h == cur else ""}" href="{h}"{cc(h)}>{t}</a>' for h, t in NAV_ITEMS)
@@ -67,7 +68,7 @@ FOOT = f'''<footer class="inkband foot on-dark" id="kontakt">
         <p>Czarter jachtów żaglowych, motorowych i houseboatów ze Stanicy Wodnej Stranda w Giżycku.</p>
         <p class="foot__soc"><a class="u" href="{FB}" rel="noopener" target="_blank">Facebook</a><a class="u" href="{IG}" rel="noopener" target="_blank">Instagram</a></p></div>
       <div><span class="micro">Szybkie linki</span><ul class="foot__list"><li><a class="u" href="czarter-jachtow.html">Czarter jachtów</a></li><li><a class="u" href="poradnik.html">Poradnik czarterowy</a></li><li><a class="u" href="cennik.html">Cennik</a></li><li><a class="u" href="wspolpraca.html">Współpraca</a></li><li><a class="u" href="kontakt.html">Kontakt</a></li><li><a class="u" href="polityka-prywatnosci.html">Polityka prywatności</a></li></ul></div>
-      <div><span class="micro">Czarter jachtów</span><ul class="foot__list"><li><a class="u" href="jachty-zaglowe.html">Jachty żaglowe</a></li><li><a class="u" href="jachty-motorowe.html">Jachty motorowe</a></li><li><a class="u" href="czarter-bez-patentu.html">Czarter bez patentu</a></li><li><a class="u" href="jachty-na-sprzedaz.html">Jachty na sprzedaż</a></li></ul></div>
+      <div><span class="micro">Czarter jachtów</span><ul class="foot__list"><li><a class="u" href="jachty-zaglowe.html">Jachty żaglowe</a></li><li><a class="u" href="jachty-motorowe.html">Jachty motorowe</a></li><li><a class="u" href="czarter-bez-patentu.html">Czarter bez patentu</a></li><li><a class="u" href="houseboat-mazury.html">Houseboaty</a></li><li><a class="u" href="jachty-na-sprzedaz.html">Jachty na sprzedaż</a></li></ul></div>
       <div><span class="micro">Kontakt</span><ul class="foot__list"><li>Stanica Wodna Stranda</li><li>Pierkunowo 36, 11-500 Giżycko</li><li class="num"><a class="u" href="{TEL_H}">{TEL}</a></li><li><a class="u" href="mailto:{MAIL}">{MAIL}</a></li><li class="num">Biuro 8:00 – 20:00, codziennie</li></ul></div>
     </div>
     {UE}

@@ -3,13 +3,13 @@ import jednostki
 GAL = json.load(open('_img/galerie-ws.json'))
 KIND = {u[0]: 'sail' for u in SAIL} | {u[0]: 'motor' for u in MOTOR}
 MAPS = 'https://www.google.com/maps/search/?api=1&amp;query=Stanica+Wodna+Stranda+Pierkunowo+36+Gi%C5%BCycko'
-LIVE_MODEL = {'Antila 30.1 E': 'antila-30-1'}          # nazwa modelu u nas → adres strony modelu u klienta
+LIVE_MODEL = {m: p.split('/')[-1] for m, p in LIVE_MODEL_PAGES.items()}          # nazwa modelu u nas → adres strony modelu u klienta
 
-def gpic(slug, n, ws, W, H, sizes, big=False, eager=False):
+def gpic(slug, n, ws, W, H, sizes, big=False, eager=False, alt=None):
     src = lambda e: ', '.join(f'assets/img/j/{slug}/{n}-{w}.{e} {w}w' for w in ws)
     w0 = ws[-1] if big else ws[0]
     return (f'<picture><source type="image/webp" srcset="{src("webp")}" sizes="{sizes}">'
-            f'<img src="assets/img/j/{slug}/{n}-{w0}.jpg" srcset="{src("jpg")}" sizes="{sizes}" width="{W}" height="{H}" alt=""'
+            f'<img src="assets/img/j/{slug}/{n}-{w0}.jpg" srcset="{src("jpg")}" sizes="{sizes}" width="{W}" height="{H}" alt="{esc(gal_alt(slug, n) if alt is None else alt)}"'
             f'{" fetchpriority=\"high\"" if eager else ""} decoding="async"></picture>')
 
 SPEC_ORDER = ['Długość', 'Szerokość', 'Zanurzenie', 'Liczba osób', 'Zamykane kabiny', 'Wysokość kabiny', 'Typ miecza', 'Typ steru', 'Typ silnika', 'Moc silnika', 'Powierzchnia żagli', 'Rok produkcji']
@@ -64,7 +64,7 @@ def unit_page(u):
     thumbs = ''.join(f'<button type="button" data-i="{i}" aria-label="Powiększ zdjęcie {i+1} z {len(g)}"{" aria-current=\"true\"" if i == 0 else ""}>'
                      f'{gpic(slug, n, ws, W, H, "180px")}</button>' for i, (n, ws, W, H) in enumerate(g))
     facts = ''.join(f'<li><i data-lucide="{ic}" class="lucide" aria-hidden="true"></i><span class="uic__k">{k}</span><b>{v}</b></li>' for ic, k, v in unit_facts(slug))
-    desc = ''.join(f'<h3 class="udesc__h">{esc(t)}</h3>' if tag == 'h2' else f'<p>{esc(t)}</p>' for tag, t in x['desc'])
+    desc = ''.join(f'<h3 class="udesc__h">{esc(t)}</h3>' if tag == 'h2' else f'<p>{t}</p>' for tag, t in x['desc'])
     side = gpic(slug, *g[1], '(min-width:1024px) 40vw, 100vw', big=True) if len(g) > 1 else ''
     equip = ''.join(f'<li>{esc(e)}</li>' for e in x['equip'])
     keys = [k for k in SPEC_ORDER if k in sp] + [k for k in sp if k not in SPEC_ORDER]
@@ -86,7 +86,7 @@ def unit_page(u):
   <div class="wrap uh__in">
     {crumbs([(lst, lst_name), (murl(model), model), (f"{slug}.html", name or model)])}
     <p class="micro uh__type">{"Jacht żaglowy" if kind == "sail" else "Jacht motorowy"}</p>
-    <h1 class="uh__h unit__h"><span class="uh__m">{esc(model)}</span>{f'<span class="uh__n">{esc(name)}</span>' if name else ''}</h1>
+    <h1 class="uh__h unit__h"><span class="uh__m">{esc(model)}</span>{f'<span class="uh__n"><span class="sr"> „</span>{esc(name)}<span class="sr">”</span></span>' if name else ''}</h1>
     <span class="uh__count num" aria-hidden="true"><i data-lucide="images" class="lucide"></i><span class="ugal__n">1</span> / {len(g)}</span>
   </div>
   <div class="ustrip">
@@ -166,7 +166,7 @@ def unit_page(u):
     <a class="btn btn--lg ucta__btn" href="#dostepnosc">Rezerwuj online <i data-lucide="arrow-right" class="lucide"></i></a>
   </div>
 </section>'''
-    first = next((t for tag, t in x['desc'] if tag == 'p'), f'{full} — czarter z Giżycka, Stanica Wodna Stranda.')
+    first = re.sub(r'<[^>]+>', '', next((t for tag, t in x['desc'] if tag == 'p'), f'{full} — czarter z Giżycka, Stanica Wodna Stranda.'))
     page(f'{slug}.html', f'{full} — czarter na Mazurach, Giżycko | Jachty Mazury', first[:155], body, lst, UFORM_JS)
 
 UFORM_JS = '''<script>
@@ -194,8 +194,7 @@ def model_extract(m):
     for mm in re.finditer(r'<(h1|h2|h3|p)\b[^>]*>(.*?)</\1>', s[a:b], re.S):
         t = jednostki._txt(mm.group(2))
         if not t or mm.group(1) == 'h1': continue
-        if re.match(r'(Szukasz|Nie posiadasz|Jeśli planujesz|Sprawdź|Zobacz)', t): continue
-        out.append(('h' if mm.group(1) != 'p' else 'p', t))
+        out.append(('h', esc(t)) if mm.group(1) != 'p' else ('p', inline(mm.group(2))))
     return out
 
 def model_page(m):
@@ -203,7 +202,7 @@ def model_page(m):
     g = GAL.get(us[0][0], [])
     hero = gpic(us[0][0], g[0][0], g[0][1], g[0][2], g[0][3], '100vw', big=True, eager=True) if g else ''
     d = model_extract(m) or []
-    desc = ''.join(f'<h3 class="udesc__h">{esc(t)}</h3>' if tag == 'h' else f'<p>{esc(t)}</p>' for tag, t in d)
+    desc = ''.join(f'<h3 class="udesc__h">{t}</h3>' if tag == 'h' else f'<p>{t}</p>' for tag, t in d)
     prices = [od(u[3]) for u in us if od(u[3])]
     body = f'''<section class="uh uh--model">
   <figure class="uh__ph">{hero}</figure>
@@ -225,7 +224,7 @@ def model_page(m):
 {f"""<section class="psec psec--sand udesc">
   <div class="wrap"><div class="udesc__t udesc__t--wide"><h2 class="h2">O modelu {esc(m)}</h2>{desc}</div></div>
 </section>""" if desc else ''}''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.')
-    lead = next((t for tag, t in d if tag == 'p'), f'{m} — czarter z Giżycka.')
+    lead = re.sub(r'<[^>]+>', '', next((t for tag, t in d if tag == 'p'), f'{m} — czarter z Giżycka.'))
     page(murl(m), f'{m} — czarter na Mazurach, Giżycko | Jachty Mazury', lead[:155], body, lst)
 
 # ---------------------------------------------------------------- hub „Czarter jachtów” z FAQ (treść 1:1 z /czarter-jachtow-gizycko/)
@@ -234,7 +233,7 @@ def hub_extract():
     s = re.sub(r'<script.*?</script>|<style.*?</style>|<header.*?</header>|<footer.*?</footer>|<nav.*?</nav>', '', s, flags=re.S)
     h1 = jednostki._txt(re.search(r'<h1[^>]*>(.*?)</h1>', s, re.S).group(1))
     a = s.find('<h1'); q = s.find('Poznaj odpowiedzi'); z = s.find('Zarządzaj opcjami')
-    intro = [jednostki._txt(p) for p in re.findall(r'<p\b[^>]*>(.*?)</p>', s[a:q], re.S)]
+    intro = [inline(p) for p in re.findall(r'<p\b[^>]*>(.*?)</p>', s[a:q], re.S) if jednostki._txt(p)]
     ol = s[q:]; ol = ol[ol.find('<ol'):]
     # pytania: <li> najwyższego poziomu w <ol>
     faq = []; depth = 0; i = ol.find('>') + 1; cur = None; buf = ''
@@ -250,7 +249,8 @@ def hub_extract():
         if tag in ('ul',): depth += -1 if close else 1
     def clean(h):
         h = re.sub(r'<(/?)(?:b|strong)\b[^>]*>', r'<\1strong>', h)
-        h = re.sub(r'<(?!/?(?:p|ul|li|strong)\b)[^>]+>', '', h)
+        h = re.sub(r'<a\b[^>]*>.*?</a>', lambda m: inline(m.group(0)), h, flags=re.S)
+        h = re.sub(r'<(?!/?(?:p|ul|li|strong|a)\b)[^>]+>', '', h)
         h = re.sub(r'<(p|ul|li)\b[^>]*>', r'<\1>', h)
         h = re.sub(r'<li>\s*<p>(.*?)</p>', r'<li>\1', h, flags=re.S)
         h = re.sub(r'<p>\s*</p>', '', h); h = re.sub(r'<li>\s*</li>', '', h)
@@ -260,7 +260,7 @@ def hub_extract():
     sections = []
     for mm in re.finditer(r'<(h4|h3|p|li)\b[^>]*>(.*?)</\1>', s[s.find('Nasza Giżycka flota') - 60:z], re.S):
         t = jednostki._txt(mm.group(2))
-        if t: sections.append((mm.group(1), t))
+        if t: sections.append((mm.group(1), esc(t) if mm.group(1) in ('h3', 'h4') else inline(mm.group(2))))
     return h1, intro, faq, sections
 
 def hub_page():
@@ -278,15 +278,15 @@ def hub_page():
     for tag, t in secs:
         if tag == 'li':
             if not lst: seo += '<ul>'; lst = True
-            seo += f'<li>{esc(t)}</li>'; continue
+            seo += f'<li>{t}</li>'; continue
         if lst: seo += '</ul>'; lst = False
-        seo += f'<h2 class="h3">{esc(t)}</h2>' if tag in ('h4', 'h3') else f'<p>{esc(t)}</p>'
+        seo += f'<h2 class="h3">{t}</h2>' if tag in ('h4', 'h3') else f'<p>{t}</p>'
     if lst: seo += '</ul>'
-    body = (phead([('czarter-jachtow.html', 'Czarter jachtów')], 'Stanica Wodna Stranda · Giżycko', esc(h1), esc(intro[0]) if intro else '')
+    body = (phead([('czarter-jachtow.html', 'Czarter jachtów')], 'Stanica Wodna Stranda · Giżycko', esc(h1), intro[0] if intro else '')
      + f'''<section class="psec">
   <div class="wrap">
     <div class="hts">{tile("jachty-zaglowe.html", "Jachty żaglowe", SAIL)}{tile("jachty-motorowe.html", "Jachty motorowe", MOTOR)}{tile("czarter-bez-patentu.html", "Czarter bez patentu", bez)}</div>
-    <div class="hub__intro">{''.join(f"<p>{esc(p)}</p>" for p in intro[1:])}</div>
+    <div class="hub__intro">{''.join(f"<p>{p}</p>" for p in intro[1:])}</div>
   </div>
 </section>
 <section class="psec psec--sand">
@@ -299,7 +299,7 @@ def hub_page():
   <div class="wrap"><div class="art__body hub__seo">{seo}</div></div>
 </section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'))
     page('czarter-jachtow.html', 'Czarter jachtów Giżycko — jachty żaglowe, motorowe i houseboaty | Jachty Mazury',
-         (intro[0] if intro else h1)[:155], body, 'czarter-jachtow.html', f'<script type="application/ld+json">{ld}</script>')
+         re.sub(r'<[^>]+>', '', intro[0] if intro else h1)[:155], body, 'czarter-jachtow.html', f'<script type="application/ld+json">{ld}</script>')
 
 # ---------------------------------------------------------------- Wiedza: filmy i aktualności
 def filmy_page():
@@ -315,13 +315,13 @@ def filmy_page():
 
 def news_card(a, big=False):
     return (f'<a class="nc" href="{a["slug"]}.html"><figure class="nc__ph">{pic("art-" + a["slug"], a["h1"], "(min-width:1024px) 30vw, 100vw")}</figure>'
-            f'<span class="nc__k micro">Poradnik</span><span class="nc__t">{esc(a["h1"])}</span><span class="nc__l">{esc(a["lead"])}</span>'
+            f'<span class="nc__k micro">{pl_date(a.get("date", "")) or "Poradnik"}</span><span class="nc__t">{esc(a["h1"])}</span><span class="nc__l">{esc(a["lead"])}</span>'
             f'<span class="nc__go">Czytaj więcej <i data-lucide="arrow-right" class="lucide"></i></span></a>')
 
 def news_page():
     body = (phead([('poradnik.html', 'Wiedza'), ('aktualnosci.html', 'Aktualności')], 'Wiedza', 'Aktualności',
                   'Najnowsze wpisy z działu Wiedza.')
-     + f'<section class="psec"><div class="wrap"><div class="ncs">{"".join(news_card(a) for a in ART)}</div></div></section>'
+     + f'<section class="psec"><div class="wrap"><div class="ncs">{"".join(news_card(a) for a in sorted(ART, key=lambda a: a.get("date", ""), reverse=True))}</div></div></section>'
      + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'))
     page('aktualnosci.html', 'Aktualności | Jachty Mazury', 'Najnowsze wpisy Jachty Mazury: poradniki, trasy i informacje z mariny w Giżycku.', body, 'aktualnosci.html')
 
@@ -350,8 +350,8 @@ def home_page():
   <figure class="hh__ph">{pic("fl-a30", "Antila 30 pod żaglami na jeziorze", "100vw", True) if "fl-a30" in WS else '<picture><source type="image/webp" srcset="assets/img/r/fl-a30-600.webp 600w, assets/img/r/fl-a30-1280.webp 1280w" sizes="100vw"><img src="assets/img/r/fl-a30-1280.jpg" srcset="assets/img/r/fl-a30-600.jpg 600w, assets/img/r/fl-a30-1280.jpg 1280w" sizes="100vw" width="1280" height="960" alt="Antila 30 pod żaglami na jeziorze" fetchpriority="high" decoding="async"></picture>'}</figure>
   <div class="hh__shade" aria-hidden="true"></div>
   <div class="wrap hh__in">
-    <p class="micro hh__eye">Czarter jachtów · Giżycko</p>
-    <h1 class="hh__h">Mazury w&nbsp;najlepszym wydaniu</h1>
+    <h1 class="micro hh__eye">Czarter jachtów Mazury</h1>
+    <p class="hh__h">Mazury w&nbsp;najlepszym wydaniu</p>
     <p class="hh__lead">Wolność. Przygoda. Niezapomniane chwile.</p>
     <a class="btn btn--lg hh__btn" href="#rezerwuj" data-open-modal>Sprawdź dostępność i zarezerwuj online <i data-lucide="arrow-right" class="lucide"></i></a>
   </div>
@@ -381,7 +381,7 @@ def home_page():
 <section class="psec news">
   <div class="wrap">
     <div class="sech"><h2 class="h2">Aktualności</h2><div class="sech__a"><a class="u u--on" href="aktualnosci.html">Zobacz wszystkie aktualności →</a></div></div>
-    <div class="ncs">{''.join(news_card(a) for a in ART[:3])}</div>
+    <div class="ncs">{''.join(news_card(a) for a in sorted(ART, key=lambda a: a.get("date", ""), reverse=True)[:3])}</div>
   </div>
 </section>
 <section class="psec psec--sand ab">
@@ -426,7 +426,7 @@ def home_page():
  var m=document.getElementById('rezerwuj-okno'),last=null;
  function open(e){if(e)e.preventDefault();last=document.activeElement;m.hidden=false;document.body.classList.add('lb-open');m.querySelector('.bk__x').focus()}
  function close(){m.hidden=true;document.body.classList.remove('lb-open');if(last)last.focus()}
- [].forEach.call(document.querySelectorAll('[data-open-modal],a[href="index.html#rezerwuj"],a[href="#rezerwuj"]'),function(a){a.addEventListener('click',open)});
+ [].forEach.call(document.querySelectorAll('[data-open-modal],a[href$="#rezerwuj"]'),function(a){a.addEventListener('click',open)});
  [].forEach.call(m.querySelectorAll('[data-close-modal]'),function(b){b.addEventListener('click',close)});
  m.addEventListener('keydown',function(e){if(e.key==='Escape')close();if(e.key!=='Tab')return;var f=[].slice.call(m.querySelectorAll('a,button')),a=f[0],z=f[f.length-1];
   if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}});
@@ -440,5 +440,46 @@ def home_page():
          body, 'index.html', js)
 
 for u in SAIL + MOTOR: unit_page(u)
-for m in models(SAIL + MOTOR): model_page(m)
+for m in models(SAIL + MOTOR):
+    if has_model_page(m): model_page(m)
 hub_page(); filmy_page(); news_page(); home_page()
+
+# ---------------------------------------------------------------- /houseboat-mazury/ (treść 1:1 z obecnej strony)
+def houseboat_page():
+    s = open('_seo/html/houseboat-mazury.html', encoding='utf-8').read()
+    s = re.sub(r'<script.*?</script>|<style.*?</style>|<header.*?</header>|<footer.*?</footer>|<nav.*?</nav>', '', s, flags=re.S)
+    a = s.find('<h1'); z = s.find('Zarządzaj opcjami')
+    blocks = [(m.group(1), m.group(2)) for m in re.finditer(r'<(h1|h2|p|li)\b[^>]*>(.*?)</\1>', s[a:z], re.S) if jednostki._txt(m.group(2))]
+    h1 = jednostki._txt(blocks[0][1])
+    intro, sections, faq = [], [], []; cur = None
+    for tag, raw in blocks[1:]:
+        if tag == 'h2': cur = jednostki._txt(raw); sections.append([cur, []]); continue
+        if cur is None: intro.append(inline(raw)); continue
+        if tag == 'li' and 'pytania' in cur:
+            txt = inline(raw); q, _, ans = jednostki._txt(raw).partition('? ')
+            faq.append((q + '?', inline(raw)[len(q) + 1:].lstrip(' ?') if ans else txt)); continue
+        sections[-1][1].append(inline(raw))
+    bez = [u for u in MOTOR if u[0] != 'stillo-31-star']
+    parts = ''
+    for title, ps in sections:
+        if 'pytania' in title: continue
+        parts += f'<h2 class="h3">{esc(title)}</h2>' + ''.join(f'<p>{p}</p>' for p in ps)
+    items = ''.join(f'<details class="faq__i"><summary>{esc(qq)}</summary><div class="faq__a"><p>{aa}</p></div></details>' for qq, aa in faq)
+    ld = json.dumps({'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
+        {'@type': 'Question', 'name': qq, 'acceptedAnswer': {'@type': 'Answer', 'text': re.sub(r'<[^>]+>', '', aa)}} for qq, aa in faq]}, ensure_ascii=False)
+    body = (phead([('czarter-jachtow.html', 'Czarter jachtów'), ('houseboat-mazury.html', 'Houseboaty')], 'Czarter bez patentu · Giżycko', esc(h1), intro[0] if intro else '')
+     + f'''<section class="psec">
+  <div class="wrap"><div class="art__body">{"".join(f"<p>{p}</p>" for p in intro[1:])}{parts}</div></div>
+</section>
+<section class="psec fleet psec--sand">
+  <div class="wrap">
+    <h2 class="h3 psec__h">Dostępne houseboaty</h2>
+    <div class="fl">
+{''.join(card(*w) for w in bez)}    </div>
+  </div>
+</section>
+{f"""<section class="psec"><div class="wrap faq"><h2 class="h2">Najczęściej zadawane pytania</h2><div class="faq__l">{items}</div></div></section>""" if items else ''}'''
+     + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'))
+    page('houseboat-mazury.html', 'Houseboat Mazury', re.sub(r'<[^>]+>', '', intro[0])[:155] if intro else h1, body, 'houseboat-mazury.html',
+         f'<script type="application/ld+json">{ld}</script>' if faq else '')
+houseboat_page()

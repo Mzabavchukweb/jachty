@@ -137,6 +137,7 @@ FOOT = f'''<footer class="inkband foot on-dark" id="kontakt">
 </footer>'''
 
 exec(open(os.path.join(ROOT, '_build/nawigacja.py'), encoding='utf-8').read())   # nowa nawigacja i stopka
+exec(open(os.path.join(ROOT, '_build/adresy.py'), encoding='utf-8').read())      # struktura adresów 1:1 z obecną stroną
 
 CALL = f'''<a class="callfab" href="{TEL_H}" aria-label="Zadzwoń: {TEL}" title="{TEL}">
   <span class="callfab__ico" aria-hidden="true"><i data-lucide="phone" class="lucide"></i><span class="callfab__fb">✆</span></span>
@@ -707,7 +708,7 @@ for i, a in enumerate(ART):
         lead = blocks[0][1]; blocks = blocks[1:]
     more = [ART[(i + k) % len(ART)] for k in (1, 2, 3)]
     page(f'{a["slug"]}.html', f'{a["title"]} | Jachty Mazury', re.sub(r'<[^>]+>', '', lead)[:155],
-     phead([('poradnik.html', 'Poradnik'), (f'{a["slug"]}.html', a['h1'])], f'{mins} min czytania', esc(a['h1']), lead)
+     phead([('poradnik.html', 'Poradnik'), (f'{a["slug"]}.html', a['h1'])], f'{pl_date(a.get("date", "")) + " · " if a.get("date") else ""}{mins} min czytania', esc(a['h1']), lead)
      + f'''<section class="psec art">
   <div class="wrap">
     <figure class="art__img">{pic("art-" + a["slug"], a["h1"], "(min-width:1024px) 900px, 100vw", True)}</figure>
@@ -749,7 +750,7 @@ print('gotowe')
 
 # ================================================================= ISTNIEJĄCE STRONY: nagłówek, stopka, skrypt
 def patch(fname, cur, photo=False, own_booking=False, dark=False):
-    s = open(fname).read()
+    s = open(f'_build/src/{fname}').read()   # źródło ręcznie tworzonej strony
     a = s.index('<header class="head'); b = s.index('</header>', a) + 9
     # usuń poprzednie menu mobilne, jeśli było
     os.makedirs('_build/kopie', exist_ok=True); open(f'_build/kopie/{fname}', 'w').write(s)   # kopia przed zmianą
@@ -770,7 +771,6 @@ def patch(fname, cur, photo=False, own_booking=False, dark=False):
     open(fname, 'w').write(s); print('  ✎', fname)
 
 print('Nawigacja na istniejących stronach:')
-open('jacht.html', 'w').write('<!doctype html><html lang="pl"><head><meta charset="utf-8"><title>Antila 33 | Jachty Mazury</title><meta http-equiv="refresh" content="0; url=model-antila-33.html"><link rel="canonical" href="model-antila-33.html"></head><body><a href="model-antila-33.html">Antila 33</a></body></html>')
 patch('fundusze-europejskie.html', '', dark=True)
 
 # ================================================================= pages.css
@@ -823,5 +823,6 @@ def stamp_assets():
         if t2 != t: open(h, 'w', encoding='utf-8').write(t2)
     print('  wersje zasobów:', ', '.join(f'{k.split("/")[-1]}={v}' for k, v in sorted(ver.items())))
 stamp_assets()
+exec(open(os.path.join(ROOT, '_build/struktura.py'), encoding='utf-8').read())   # katalogi jak na obecnej stronie + SEO
 
 print('koniec')
