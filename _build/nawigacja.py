@@ -8,7 +8,7 @@ def models(units):
 def murl(model): return f'model-{mslug(model)}.html'
 def uname(u): return f'{u[1]} „{u[2]}”' if u[2] else u[1]
 
-WIEDZA = [('wiedza.html', 'Wiedza'), ('poradnik.html', 'Poradnik czarterowy'), ('filmy-szkoleniowe.html', 'Filmy szkoleniowe'), ('aktualnosci.html', 'Aktualności')]
+WIEDZA = [('poradnik.html', 'Poradnik czarterowy'), ('filmy-szkoleniowe.html', 'Filmy szkoleniowe'), ('aktualnosci.html', 'Aktualności')]
 NAV_ITEMS = [('cennik.html', 'Cennik'), ('jachty-na-sprzedaz.html', 'Na sprzedaż'), ('port.html', 'Port'), ('wspolpraca.html', 'Współpraca'), ('kontakt.html', 'Kontakt')]
 CZ_ITEMS = [('czarter-jachtow.html', 'Czarter jachtów'), ('jachty-zaglowe.html', 'Jachty żaglowe'), ('jachty-motorowe.html', 'Jachty motorowe'), ('czarter-bez-patentu.html', 'Czarter bez patentu')]
 

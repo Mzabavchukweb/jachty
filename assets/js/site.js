@@ -67,7 +67,6 @@
     var close=function(){lb.classList.remove('is-open');document.body.classList.remove('lb-open');lb.hidden=true;if(from)from.focus()};
     th.forEach(function(b,i){b.addEventListener('click',function(){open(i,b)})});
     var z=fig.querySelector('.ugal__zoom');if(z)z.addEventListener('click',function(){open(cur,z)});
-    [].forEach.call(document.querySelectorAll('.uh__arrow'),function(b){b.addEventListener('click',function(){setMain((cur+(+b.dataset.dir)+th.length)%th.length)})});
     lb.querySelector('.lb__x').addEventListener('click',close);
     lb.querySelector('.lb__nav--prev').addEventListener('click',function(){show(cur-1)});
     lb.querySelector('.lb__nav--next').addEventListener('click',function(){show(cur+1)});
@@ -81,10 +80,6 @@
     /* duże wersje od razu do pamięci — przełączanie bez czekania */
     addEventListener('load',function(){var w=document.createElement('div');w.className='lb__warm';w.setAttribute('aria-hidden','true');th.forEach(function(_,i){w.appendChild(big(i,'100vw'))});document.body.appendChild(w)});
   }
-
-  /* spacer wirtualny: ramka ładuje się dopiero po kliknięciu */
-  [].forEach.call(document.querySelectorAll('.vt'),function(v){var b=v.querySelector('.vt__play');if(b)b.addEventListener('click',function(){
-    v.innerHTML='<iframe src="'+v.dataset.src+'" title="Spacer wirtualny po jachcie" allow="fullscreen; xr-spatial-tracking" allowfullscreen loading="lazy"></iframe>'})});
 
   /* pojawianie sekcji */
   if('IntersectionObserver' in window){
