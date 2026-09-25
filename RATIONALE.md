@@ -340,6 +340,17 @@ Na telefonie grafika w nagłówku stoi pod tekstem. Róża wiatrów w pasie „W
 - Nie zrobione: wersja angielska (56 adresów `/en/…`). Jej tytuły, opisy, H1 i hreflang są w inwentaryzacji; strony trzeba zbudować.
 - Nowe adresy (nie ma ich dziś): `/aktualnosci/`, `/filmy-szkoleniowe/`. `/polityka-prywatnosci/` istnieje dziś, ale nie ma jej w mapie strony.
 
+**Wizualizacje 2 (25.09.2026)** — źródło: `Re_ Strona internetowa (1).zip` (czarter jachtów, jachty żaglowe, motorowe, strona modelu ×2, strona jachtu, Wiedza, cennik). Wygląd z wizualizacji, teksty z obecnej strony (klientka: teksty w wizualizacjach są przykładowe).
+- Kolory uporządkowane jedną zasadą: tekst i nagłówki `--ink`; przyciski akcji `--deep`; tła `--paper`, `--sand`, `--ink`; zieleń `--sage` tylko w ikonach i etykietach. Na ciemnym tle i na zdjęciach przyciski białe.
+- Czarter jachtów: zdjęcie, dwa duże kafle (żaglowe, motorowe; opisy = meta opisy tych stron), „Co zyskujesz” z sześciu korzyści z tej strony (wizualizacja miała pięć wymyślonych), FAQ w dwóch kolumnach, tekst SEO.
+- Jachty żaglowe / motorowe: zdjęcie, wstęp z obecnej strony, siatka modeli z ikonami (silnik, ster, miejsca, kabiny — z danych jednostek), cały tekst SEO z obecnej strony pod siatką. Jednostki są na stronach modeli.
+- Strona modelu wg wersji 2 (najpierw jednostki — do wysyłania ofert): jednostki z rokiem i ceną od, „O modelu” + najważniejsze informacje (ikony), sekcje opisu modelu (wnętrze, kabiny, prowadzenie) w kolumnach. Wersja 1 różni się tylko kolejnością — do wyboru.
+- Strona jachtu: strzałki na dużym zdjęciu. Spacer wirtualny: gotowe miejsce obok opisu (`SPACERY` w `_build/serwis.py`; w motywie pole ACF) — ramka ładuje się dopiero po kliknięciu; dopóki spaceru nie ma, jest zdjęcie.
+- Wiedza: nowa strona zbiorcza `/wiedza/` (poradnik, filmy, aktualności, najnowsze artykuły, miejsce na filmy).
+- Cennik: zdjęcie w nagłówku, większe miniatury i nazwy; lista rozwijana na telefonie bez zmian. Pory roku („niski/wysoki sezon”) z wizualizacji nie są wpisane — obecny cennik ich nie nazywa, ma 11 okresów.
+- Pominięte z wizualizacji jako przykładowe: modele spoza floty (Phobos 25, Tes 678 BT, Jannor 700, Twister 780, Balt 818, Weekend 820, Stillo 26, Nexus 870), imiona i lata jednostek (Luna, Tawerna…), ceny w cenniku, dane kontaktowe, hasła („Przestrzeń, która inspiruje”).
+- Nagłówek strony (pasek z menu) zostaje ciemny, jak ustalono wcześniej — wizualizacje mają jasny; do decyzji.
+
 **Pas „Wybrałeś termin?"** nad stopką ma od dołu cienką jasną linię (`rgba(252,249,244,.5)`), bo oba bloki są ciemne i zlewały się w jeden.
 
 **Cennik na telefonie**: szeroka tabela (13 kolumn) zamienia się w listę rozwijanych pozycji (`<details>`) — nazwa jachtu i „od … zł / doba", po rozwinięciu wszystkie okresy, kaucja i sprzątanie.

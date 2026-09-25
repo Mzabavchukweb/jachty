@@ -17,7 +17,7 @@ NEWPATH = {'index.html': '', 'czarter-jachtow.html': 'czarter-jachtow-gizycko/',
     'jachty-motorowe.html': 'czarter-jachtow-motorowych/', 'czarter-bez-patentu.html': 'czarter-bez-patentu/', 'houseboat-mazury.html': 'houseboat-mazury/',
     'cennik.html': 'cennik/', 'jachty-na-sprzedaz.html': 'jachty-na-sprzedaz/', 'poradnik.html': 'poradnik-czarterowy/', 'port.html': 'port/',
     'wspolpraca.html': 'inwestycje-i-posrednictwo/', 'kontakt.html': 'kontakt/', 'polityka-prywatnosci.html': 'polityka-prywatnosci/',
-    'fundusze-europejskie.html': 'fundusze-europejskie/', 'filmy-szkoleniowe.html': 'filmy-szkoleniowe/', 'aktualnosci.html': 'aktualnosci/'}
+    'fundusze-europejskie.html': 'fundusze-europejskie/', 'filmy-szkoleniowe.html': 'filmy-szkoleniowe/', 'aktualnosci.html': 'aktualnosci/', 'wiedza.html': 'wiedza/'}
 for u in SAIL + MOTOR: NEWPATH[f'{u[0]}.html'] = f'{u[0]}/'
 for a in ART: NEWPATH[f'{a["slug"]}.html'] = f'{a["slug"]}/'
 for m in models(SAIL + MOTOR):
