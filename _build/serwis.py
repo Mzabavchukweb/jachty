@@ -64,7 +64,10 @@ def unit_page(u):
     main = gpic(slug, g[0][0], g[0][1], g[0][2], g[0][3], '100vw', big=True, eager=True) if g else ''
     thumbs = ''.join(f'<button type="button" data-i="{i}" aria-label="Powiększ zdjęcie {i+1} z {len(g)}"{" aria-current=\"true\"" if i == 0 else ""}>'
                      f'{gpic(slug, n, ws, W, H, "180px")}</button>' for i, (n, ws, W, H) in enumerate(g))
-    facts = ''.join(f'<li><i data-lucide="{ic}" class="lucide" aria-hidden="true"></i><span class="uic__k">{k}</span><b>{v}</b></li>' for ic, k, v in unit_facts(slug))
+    def fv(v):
+        main, _, extra = v.partition(' · ')
+        return f'<b>{main}</b>' + (f'<small>{extra}</small>' if extra else '')
+    facts = ''.join(f'<li><i data-lucide="{ic}" class="lucide" aria-hidden="true"></i><span class="uic__k">{k}</span>{fv(v)}</li>' for ic, k, v in unit_facts(slug))
     cut = next((i for i, (tag, t) in enumerate(x['desc']) if tag == 'h2'), len(x['desc']))
     cut = max(cut, 1)
     blk = lambda part: ''.join(f'<h3 class="udesc__h">{esc(t)}</h3>' if tag == 'h2' else f'<p>{t}</p>' for tag, t in part)
@@ -88,9 +91,9 @@ def unit_page(u):
     terms = ''.join(f'<li>{esc(t)}</li>' for t in x['terms'])
     v = ROWS.get(row); ptab = ''
     if v:
-        lis = ''.join(f'<li><span>{r}{t}</span><b class="num">{zl(int(val)) if val.strip().isdigit() else "—"} <small>{un}</small></b></li>' for (r, un, t), val in zip(periods, v[:11]))
-        ptab = (f'<ul class="unit__prices">{lis}<li class="unit__px"><span>Kaucja</span><b class="num">{zl(int(v[11]))}</b></li>'
-                f'<li class="unit__px"><span>Sprzątanie</span><b class="num">{zl(int(v[12]))}</b></li></ul>'
+        lis = ''.join(f'<li><span class="up__r num">{r}</span><span class="up__t">{t}</span><span class="up__p num"><b>{zl(int(val)) if val.strip().isdigit() else "—"}</b><small>{un}</small></span></li>' for (r, un, t), val in zip(periods, v[:11]))
+        ptab = (f'<ul class="unit__prices">{lis}<li class="unit__px"><span class="up__r">Kaucja</span><span class="up__t"></span><span class="up__p num"><b>{zl(int(v[11]))}</b></span></li>'
+                f'<li class="unit__px"><span class="up__r">Sprzątanie</span><span class="up__t"></span><span class="up__p num"><b>{zl(int(v[12]))}</b></span></li></ul>'
                 f'<p class="unit__note">Cena za dobę obowiązuje przy czarterze minimum tygodniowym. Przy krótszych terminach cena ustalana jest indywidualnie.</p>')
     subject = f'Zapytanie o czarter: {full}'
     more = ([w for w in SAIL + MOTOR if w[0] != slug and w[1] == model] + [w for w in (SAIL if kind == 'sail' else MOTOR) if w[0] != slug and w[1] != model])[:4]
@@ -165,10 +168,14 @@ def unit_page(u):
 <section class="psec udet">
   <div class="wrap">
     <div class="udet__g">
+      <div class="udet__c">
       {f'<details class="udet__i udet__i--eq" open><summary><h2 class="h3">Wyposażenie</h2></summary><ul class="unit__eq">{equip}</ul></details>' if equip else ''}
       <details class="udet__i" open><summary><h2 class="h3">Dane techniczne</h2></summary><dl class="unit__spec num">{spec}</dl></details>
+      </div>
+      <div class="udet__c">
       {f'<details class="udet__i" open><summary><h2 class="h3">Cennik 2027</h2></summary>{ptab}</details>' if ptab else ''}
       {f'<details class="udet__i" open><summary><h2 class="h3">Warunki rezerwacji</h2></summary><ul class="unit__terms">{terms}</ul></details>' if terms else ''}
+      </div>
     </div>
   </div>
 </section>
