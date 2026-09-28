@@ -1347,3 +1347,13 @@ html:not(.js) .udesc2__btn{display:none}
 .psec.udet{padding-top:0!important}
 @media(max-width:640px){.psec.udet{padding-top:0!important}}
 @media(max-width:640px){.uh.ugal .ustrip__in{grid-template-columns:minmax(0,1fr);gap:0}}
+
+/* broszura PDF */
+.uav__top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin:0 0 24px}
+.uav__top .uav__price{margin:0}
+.uav__pdf{min-height:46px;gap:8px}
+.uav__pdf .lucide,.ucta__pdf .lucide{width:18px;height:18px}
+.ucta__a{display:flex;gap:12px;flex-wrap:wrap}
+.ucta .ucta__pdf{background:transparent;border-color:rgba(255,255,255,.7);color:#fff}
+.ucta .ucta__pdf:hover{background:#fff;color:var(--ink)}
+@media(max-width:640px){.uav__pdf{width:100%;justify-content:center}.ucta__a{width:100%}.ucta__a .btn{flex:1 1 100%;justify-content:center}}

@@ -136,7 +136,8 @@ def unit_page(u):
   <div class="wrap g12">
     <div class="c6 uav__cal">
       <h2 class="h2 sec-line">Dostępność i&nbsp;rezerwacja</h2>
-      <div class="uav__price">{price_html(row)}</div>
+      <div class="uav__top"><div class="uav__price">{price_html(row)}</div>
+        <button class="btn btn--outline uav__pdf" type="button"><i data-lucide="file-down" class="lucide" aria-hidden="true"></i> Pobierz broszurę PDF</button></div>
       <div class="ucal" data-slot="kalendarz-dostawcy"><div class="ucal__m"></div><div class="ucal__m"></div></div>
       <p class="ucal__note"><i data-lucide="info" class="lucide" aria-hidden="true"></i> Wolne i zajęte terminy pokaże kalendarz systemu rezerwacji. Kliknij dzień, żeby wpisać go w formularz.</p>
       <p class="uav__hours">Wydanie jachtu 16:00 – 20:00 · zdanie 8:00 – 10:00</p>
@@ -189,7 +190,8 @@ def unit_page(u):
 <section class="ucta">
   <div class="wrap ucta__in">
     <div><h2 class="h2">{esc(model)}{f" „{esc(name)}”" if name else ""}</h2><p>Sprawdź dostępność i zaplanuj swój rejs już dziś.</p></div>
-    <a class="btn btn--lg ucta__btn" href="#dostepnosc">Rezerwuj online <i data-lucide="arrow-right" class="lucide"></i></a>
+    <div class="ucta__a"><button class="btn btn--outline btn--lg ucta__pdf" type="button"><i data-lucide="file-down" class="lucide" aria-hidden="true"></i> Broszura PDF</button>
+    <a class="btn btn--lg ucta__btn" href="#dostepnosc">Rezerwuj online <i data-lucide="arrow-right" class="lucide"></i></a></div>
   </div>
 </section>'''
     first = re.sub(r'<[^>]+>', '', next((t for tag, t in x['desc'] if tag == 'p'), f'{full} — czarter z Giżycka, Stanica Wodna Stranda.'))
@@ -769,3 +771,4 @@ hub_page(); wiedza_page()
 swap_head('cennik.html', phero([('cennik.html', 'Cennik')], 'Cennik czarteru jachtów 2027',
     'Cena za dobę obowiązuje przy czarterze minimum tygodniowym. Przy krótszych terminach cena ustalana jest indywidualnie.',
     pic('port', 'Stanica Wodna Stranda z lotu ptaka', '100vw', True), '50% 60%'))
+
