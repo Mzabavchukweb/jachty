@@ -1477,12 +1477,19 @@ body.modal-open .fabs,body.mnav-open .fabs,body.lb-open .fabs,body:has(.konh) .f
 /* H4: niższe kafle — mocniejsze przyciemnienie pod tekstem (kontrast AA na jasnych fragmentach zdjęć) */
 .kt__i::after{background:linear-gradient(0deg,rgba(18,26,29,.92) 0%,rgba(18,26,29,.7) 45%,rgba(18,26,29,.3) 100%)}
 .kt__t,.kt__d{text-shadow:0 1px 14px rgba(0,0,0,.35)}
-/* H10: falka w stopce po prawej, jak na wizualizacji (raster, dekoracja bez treści) */
+/* H10: falka w stopce po prawej, jak na wizualizacji (raster, dekoracja bez treści).
+   Przypięta do rzędu z logotypami UE — w wolnym miejscu po prawej; nie zależy od odstępów stopki i nie wchodzi na napisy. */
 .foot{position:relative;overflow:hidden}
 .foot>.wrap{position:relative;z-index:1}
-.foot::after{content:"";position:absolute;z-index:0;right:max(var(--gutter),calc((100% - var(--wrap)) / 2));bottom:84px;width:min(520px,48vw);aspect-ratio:1040/160;
+.foot .ue{position:relative}
+.foot .ue::after{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);width:min(420px,30vw);aspect-ratio:1040/160;
   background:url(../img/deco/fala-stopka.png) no-repeat center/contain;pointer-events:none;opacity:.85}
-@media(max-width:767px){.foot::after{width:70vw;bottom:auto;top:24px;right:-8vw;opacity:.5}}
+@media(max-width:1279px){
+  .foot .ue::after{display:none}
+  /* węższe ekrany: w prawym górnym rogu stopki, nad kolumnami */
+  .foot::after{content:"";position:absolute;z-index:0;top:24px;right:-4vw;width:min(360px,60vw);aspect-ratio:1040/160;
+    background:url(../img/deco/fala-stopka.png) no-repeat center/contain;pointer-events:none;opacity:.55}
+}
 /* WhatsApp i Messenger: przy lewej krawędzi, na połowie wysokości ekranu (prośba 29.09) — zakładki przyklejone
    do krawędzi, nie zasłaniają treści ani telefonu w prawym dolnym rogu */
 .fabs{left:0;right:auto;top:50%;bottom:auto;transform:translateY(-50%);gap:6px}
