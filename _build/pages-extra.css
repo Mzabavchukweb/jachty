@@ -1374,3 +1374,6 @@ body.modal-open{overflow:hidden}
 @media(max-width:767px){.bk{padding:8px}.bk__p--ibs{height:calc(100dvh - 16px);padding:14px}}
 .more ul{margin:0 0 14px;padding-left:1.2em;display:grid;gap:4px}.more li{line-height:1.6}
 .udesc__l{margin:0 0 14px;padding-left:1.2em;display:grid;gap:4px}.udesc__l li{line-height:1.6}
+/* dolny pasek stopki nad pływającym przyciskiem telefonu (na samym dole strony zasłaniał prawy koniec paska) */
+@media(min-width:768px){footer.foot{padding-bottom:calc(var(--gutter) + 84px)}}
+.foot__by a{white-space:nowrap}

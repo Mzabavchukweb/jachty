@@ -98,6 +98,6 @@ FOOT = f'''<footer class="inkband foot on-dark" id="kontakt">
       <div><span class="micro">Kontakt</span><ul class="foot__list"><li>Stanica Wodna Stranda</li><li><a class="u" href="{PIN}" rel="noopener" target="_blank">Pierkunowo 36, 11-500 Giżycko</a></li><li class="num"><a class="u" href="{TEL_H}">{TEL}</a></li><li><a class="u" href="mailto:{MAIL}">{MAIL}</a></li><li class="num">Biuro 8:00 – 20:00, codziennie</li></ul></div>
     </div>
     {UE}
-    <div class="foot__bot"><span>© 2026 jachtymazury.pl</span><span><a class="u" href="fundusze-europejskie.html">Fundusze Europejskie</a> · <a class="u" href="polityka-prywatnosci.html">Polityka prywatności</a></span></div>
+    <div class="foot__bot"><span>© 2026 jachtymazury.pl</span><span><a class="u" href="fundusze-europejskie.html">Fundusze Europejskie</a> · <a class="u" href="polityka-prywatnosci.html">Polityka prywatności</a></span><span class="foot__by">Projekt i realizacja: <a class="u" href="https://codingmaks.com" rel="noopener" target="_blank">codingmaks.com</a></span></div>
   </div>
 </footer>'''
