@@ -3,7 +3,7 @@ import urllib.parse
 LIVE = 'https://jachtymazury.pl'
 SEO = json.load(open('_seo/obecna-strona.json'))
 LIVE_MODEL_PAGES = {'Antila 27': 'czarter-jachtow-zaglowych/antila-27', 'Antila 28.2': 'czarter-jachtow-zaglowych/antila-28-2',
-    'Antila 30.1 E': 'czarter-jachtow-zaglowych/antila-30-1', 'Antila 30': 'czarter-jachtow-zaglowych/antila-30',
+    'Antila 30.1': 'czarter-jachtow-zaglowych/antila-30-1', 'Antila 30': 'czarter-jachtow-zaglowych/antila-30',
     'Antila 33.3': 'czarter-jachtow-zaglowych/antila-33-3', 'Antila 33': 'czarter-jachtow-zaglowych/antila-33',
     'Maxus 24 Evo': 'czarter-jachtow-zaglowych/maxus-24-evo', 'Maxus 28': 'czarter-jachtow-zaglowych/maxus-28',
     'Nautic 880': 'czarter-jachtow-motorowych/nautic-880', 'Nexus 870 Revo': 'czarter-jachtow-motorowych/nexus-870-revo'}

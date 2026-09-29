@@ -22,8 +22,12 @@ def extract(slug):
         if t in ('h3', 'h4') and up and 'DANE TECHNICZNE' in x: mode = 'spec'; continue
         if t in ('h3', 'h4') and 'WARUNKI REZERWACJI' in x.upper(): mode = 'terms'; continue
         if t in ('h3', 'h4') and up and 'CENNIK' in x: mode = 'stop'; continue
-        if mode == 'desc' and t in ('p', 'h3', 'h2'):
-            desc.append(('h2', x) if t != 'p' else ('p', INLINE(raw) if INLINE else H.escape(x)))
+        if mode == 'desc' and t in ('p', 'h3', 'h2', 'li'):
+            if t == 'li':   # punkty list w opisie (dotąd pomijane)
+                raw = re.sub(r'</?p\b[^>]*>', '', raw)
+                desc.append(('li', INLINE(raw) if INLINE else H.escape(x)))
+            else:
+                desc.append(('h2', x) if t != 'p' else ('p', INLINE(raw) if INLINE else H.escape(x)))
         elif mode == 'equip' and t == 'li': equip.append(x.rstrip(',.'))
         elif mode == 'terms' and t == 'li': terms.append(x)
     imgs = []

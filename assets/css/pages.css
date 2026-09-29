@@ -1616,3 +1616,5 @@ html.js .more:not(.is-open){display:none}
 .bk__alt{margin:0;font-size:.9375rem;color:var(--ink-80)}
 body.modal-open{overflow:hidden}
 @media(max-width:767px){.bk{padding:8px}.bk__p--ibs{height:calc(100dvh - 16px);padding:14px}}
+.more ul{margin:0 0 14px;padding-left:1.2em;display:grid;gap:4px}.more li{line-height:1.6}
+.udesc__l{margin:0 0 14px;padding-left:1.2em;display:grid;gap:4px}.udesc__l li{line-height:1.6}

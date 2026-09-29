@@ -15,7 +15,7 @@ WIEDZA = [('wiedza.html', 'Wiedza')] + WIEDZA_SUB
 NAV_ITEMS = [('cennik.html', 'Cennik'), ('jachty-na-sprzedaz.html', 'Na sprzedaż'), ('wspolpraca.html', 'Współpraca'), ('kontakt.html', 'Kontakt')]
 CZ_ITEMS = [('czarter-jachtow.html', 'Czarter jachtów'), ('jachty-zaglowe.html', 'Jachty żaglowe'), ('jachty-motorowe.html', 'Jachty motorowe'), ('czarter-bez-patentu.html', 'Czarter bez patentu')]
 # kolejność modeli żaglowych jak w menu obecnej strony
-SAIL_ORDER = ['Maxus 24 Evo', 'Maxus 28', 'Antila 24.4', 'Antila 27', 'Antila 28.2', 'Antila 30', 'Antila 30.1 E', 'Antila 33', 'Antila 33.3', 'Antila 34']
+SAIL_ORDER = ['Maxus 24 Evo', 'Maxus 28', 'Antila 24.4', 'Antila 27', 'Antila 28.2', 'Antila 30', 'Antila 30.1', 'Antila 33', 'Antila 33.3', 'Antila 34']
 def _sail_models():
     ms = models(SAIL)
     return sorted(ms, key=lambda m: SAIL_ORDER.index(m) if m in SAIL_ORDER else 99)

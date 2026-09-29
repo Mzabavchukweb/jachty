@@ -92,7 +92,13 @@ def unit_page(u):
     facts = ''.join(f'<li>{ico(ic)}<span class="uic__k">{k}</span>{fv(v)}</li>' for ic, k, v in unit_facts(slug))
     cut = next((i for i, (tag, t) in enumerate(x['desc']) if tag == 'h2'), len(x['desc']))
     cut = max(cut, 1)
-    blk = lambda part: ''.join(f'<h3 class="udesc__h">{esc(t)}</h3>' if tag == 'h2' else f'<p>{t}</p>' for tag, t in part)
+    def blk(part):   # opis: nagłówki, akapity i listy w kolejności z obecnej strony
+        o, lst = '', False
+        for tag, t in part:
+            if tag == 'li' and not lst: o += '<ul class="udesc__l">'; lst = True
+            if tag != 'li' and lst: o += '</ul>'; lst = False
+            o += f'<li>{t}</li>' if tag == 'li' else (f'<h3 class="udesc__h">{esc(t)}</h3>' if tag == 'h2' else f'<p>{t}</p>')
+        return o + ('</ul>' if lst else '')
     lead_d, more_d = blk(x['desc'][:cut]), blk(x['desc'][cut:])
     # suwak: najpierw zdjęcia wnętrza (rozpoznane po opisie zdjęcia na obecnej stronie), potem reszta
     INSIDE = ('wnętrz', 'wnetrz', 'mes', 'kambuz', 'kabin', 'salon', 'łazien', 'toalet', 'kuchni', 'sterówk', 'koj')
@@ -268,10 +274,11 @@ def model_extract(m):
     s = open(f, encoding='utf-8').read()
     s = re.sub(r'<script.*?</script>|<style.*?</style>|<header.*?</header>|<footer.*?</footer>|<nav.*?</nav>', '', s, flags=re.S)
     a = s.find('<h1'); b = s.find('Zarządzaj opcjami'); out = []
-    for mm in re.finditer(r'<(h1|h2|h3|p)\b[^>]*>(.*?)</\1>', s[a:b], re.S):
+    for mm in re.finditer(r'<(h1|h2|h3|li|p)\b[^>]*>(.*?)</\1>', s[a:b], re.S):
         t = jednostki._txt(mm.group(2))
         if not t or mm.group(1) == 'h1': continue
-        out.append(('h', esc(t)) if mm.group(1) != 'p' else ('p', inline(mm.group(2))))
+        if mm.group(1) == 'li': out.append(('li', inline(re.sub(r'</?p\b[^>]*>', '', mm.group(2))).strip()))   # punkty list (dotąd pomijane)
+        else: out.append(('h', esc(t)) if mm.group(1) != 'p' else ('p', inline(mm.group(2))))
     return out
 
 def model_page(m):
@@ -664,7 +671,7 @@ def unit_mini(u):
             f'<a class="btn btn--sm um__btn" href="{u[0]}.html">Zobacz szczegóły <i data-lucide="arrow-right" class="lucide"></i></a></div></article>')
 
 # ikony do punktów „Czy … to dobry wybór?” — dobór po słowach z treści punktu (treść bez zmian, ze strony modelu)
-WHY_IC = [('kabin', 'door-closed'), ('osób', 'users'), ('osoby', 'users'), ('łazienk', 'shower-head'), ('prysznic', 'shower-head'),
+WHY_IC = [('rodzin', 'users'), ('toalet', 'bath'), ('kabin', 'door-closed'), ('osób', 'users'), ('osoby', 'users'), ('łazienk', 'shower-head'), ('prysznic', 'shower-head'),
           ('dynamiczn', 'gauge'), ('stabiln', 'anchor'), ('bezpiecz', 'shield-check'), ('nautyczn', 'wind'), ('przestron', 'maximize-2'),
           ('przestrzen', 'maximize-2'), ('długości', 'maximize-2'), ('nowoczes', 'sparkles'), ('komfort', 'sofa'), ('standard', 'sofa')]
 def why_icon(t):
@@ -682,20 +689,29 @@ def model_page(m):
     cols, cur = [], None
     for tag, t in d[first_h:]:
         if tag == 'h': cur = [t, []]; cols.append(cur)
-        elif cur: cur[1].append(t)
+        elif cur: cur[1].append((tag, t))
     # MOD6: „Dlaczego warto wybrać …” z punktów sekcji „Czy … to dobry wybór?”
     why = next((c for c in cols if 'dobry wybór' in jednostki._txt(c[0]).lower()), None)
     pts, rest = [], []
     if why:
-        for p_ in why[1]:
-            if '•' in p_:
+        for tg, p_ in why[1]:
+            if tg == 'li':
+                pts.append(p_.strip(' ,.;'))
+            elif '•' in p_:
                 pts += [x.strip(' ,.') for x in re.split(r'•', re.sub(r'<br[^>]*>', '', p_)) if jednostki._txt(x).strip(' ,.')]
-            elif not jednostki._txt(p_).lower().startswith('jeśli szukasz'):
+            elif not re.match(r'jeśli (szukasz|zależy)', jednostki._txt(p_).lower()):
                 rest.append(p_)
     more = [c for c in cols if c is not why]
     facts = [f for f in unit_facts(us[0][0]) if f[1] != 'Rok produkcji']
     fh = ''.join(f'<li>{ico(ic)}<span class="uic__k">{k}</span><b>{v}</b></li>' for ic, k, v in facts)
-    more_html = ''.join(f'<h3 class="h3">{h}</h3>{"".join(f"<p>{p}</p>" for p in pp)}' for h, pp in more)
+    def body_html(items):   # akapity i listy w kolejności z obecnej strony
+        o, lst = '', False
+        for tg, t in items:
+            if tg == 'li' and not lst: o += '<ul>'; lst = True
+            if tg != 'li' and lst: o += '</ul>'; lst = False
+            o += f'<li>{t}</li>' if tg == 'li' else f'<p>{t}</p>'
+        return o + ('</ul>' if lst else '')
+    more_html = ''.join(f'<h3 class="h3">{h}</h3>{body_html(pp)}' for h, pp in more)
     body = f'''<section class="uh uh--model">
   <figure class="uh__ph">{hero}</figure>
   <div class="uh__shade" aria-hidden="true"></div>
