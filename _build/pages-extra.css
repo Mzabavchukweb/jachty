@@ -1384,3 +1384,23 @@ body.modal-open{overflow:hidden}
 /* dolny pasek stopki nad pływającym przyciskiem telefonu (na samym dole strony zasłaniał prawy koniec paska) */
 @media(min-width:768px){footer.foot{padding-bottom:calc(var(--gutter) + 84px)}}
 .foot__by a{white-space:nowrap}
+
+/* ===================== FUNDUSZE EUROPEJSKIE — wersja skrócona (prośba klientki 29.09) =====================
+   Zostają tylko elementy wymagane przez program: informacja o dotacji, tytuł, zestawienie czterech znaków
+   (FE, barwy RP, UE, województwo — samego znaku UE użyć nie wolno), cel, efekty, kwoty, hasztagi. */
+.fe--min{padding-block:var(--s6)}
+.fe__box{max-width:880px;display:grid;gap:18px}
+.fe--min .fe__ben{margin:0;font-size:.9375rem;color:var(--ink-80)}
+.fe--min .fe__title{margin:0;max-width:30ch;color:var(--ink)}
+.fe--min .fe__logos{margin:6px 0;padding:16px 20px;border-radius:var(--r-card);max-width:640px}
+.fe--min .fe__logos img{max-width:560px}
+.fe--min .fe__body{margin:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.fe--min .fe__body h2{font-size:1.25rem;margin:0 0 6px}
+.fe--min .fe__body p{margin:0;font-size:.9375rem}
+.fe--min .fe__nums{margin:6px 0 0;padding-top:16px;border-top-width:1px;gap:24px}
+.fe--min .fe__n span{margin-bottom:4px}
+.fe--min .fe__n b{font-size:1.75rem}
+.fe--min .fe__tags{margin:0}
+@media(max-width:640px){.fe--min .fe__body{grid-template-columns:1fr;gap:16px}}
+/* pas znaków w stopce: mniejszy, obok opisu (nadal czytelny — znaki muszą być rozpoznawalne) */
+.foot .ue__img{max-width:440px;flex:0 1 440px;padding:10px 14px;border-radius:var(--r-s)}
