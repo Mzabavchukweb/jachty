@@ -17,10 +17,13 @@ ART = json.load(open('_a/articles.json'))
 
 TEL = '+48 511 420 100'; TEL_H = 'tel:+48511420100'
 MAIL = 'info@jachtymazury.pl'
+PIN = 'https://maps.app.goo.gl/tr9a722sVFmJB8iD6'   # pinezka firmy w Mapach Google (od klientki, 29.09) — cel wszystkich linków „mapa / trasa”
 GREV = 'https://share.google/dC6VqBSRLYOjmESdY'   # profil firmy w Google (link od klienta)
 FB = 'https://www.facebook.com/jachtymazury/'
 IG = 'https://www.instagram.com/jachtymazury.pl/'
 YT = 'https://www.youtube.com/channel/UCGulH1SMSyk0Ihr2HQ8rfRA'
+WA = 'https://wa.me/48511420100'   # DO POTWIERDZENIA: czy WhatsApp jest pod numerem biura (zadanie G4)
+MSG = 'https://m.me/jachtymazury'  # Messenger strony facebook.com/jachtymazury
 
 # poprawki tabel, w których brakowało jednej wartości (uzupełnione z opisu na tej samej stronie jednostki)
 FIX = {
@@ -90,7 +93,7 @@ def mnav(cur):
   <nav class="mnav__in" aria-label="Menu">
     <ul class="mnav__l">{links}</ul>
     <div class="mnav__cta">
-      <a class="btn btn--block" href="index.html#rezerwuj">Sprawdź dostępność <i data-lucide="arrow-right" class="lucide"></i></a>
+      <a class="btn btn--block" href="#rezerwuj" data-open-modal>Sprawdź dostępność <i data-lucide="arrow-right" class="lucide"></i></a>
       <a class="btn btn--outline btn--block" href="{TEL_H}"><i data-lucide="phone" class="lucide"></i> {TEL}</a>
       <p class="mnav__meta">Biuro 8:00 – 20:00, siedem dni w tygodniu · <a href="mailto:{MAIL}">{MAIL}</a></p>
     </div>
@@ -102,7 +105,7 @@ LANG = '<nav class="head__lang" aria-label="Wybór języka"><a href="#" aria-cur
 def header(cur, photo=False, dark=False):
     logo = ('<img class="head__logo head__logo--mono" src="assets/img/logo-mono.png" width="450" height="76" alt="Jachtymazury.pl"><img class="head__logo head__logo--color" src="assets/img/logo.png" width="450" height="76" alt="">'
             if photo or dark else '<img class="head__logo" src="assets/img/logo.png" width="450" height="76" alt="Jachtymazury.pl">')
-    btn = ('<a class="btn btn--outline" href="#rezerwuj" data-open-modal>Rezerwuj online</a>' if photo else '<a class="btn" href="index.html#rezerwuj">Rezerwuj online</a>')
+    btn = ('<a class="btn btn--outline" href="#rezerwuj" data-open-modal>Rezerwuj online</a>' if photo else '<a class="btn" href="#rezerwuj" data-open-modal>Rezerwuj online</a>')
     return (f'''<header class="head{" on-photo" if photo else ""}{" head--dark" if dark else ""}" id="head">
   <div class="wrap head__bar">
     <a href="index.html" aria-label="Jachty Mazury — strona główna">{logo}</a>
@@ -139,9 +142,24 @@ FOOT = f'''<footer class="inkband foot on-dark" id="kontakt">
 exec(open(os.path.join(ROOT, '_build/nawigacja.py'), encoding='utf-8').read())   # nowa nawigacja i stopka
 exec(open(os.path.join(ROOT, '_build/adresy.py'), encoding='utf-8').read())      # struktura adresów 1:1 z obecną stroną
 
-CALL = f'''<a class="callfab" href="{TEL_H}" aria-label="Zadzwoń: {TEL}" title="{TEL}">
+CALL = f'''<div class="fabs">
+  <a class="fabx fabx--wa" href="{WA}" rel="noopener" target="_blank" aria-label="Napisz na WhatsApp" title="WhatsApp"><img src="assets/img/ikony/whatsapp-bialy.png" width="26" height="26" alt=""></a>
+  <a class="fabx fabx--ms" href="{MSG}" rel="noopener" target="_blank" aria-label="Napisz na Messengerze" title="Messenger"><img src="assets/img/ikony/messenger-bialy.png" width="24" height="24" alt=""></a>
+</div>
+<a class="callfab" href="{TEL_H}" aria-label="Zadzwoń: {TEL}" title="{TEL}">
   <span class="callfab__ico" aria-hidden="true"><i data-lucide="phone" class="lucide"></i><span class="callfab__fb">✆</span></span>
 </a>'''
+
+# R1: okno rezerwacji na każdej stronie — harmonogram IBS (kod od klientki 29.09, wersja testowa); ramka ładuje się przy pierwszym otwarciu
+BOOK = f'''<div class="bk" id="rezerwuj-okno" role="dialog" aria-modal="true" aria-labelledby="bk-h" hidden>
+  <div class="bk__bg" data-close-modal></div>
+  <div class="bk__p bk__p--ibs">
+    <div class="bk__hd"><h2 class="h3" id="bk-h">Sprawdź dostępność i zarezerwuj</h2>
+      <button class="bk__x" type="button" data-close-modal aria-label="Zamknij okno rezerwacji"><i data-lucide="x" class="lucide"></i></button></div>
+    <iframe class="bk__f" title="Rezerwacja czarteru — wybór jednostki i terminu" data-src="https://beta.ibs-integra.pl/ClientScheduler?pointOfServiceCode=jachty-mazury&amp;embed=1"></iframe>
+    <p class="bk__alt">Wolisz zadzwonić? <a class="u u--on num" href="{TEL_H}">{TEL}</a> · biuro codziennie 8:00 – 20:00</p>
+  </div>
+</div>'''
 
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">'
 
@@ -171,6 +189,7 @@ def page(fname, title, desc, body, cur, extra_js=''):
 {FOOT}
 
 {CALL}
+{BOOK}
 
 <script src="https://unpkg.com/lucide@latest" defer></script>
 <script src="assets/js/site.js" defer></script>
@@ -182,6 +201,7 @@ def page(fname, title, desc, body, cur, extra_js=''):
     print('  →', fname, len(out))
 
 def crumbs(items):
+    return ''   # okruszki usunięte z hero na wszystkich stronach (uwagi klientki 29.09, zadanie G3)
     lis = ''.join(f'<li><a class="u" href="{h}">{t}</a></li>' for h, t in items[:-1])
     return f'<nav aria-label="Okruszki"><ol class="crumbs"><li><a class="u" href="index.html">Start</a></li>{lis}<li aria-current="page">{items[-1][1]}</li></ol></nav>'
 
@@ -261,7 +281,7 @@ def card(slug, model, name, row, detail=None):
             <div class="meas__t" aria-hidden="true"><span class="meas__b" style="width:{pct}%"></span></div>{SCALE}</div>
           <div class="fli__buy">
             <div class="fli__price">{price}</div>
-            <div class="fli__act">{see}<a class="btn btn--sm" href="index.html#rezerwuj" aria-label="Rezerwuj {esc(full)}">Rezerwuj</a></div>
+            <div class="fli__act">{see}<a class="btn btn--sm" href="#rezerwuj" data-open-modal aria-label="Rezerwuj {esc(full)}">Rezerwuj</a></div>
           </div>
         </div>
       </article>
@@ -289,10 +309,9 @@ def fleet_list(units, sand=False):
 
 def cta(h, p):
     return f'''<section class="inkband band pcta on-dark on-photo">
-  <span class="deco deco--compass" aria-hidden="true"></span>
   <div class="wrap pcta__in">
     <div><h2 class="h2">{h}</h2><p class="pcta__p">{p}</p></div>
-    <div class="pcta__b"><a class="btn" href="index.html#rezerwuj">Sprawdź dostępność <i data-lucide="arrow-right" class="lucide"></i></a>
+    <div class="pcta__b"><a class="btn" href="#rezerwuj" data-open-modal>Sprawdź dostępność <i data-lucide="arrow-right" class="lucide"></i></a>
       <a class="btn btn--outline" href="{TEL_H}"><i data-lucide="phone" class="lucide"></i> {TEL}</a></div>
   </div>
 </section>'''
@@ -388,7 +407,9 @@ def ctable(tab):
     for row in tab[1:]:
         name, v = row[1], row[2:]
         tds = ''.join(f'<td class="num">{zl(int(x)) if x.strip().isdigit() else "<span class=muted>—</span>"}</td>' for x in v[:11])
-        body += f'<tr><th scope="row"><span class="cen__y">{thumb(name, "cen__ph")}<span>{esc(name)}</span></span></th>{tds}<td class="num">{zl(int(v[11]))}</td><td class="num">{zl(int(v[12]))}</td></tr>'
+        u = row_photo(name); href = murl(u[1]) if u else ''
+        cell = f'<span class="cen__y">{thumb(name, "cen__ph")}<span>{esc(name)}</span></span>'
+        body += f'<tr><th scope="row">{f'<a class="cen__a" href="{href}">{cell}</a>' if href else cell}</th>{tds}<td class="num">{zl(int(v[11]))}</td><td class="num">{zl(int(v[12]))}</td></tr>'
     return f'<div class="ctab" tabindex="0" role="region" aria-label="Tabela cen, przewijaj poziomo"><table class="cen"><thead><tr><th scope="col">Jacht</th>{th}<th scope="col">Kaucja</th><th scope="col">Sprzątanie</th></tr></thead><tbody>{body}</tbody></table></div>'
 
 def cmobile(tab):
@@ -399,7 +420,7 @@ def cmobile(tab):
         head = f'od {zl(min(nums))} / doba' if nums else 'cena indywidualna'
         lis = ''.join(f'<li><span>{r}{g}</span><b class="num">{zl(int(x)) if x.strip().isdigit() else "—"}<small> {u}</small></b></li>' for (r, u, g), x in zip(periods, v[:11]))
         out += f'''<details class="cmob"><summary>{thumb(name, "cmob__ph")}<span class="cmob__n">{esc(name)}</span><span class="cmob__p num">{head}</span></summary>
-  <ul class="cmob__l">{lis}<li class="cmob__x"><span>Kaucja</span><b class="num">{zl(int(v[11]))}</b></li><li class="cmob__x"><span>Sprzątanie</span><b class="num">{zl(int(v[12]))}</b></li></ul></details>'''
+  <ul class="cmob__l">{lis}<li class="cmob__x"><span>Kaucja</span><b class="num">{zl(int(v[11]))}</b></li><li class="cmob__x"><span>Sprzątanie</span><b class="num">{zl(int(v[12]))}</b></li>{f'<li class="cmob__lnk"><a class="u u--on" href="{murl(row_photo(name)[1])}">Zobacz jacht →</a></li>' if row_photo(name) else ''}</ul></details>'''
     return f'<div class="cmobs">{out}</div>'
 
 page('cennik.html', 'Cennik czarteru jachtów 2027 | Jachty Mazury',
@@ -440,8 +461,7 @@ page('cennik.html', 'Cennik czarteru jachtów 2027 | Jachty Mazury',
         <div><dt>Pies lub kot na jachcie</dt><dd>150 zł</dd></div><div><dt>Wypożyczenie sprzętu nurkowego</dt><dd>od 2000 zł / tydzień</dd></div></dl>
     </section>
   </div>
-</section>'''
- + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'),
+</section>''',
  'cennik.html')
 
 # ---- jachty na sprzedaż
@@ -505,39 +525,11 @@ page('poradnik.html', 'Poradnik czarterowy — koszty, trasy i wybór jachtu | J
  'poradnik.html')
 
 # ---- port
-page('port.html', 'Nasz port — Stanica Wodna Stranda, Giżycko | Jachty Mazury',
- 'Stacjonujemy w porcie Stranda nad zatoką Tracz na jeziorze Kisajno, ok. 2 km od centrum Giżycka.',
- phead([('port.html', 'Port')], 'Pierkunowo 36 · 11-500 Giżycko', 'Stanica Wodna Stranda',
-       'Stacjonujemy w Giżycku w porcie Stranda, położonym nad zatoką Tracz na jeziorze Kisajno.')
- + f'''<section class="psec">
-  <div class="wrap g12">
-    <figure class="c7 port__big bleed-l reveal">{pic("port", "Stanica Wodna Stranda", "(min-width:1024px) 60vw, 100vw", True)}</figure>
-    <div class="c5 prose reveal">
-      <p>Stranda to nowoczesny kompleks wypoczynkowy znajdujący się ok. 2 km od centrum Giżycka. Marina jest dobrą bazą wypadową w sercu Mazur.</p>
-      <p>Do dyspozycji żeglarzy jest pompa do odbioru nieczystości, a w promieniu 2 km znajdują się dwie wodne stacje paliw. W Strandzie bezpłatnie opróżnimy toalety chemiczne.</p>
-      <dl class="dl num">
-        <div><dt>Adres</dt><dd>Pierkunowo 36<br>11-500 Giżycko</dd></div>
-        <div><dt>Położenie</dt><dd>zatoka Tracz, jez. Kisajno</dd></div>
-        <div><dt>Do centrum</dt><dd>ok. 2 km</dd></div>
-        <div><dt>Stacje paliw</dt><dd>dwie wodne, w promieniu 2 km</dd></div>
-      </dl>
-      <a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Stanica+Wodna+Stranda+Pierkunowo+36+Gi%C5%BCycko" rel="noopener" target="_blank">Pokaż na mapie <i data-lucide="arrow-up-right" class="lucide"></i></a>
-    </div>
-  </div>
-</section>
-<section class="psec psec--sand">
-  <div class="wrap">
-    <span class="deco deco--reeds" aria-hidden="true"></span>
-    <h2 class="h3 psec__h">Co znajdziesz w marinie</h2>
-    <ul class="amen reveal">
-      <li>Monitorowany parking</li><li>Sanitariaty</li><li>Prysznice</li><li>Pralnia</li><li>Plac zabaw dla dzieci</li>
-      <li>Pompa do odbioru nieczystości</li><li>Bezpłatne opróżnianie toalet chemicznych</li>
-      <li>Tawerna — pizza i dania na miejscu</li><li>Muzyka na żywo w wakacje</li><li>Własny browar Strandy (od sezonu 2022)</li>
-    </ul>
-  </div>
-</section>'''
- + cta('Tu zaczyna się Twój rejs', 'Odbiór jachtu 16:00 – 20:00, zdanie 8:00 – 10:00.'),
- 'port.html')
+# „Port” usunięty z menu (uwagi klientki 29.09): treść jest w Kontakcie, adres /port/ przekierowuje do kontakt/#port.
+# Na produkcji ma to być 301 (wpis w _seo/mapa-adresow.csv); w makiecie — strona przekierowująca.
+open('port.html', 'w').write('''<!doctype html><html lang="pl"><head><meta charset="utf-8"><title>Port — przeniesiono do Kontaktu | Jachty Mazury</title>
+<meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=../kontakt/#port"><link rel="canonical" href="https://jachtymazury.pl/kontakt/"></head>
+<body><p>Informacje o porcie są teraz w zakładce <a href="kontakt.html#port">Kontakt</a>.</p></body></html>''')
 
 # ---- współpraca
 page('wspolpraca.html', 'Inwestycje i pośrednictwo jachtowe na Mazurach | Jachty Mazury',
@@ -590,7 +582,7 @@ page('wspolpraca.html', 'Inwestycje i pośrednictwo jachtowe na Mazurach | Jacht
  'wspolpraca.html')
 
 # ---- kontakt
-MAPS = 'https://www.google.com/maps/search/?api=1&amp;query=Stanica+Wodna+Stranda+Pierkunowo+36+Gi%C5%BCycko'
+MAPS = PIN
 SPRAWY = ['Czarter', 'Zakup jachtu', 'Współpraca', 'Inne']
 page('kontakt.html', 'Kontakt — obsługa i rezerwacje | Jachty Mazury',
  f'Telefon {TEL}, e-mail {MAIL}, biuro codziennie od 8:00 do 20:00. Stanica Wodna Stranda, Pierkunowo 36, Giżycko.',
@@ -634,20 +626,30 @@ page('kontakt.html', 'Kontakt — obsługa i rezerwacje | Jachty Mazury',
     </div>
   </div>
 </section>
-<section class="psec kond">
+<section class="psec kond" id="port">
   <div class="wrap g12">
     <figure class="c7 kond__img reveal">{pic("port", "Stanica Wodna Stranda w Giżycku z lotu ptaka", "(min-width:1024px) 55vw, 100vw")}</figure>
-    <div class="c4 o9 kond__t reveal">
-      <p class="micro muted">Port</p>
+    <div class="c5 kond__t reveal">
+      <p class="micro muted">Nasz port</p>
       <h2 class="h2">Stanica Wodna Stranda</h2>
-      <p>Stacjonujemy w Giżycku w porcie Stranda, położonym nad zatoką Tracz na jeziorze Kisajno.</p>
-      <p class="kond__adr">Pierkunowo 36<br>11-500 Giżycko</p>
-      <div class="kond__a">
-        <a class="btn" href="{MAPS}" rel="noopener" target="_blank">Wyznacz trasę <i data-lucide="arrow-up-right" class="lucide"></i></a>
-        <a class="btn btn--outline" href="port.html">O porcie</a>
-      </div>
-      <p class="kond__soc"><a class="u" href="{FB}" rel="noopener" target="_blank">Facebook</a><a class="u" href="{IG}" rel="noopener" target="_blank">Instagram</a><a class="u" href="{YT}" rel="noopener" target="_blank">YouTube</a></p>
+      <p>Stranda to nowoczesny kompleks wypoczynkowy znajdujący się ok. 2 km od centrum Giżycka. Marina jest dobrą bazą wypadową w sercu Mazur.</p>
+      <p>Do dyspozycji żeglarzy jest pompa do odbioru nieczystości, a w promieniu 2 km znajdują się dwie wodne stacje paliw. W Strandzie bezpłatnie opróżnimy toalety chemiczne.</p>
+      <dl class="dl num">
+        <div><dt>Adres</dt><dd>Pierkunowo 36<br>11-500 Giżycko</dd></div>
+        <div><dt>Położenie</dt><dd>zatoka Tracz, jez. Kisajno</dd></div>
+        <div><dt>Do centrum</dt><dd>ok. 2 km</dd></div>
+        <div><dt>Stacje paliw</dt><dd>dwie wodne, w promieniu 2 km</dd></div>
+      </dl>
+      <a class="btn" href="{MAPS}" rel="noopener" target="_blank">Wyznacz trasę <i data-lucide="arrow-up-right" class="lucide"></i></a>
     </div>
+  </div>
+  <div class="wrap">
+    <h3 class="h3 kond__h">Co znajdziesz w marinie</h3>
+    <ul class="amen">
+      <li>Monitorowany parking</li><li>Sanitariaty</li><li>Prysznice</li><li>Pralnia</li><li>Plac zabaw dla dzieci</li>
+      <li>Pompa do odbioru nieczystości</li><li>Bezpłatne opróżnianie toalet chemicznych</li>
+      <li>Tawerna — pizza i dania na miejscu</li><li>Muzyka na żywo w wakacje</li><li>Własny browar Strandy (od sezonu 2022)</li>
+    </ul>
   </div>
 </section>''',
  'kontakt.html',
@@ -724,7 +726,7 @@ for i, a in enumerate(ART):
     <p class="art__all"><a class="u u--on" href="poradnik.html">Wszystkie artykuły →</a></p>
   </div>
 </section>'''
-     + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'),
+     + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do nas.'),
      'poradnik.html')
 
 # ---- strony wg uwag klientki: jednostki, modele, hub, Wiedza, strona główna
@@ -758,7 +760,7 @@ def patch(fname, cur, photo=False, own_booking=False, dark=False):
     m = re.match(r'\s*<div class="mnav" id="mnav" hidden>.*?</nav>\n</div>', s2, re.S)   # stare menu mobilne — dokładnie jego blok
     if m: s2 = s2[m.end():]
     h = header(cur, photo, dark)
-    if own_booking: h = h.replace('<a class="btn" href="index.html#rezerwuj">Rezerwuj online</a>', '<a class="btn" href="#dostepnosc" data-open-modal>Rezerwuj online</a>')
+    if own_booking: h = h.replace('<a class="btn" href="#rezerwuj" data-open-modal>Rezerwuj online</a>', '<a class="btn" href="#dostepnosc" data-open-modal>Rezerwuj online</a>')
     s = s[:a] + h + s2
     fa = s.index('<footer'); fb = s.index('</footer>', fa) + 9
     s = s[:fa] + FOOT.replace(' id="kontakt"', '' if not photo else ' id="kontakt"') + s[fb:]
@@ -766,6 +768,8 @@ def patch(fname, cur, photo=False, own_booking=False, dark=False):
         s = s.replace('<link rel="stylesheet" href="assets/css/system.css">', '<link rel="stylesheet" href="assets/css/system.css">\n<link rel="stylesheet" href="assets/css/head-dark.css">', 1)
     if 'assets/css/mobile.css' not in s:
         s = s.replace('</head>', '<link rel="stylesheet" href="assets/css/mobile.css">\n</head>', 1)
+    if 'id="rezerwuj-okno"' not in s:
+        s = s.replace('</body>', BOOK + '\n</body>', 1)   # R1: wspólne okno rezerwacji
     if 'assets/js/site.js' not in s:
         s = s.replace('</body>', '<script src="assets/js/site.js" defer></script>\n</body>', 1)
     open(fname, 'w').write(s); print('  ✎', fname)

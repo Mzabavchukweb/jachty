@@ -4,7 +4,7 @@
 .head--dark.is-scrolled .head__logo--mono,body.mnav-open .head--dark .head__logo--mono{display:none}
 .head--dark.is-scrolled .head__logo--color,body.mnav-open .head--dark .head__logo--color{display:block}
 body:not(.mnav-open) .head--dark:not(.is-scrolled){background:var(--ink);border-bottom-color:rgba(255,255,255,.14);color:#fff}
-body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav>a,body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav__b{color:#fff}
+body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav>a,body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav__a,body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav__b{color:#fff}
 body:not(.mnav-open) .head--dark:not(.is-scrolled) .head__lang{color:rgba(255,255,255,.75)}
 body:not(.mnav-open) .head--dark:not(.is-scrolled) .head__lang [aria-current]{color:#fff}
 body:not(.mnav-open) .head--dark:not(.is-scrolled) .head__lang a:not([aria-current]){color:#fff}

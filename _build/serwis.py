@@ -1,9 +1,10 @@
 # Strony wg uwag klientki: strona główna, jednostki (-1), modele, hub „Czarter jachtów”, Wiedza. Wykonywane wewnątrz podstrony.py.
 import jednostki
-SPACERY = {}   # jednostka → adres spaceru wirtualnego (np. Matterport, 3DVista); gdy jest, zastępuje duże zdjęcie obok opisu
+IBS = json.load(open('_u/ibs-spacery.json'))   # z obecnej strony i systemu IBS (29.09): kod stacji, spacer wirtualny
+SPACERY = {k: v['tour'] for k, v in IBS.items() if v.get('tour')}   # jednostka → spacer wirtualny; zastępuje zdjęcie obok opisu
 GAL = json.load(open('_img/galerie-ws.json'))
 KIND = {u[0]: 'sail' for u in SAIL} | {u[0]: 'motor' for u in MOTOR}
-MAPS = 'https://www.google.com/maps/search/?api=1&amp;query=Stanica+Wodna+Stranda+Pierkunowo+36+Gi%C5%BCycko'
+MAPS = PIN
 LIVE_MODEL = {m: p.split('/')[-1] for m, p in LIVE_MODEL_PAGES.items()}          # nazwa modelu u nas → adres strony modelu u klienta
 
 def gpic(slug, n, ws, W, H, sizes, big=False, eager=False, alt=None):
@@ -26,26 +27,35 @@ def unit_facts(slug):
     out = []
     def add(icon, k, v):
         if v and v not in ('–', '-'): out.append((icon, k, v))
-    add('move-horizontal', 'Długość', spec_val('Długość', sp.get('Długość', '')))
-    add('move-vertical', 'Szerokość', spec_val('Szerokość', sp.get('Szerokość', '')))
-    add('anchor', 'Zanurzenie', spec_val('Zanurzenie', sp.get('Zanurzenie', '')))
+    add('move-vertical', 'Długość', spec_val('Długość', sp.get('Długość', '')))      # strzałki zamienione (uwagi 29.09)
+    add('move-horizontal', 'Szerokość', spec_val('Szerokość', sp.get('Szerokość', '')))
+    add('waves', 'Zanurzenie', spec_val('Zanurzenie', sp.get('Zanurzenie', '')))
     add('bed-double', 'Miejsca do spania', berths(sp.get('Liczba osób', '–'))[0] if sp.get('Liczba osób') else '')
-    add('door-closed', 'Kabiny', sp.get('Zamykane kabiny', ''))
+    add('door-closed', 'Kabiny', 'otwarte' if sp.get('Zamykane kabiny', '') == '0' else sp.get('Zamykane kabiny', ''))
     if 'wc morskie' in eq or 'toaleta morska' in eq: add('bath', 'Toaleta', 'morska')
     elif 'chemiczn' in eq: add('bath', 'Toaleta', 'chemiczna')
     if 'prysznic' in eq: add('shower-head', 'Prysznic', 'z ciepłą wodą' if 'ciepłą wodą' in eq else 'tak')
     ster = sp.get('Typ steru', '').lower()
+    if IBS.get(slug, {}).get('ster'): ster = IBS[slug]['ster']   # typ steru z systemu rezerwacji klientki (IBS), gdy go podaje
     if 'koło' in ster or 'koło sterowe' in eq: add('ship-wheel', 'Ster', 'koło')
     elif 'rumpel' in ster or 'rumpel' in eq: add('ship-wheel', 'Ster', 'rumpel')
+    elif ster: add('ship-wheel', 'Ster', ster)   # np. „płetwa na pawęży” — wartość z tabeli danych jednostki
     eng = sp.get('Typ silnika', '').lower()
     power = re.search(r'silnik[^|]*?(\d+[.,]?\d*)\s*km', eq)
     if eng:
         e = 'zaburtowy' if 'przyczep' in eng or 'zaburt' in eng else ('stacjonarny' if 'stacjonarn' in eng else eng)
-        add('cog', 'Silnik', e + (f' · {power.group(1).replace(".", ",")} KM' if power else ''))
-    if 'dziobowy i rufowy ster strumieniowy' in eq: add('waves', 'Ster strumieniowy', '2')
-    elif 'ster strumieniowy' in eq: add('waves', 'Ster strumieniowy', '1')
+        eic = {'zaburtowy': 'img:silnik-zaburtowy', 'stacjonarny': 'img:silnik-stacjonarny', 'elektryczny': 'img:silnik-elektryczny'}.get(e, 'cog')   # ikony z grafiki klientki
+        add(eic, 'Silnik', e + (f' · {power.group(1).replace(".", ",")} KM' if power else ''))
+    if 'dziobowy i rufowy ster strumieniowy' in eq: add('img:ster-strumieniowy', 'Ster strumieniowy', '2')
+    elif 'ster strumieniowy' in eq: add('img:ster-strumieniowy', 'Ster strumieniowy', '1')
     add('calendar', 'Rok produkcji', sp.get('Rok produkcji', ''))
     return out
+
+def ico(ic, size=30):
+    """Ikona parametru: Lucide albo raster z grafiki klientki (prefiks img:)."""
+    if ic.startswith('img:'):
+        return f'<img class="ico" src="assets/img/ikony/{ic[4:]}.png" width="{size}" height="{size}" alt="" aria-hidden="true">'
+    return f'<i data-lucide="{ic}" class="lucide" aria-hidden="true"></i>'
 
 def price_html(row):
     p = od(row)
@@ -57,6 +67,18 @@ def kind_of_model(m): return 'sail' if any(u[1] == m for u in SAIL) else 'motor'
 def list_of(kind): return ('jachty-zaglowe.html', 'Jachty żaglowe') if kind == 'sail' else ('jachty-motorowe.html', 'Jachty motorowe')
 
 # ---------------------------------------------------------------- strona jednostki (wizualizacja -1)
+def unit_card(w):
+    s2, m2, n2, r2 = w; sp2 = UNITS[s2]['spec']; g2 = GAL.get(s2, [])
+    ph = gpic(s2, *g2[0], '(min-width:1024px) 22vw, 70vw') if g2 else pic('u-' + s2, uname(w), '(min-width:1024px) 22vw, 70vw')
+    mj = berths(sp2.get('Liczba osób', '–'))[0]; kab = sp2.get('Zamykane kabiny', ''); kab = 'otwarte' if kab == '0' else kab
+    eng = _engine(s2)
+    meta = (f'<span><i data-lucide="users" class="lucide" aria-hidden="true"></i> {mj} os.</span>' if mj and mj != '–' else '')
+    meta += (f'<span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> {esc(kab)}{" kab." if kab != "otwarte" else ""}</span>' if kab and kab not in ('–', '-') else '')
+    meta += (f'<span class="rc__eng"><i data-lucide="cog" class="lucide" aria-hidden="true"></i> silnik {esc(eng)}</span>' if eng else '')
+    return (f'<a class="rc" href="{s2}.html"><figure class="rc__ph">{ph}<span class="rc__tag">{"Jacht żaglowy" if KIND[s2] == "sail" else "Jacht motorowy"}</span></figure>'
+            f'<span class="rc__b"><span class="rc__t">{esc(uname(w))}</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span>'
+            f'<span class="rc__m num">{meta}</span></span></a>')
+
 def unit_page(u):
     slug, model, name, row = u
     kind = KIND[slug]; full = uname(u); lst, lst_name = list_of(kind)
@@ -67,7 +89,7 @@ def unit_page(u):
     def fv(v):
         main, _, extra = v.partition(' · ')
         return f'<b>{main}</b>' + (f'<small>{extra}</small>' if extra else '')
-    facts = ''.join(f'<li><i data-lucide="{ic}" class="lucide" aria-hidden="true"></i><span class="uic__k">{k}</span>{fv(v)}</li>' for ic, k, v in unit_facts(slug))
+    facts = ''.join(f'<li>{ico(ic)}<span class="uic__k">{k}</span>{fv(v)}</li>' for ic, k, v in unit_facts(slug))
     cut = next((i for i, (tag, t) in enumerate(x['desc']) if tag == 'h2'), len(x['desc']))
     cut = max(cut, 1)
     blk = lambda part: ''.join(f'<h3 class="udesc__h">{esc(t)}</h3>' if tag == 'h2' else f'<p>{t}</p>' for tag, t in part)
@@ -96,7 +118,49 @@ def unit_page(u):
                 f'<li class="unit__px"><span class="up__r">Sprzątanie</span><span class="up__t"></span><span class="up__p num"><b>{zl(int(v[12]))}</b></span></li></ul>'
                 f'<p class="unit__note">Cena za dobę obowiązuje przy czarterze minimum tygodniowym. Przy krótszych terminach cena ustalana jest indywidualnie.</p>')
     subject = f'Zapytanie o czarter: {full}'
-    more = ([w for w in SAIL + MOTOR if w[0] != slug and w[1] == model] + [w for w in (SAIL if kind == 'sail' else MOTOR) if w[0] != slug and w[1] != model])[:4]
+    # karuzela: najpierw jednostki tego samego modelu, potem reszta tego typu (uwagi 29.09, J8)
+    more = ([w for w in SAIL + MOTOR if w[0] != slug and w[1] == model] + [w for w in (SAIL if kind == 'sail' else MOTOR) if w[0] != slug and w[1] != model])[:10]
+    form_html = f'''<form class="kf uform" novalidate data-subject="{esc(subject)}">
+        <h2 class="h2 sec-line kf__h">Zapytaj o czarter</h2>
+        <p class="uform__about">Zapytanie dotyczy: <b>{esc(full)}</b></p>
+        <input type="hidden" name="subject" value="{esc(subject)}">
+        <div class="kf__f" data-f="name"><label for="u-name">Imię i nazwisko</label><input id="u-name" name="name" autocomplete="name" required><span class="kf__err">Podaj imię i nazwisko.</span></div>
+        <div class="kf__row">
+          <div class="kf__f" data-f="phone"><label for="u-tel">Telefon</label><input id="u-tel" name="phone" type="tel" autocomplete="tel" required><span class="kf__err">Podaj numer telefonu.</span></div>
+          <div class="kf__f" data-f="email"><label for="u-mail">E-mail</label><input id="u-mail" name="email" type="email" autocomplete="email" required><span class="kf__err">Podaj poprawny adres e-mail.</span></div>
+        </div>
+        <div class="kf__row">
+          <div class="kf__f"><label for="u-od">Termin od</label><input id="u-od" name="from" type="date"></div>
+          <div class="kf__f"><label for="u-do">Termin do</label><input id="u-do" name="to" type="date"></div>
+        </div>
+        <div class="kf__f"><label for="u-msg">Wiadomość</label><textarea id="u-msg" name="message" rows="3"></textarea></div>
+        <label class="uform__ok"><input type="checkbox" name="consent" required> <span>Wyrażam zgodę na przetwarzanie danych w celu odpowiedzi na zapytanie. Szczegóły w <a class="u u--on" href="polityka-prywatnosci.html">polityce prywatności</a>.</span></label>
+        <span class="kf__err uform__okerr">Zaznacz zgodę, żebyśmy mogli odpowiedzieć.</span>
+        <button class="btn kf__btn" type="submit"><span class="btn__label">Wyślij zapytanie</span> <i data-lucide="arrow-right" class="lucide"></i></button>
+      </form>
+      <div class="kf kf--ok" hidden tabindex="-1" role="status"><i data-lucide="check" class="lucide kf__ic"></i><h2 class="h3">Zapytanie wysłane</h2>
+        <p>Dotyczy: {esc(full)}. Odpowiemy telefonicznie albo e-mailem.</p></div>'''
+    # J4: kalendarz rezerwacji IBS (wersja testowa od klientki) tam, gdzie system zna jednostkę; bez „ceny od”, godzin i broszury
+    if IBS.get(slug, {}).get('ibs'):
+        ibs_url = f'https://beta.ibs-integra.pl/ClientScheduler/Availability?pointOfServiceCode=jachty-mazury&amp;station={slug}&amp;mode=select&amp;months=3&amp;monthsMobile=1&amp;embed=1&amp;reservationTarget=parent'
+        avail = f'''<section class="psec uav" id="dostepnosc">
+  <div class="wrap">
+    <h2 class="h2 sec-line">Dostępność i&nbsp;rezerwacja</h2>
+    <div class="ibs"><iframe title="Wybór terminu czarteru: {esc(full)}" src="{ibs_url}" data-ibs loading="lazy"></iframe></div>
+    <div class="uav__ask g12">
+      <div class="c5"><h2 class="h3">Wolisz zapytać?</h2><p>Napisz przez formularz albo zadzwoń: <a class="u u--on num" href="{TEL_H}">{TEL}</a>. Biuro czynne codziennie 8:00 – 20:00.</p></div>
+      <div class="c7">{form_html}</div>
+    </div>
+  </div>
+</section>'''
+    else:
+        avail = f'''<section class="psec uav" id="dostepnosc">
+  <div class="wrap g12">
+    <div class="c5"><h2 class="h2 sec-line">Dostępność i&nbsp;rezerwacja</h2><p>Zapytaj o wolne terminy — odpowiemy telefonicznie albo e-mailem.</p>
+      <p>Telefon: <a class="u u--on num" href="{TEL_H}">{TEL}</a> · biuro czynne codziennie 8:00 – 20:00.</p></div>
+    <div class="c7">{form_html}</div>
+  </div>
+</section>'''
     body = f'''<section class="uh ugal" data-n="{len(g)}">
   <figure class="ugal__main uh__ph">{main}
     <button class="ugal__zoom" type="button" aria-label="Powiększ zdjęcie"></button>
@@ -132,66 +196,22 @@ def unit_page(u):
   </div>
 </section>
 
-<section class="psec uav" id="dostepnosc">
-  <div class="wrap g12">
-    <div class="c6 uav__cal">
-      <h2 class="h2 sec-line">Dostępność i&nbsp;rezerwacja</h2>
-      <div class="uav__top"><div class="uav__price">{price_html(row)}</div>
-        <button class="btn btn--outline uav__pdf" type="button"><i data-lucide="file-down" class="lucide" aria-hidden="true"></i> Pobierz broszurę PDF</button></div>
-      <div class="ucal" data-slot="kalendarz-dostawcy"><div class="ucal__m"></div><div class="ucal__m"></div></div>
-      <p class="ucal__note"><i data-lucide="info" class="lucide" aria-hidden="true"></i> Wolne i zajęte terminy pokaże kalendarz systemu rezerwacji. Kliknij dzień, żeby wpisać go w formularz.</p>
-      <p class="uav__hours">Wydanie jachtu 16:00 – 20:00 · zdanie 8:00 – 10:00</p>
-    </div>
-    <div class="c5 o8">
-      <form class="kf uform" novalidate data-subject="{esc(subject)}">
-        <h2 class="h2 sec-line kf__h">Zapytaj o czarter</h2>
-        <p class="uform__about">Zapytanie dotyczy: <b>{esc(full)}</b></p>
-        <input type="hidden" name="subject" value="{esc(subject)}">
-        <div class="kf__f" data-f="name"><label for="u-name">Imię i nazwisko</label><input id="u-name" name="name" autocomplete="name" required><span class="kf__err">Podaj imię i nazwisko.</span></div>
-        <div class="kf__row">
-          <div class="kf__f" data-f="phone"><label for="u-tel">Telefon</label><input id="u-tel" name="phone" type="tel" autocomplete="tel" required><span class="kf__err">Podaj numer telefonu.</span></div>
-          <div class="kf__f" data-f="email"><label for="u-mail">E-mail</label><input id="u-mail" name="email" type="email" autocomplete="email" required><span class="kf__err">Podaj poprawny adres e-mail.</span></div>
-        </div>
-        <div class="kf__row">
-          <div class="kf__f"><label for="u-od">Termin od</label><input id="u-od" name="from" type="date"></div>
-          <div class="kf__f"><label for="u-do">Termin do</label><input id="u-do" name="to" type="date"></div>
-        </div>
-        <div class="kf__f"><label for="u-msg">Wiadomość</label><textarea id="u-msg" name="message" rows="3"></textarea></div>
-        <label class="uform__ok"><input type="checkbox" name="consent" required> <span>Wyrażam zgodę na przetwarzanie danych w celu odpowiedzi na zapytanie. Szczegóły w <a class="u u--on" href="polityka-prywatnosci.html">polityce prywatności</a>.</span></label>
-        <span class="kf__err uform__okerr">Zaznacz zgodę, żebyśmy mogli odpowiedzieć.</span>
-        <button class="btn kf__btn" type="submit"><span class="btn__label">Wyślij zapytanie</span> <i data-lucide="arrow-right" class="lucide"></i></button>
-      </form>
-      <div class="kf kf--ok" hidden tabindex="-1" role="status"><i data-lucide="check" class="lucide kf__ic"></i><h2 class="h3">Zapytanie wysłane</h2>
-        <p>Dotyczy: {esc(full)}. Odpowiemy telefonicznie albo e-mailem.</p></div>
-    </div>
-  </div>
-</section>
-<section class="psec udet">
+<section class="psec udet2">
   <div class="wrap">
-    <div class="udet__g">
-      <div class="udet__c">
-      {f'<details class="udet__i udet__i--eq" open><summary><h2 class="h3">Wyposażenie</h2></summary><ul class="unit__eq">{equip}</ul></details>' if equip else ''}
-      <details class="udet__i" open><summary><h2 class="h3">Dane techniczne</h2></summary><dl class="unit__spec num">{spec}</dl></details>
-      </div>
-      <div class="udet__c">
-      {f'<details class="udet__i" open><summary><h2 class="h3">Cennik 2027</h2></summary>{ptab}</details>' if ptab else ''}
-      {f'<details class="udet__i" open><summary><h2 class="h3">Warunki rezerwacji</h2></summary><ul class="unit__terms">{terms}</ul></details>' if terms else ''}
-      </div>
+    <div class="udet2__g">
+      {f'<details class="udet__i udet2__c" open><summary><h2 class="h3">Wyposażenie</h2></summary><ul class="unit__eq">{equip}</ul></details>' if equip else ''}
+      {f'<details class="udet__i udet2__c" open><summary><h2 class="h3">Warunki rezerwacji</h2></summary><ul class="unit__terms">{terms}</ul></details>' if terms else ''}
     </div>
+    <details class="udet__i udet2__spec"><summary><h2 class="h3">Dane techniczne</h2></summary><dl class="unit__spec num">{spec}</dl></details>
   </div>
 </section>
-<section class="psec fleet">
+{avail}
+<section class="psec urel">
   <div class="wrap">
-    <h2 class="h3 psec__h">Inne jednostki</h2>
-    <div class="fl">
-{''.join(card(*w) for w in more)}    </div>
-  </div>
-</section>
-<section class="ucta">
-  <div class="wrap ucta__in">
-    <div><h2 class="h2">{esc(model)}{f" „{esc(name)}”" if name else ""}</h2><p>Sprawdź dostępność i zaplanuj swój rejs już dziś.</p></div>
-    <div class="ucta__a"><button class="btn btn--outline btn--lg ucta__pdf" type="button"><i data-lucide="file-down" class="lucide" aria-hidden="true"></i> Broszura PDF</button>
-    <a class="btn btn--lg ucta__btn" href="#dostepnosc">Rezerwuj online <i data-lucide="arrow-right" class="lucide"></i></a></div>
+    <div class="sech"><h2 class="h2">Inne jednostki</h2>
+      <div class="sech__a"><button class="rec__nav" type="button" data-car="-1" aria-label="Poprzednie jednostki"><i data-lucide="arrow-left" class="lucide"></i></button>
+        <button class="rec__nav" type="button" data-car="1" aria-label="Następne jednostki"><i data-lucide="arrow-right" class="lucide"></i></button></div></div>
+    <div class="rec__t car__t">{''.join(unit_card(w) for w in more)}</div>
   </div>
 </section>'''
     first = re.sub(r'<[^>]+>', '', next((t for tag, t in x['desc'] if tag == 'p'), f'{full} — czarter z Giżycka, Stanica Wodna Stranda.'))
@@ -280,7 +300,7 @@ def model_page(m):
 </section>
 {f"""<section class="psec psec--sand udesc">
   <div class="wrap"><div class="udesc__t udesc__t--wide"><h2 class="h2">O modelu {esc(m)}</h2>{desc}</div></div>
-</section>""" if desc else ''}''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.')
+</section>""" if desc else ''}''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do nas.')
     lead = re.sub(r'<[^>]+>', '', next((t for tag, t in d if tag == 'p'), f'{m} — czarter z Giżycka.'))
     page(murl(m), f'{m} — czarter na Mazurach, Giżycko | Jachty Mazury', lead[:155], body, lst)
 
@@ -354,7 +374,7 @@ def hub_page():
 </section>
 <section class="psec">
   <div class="wrap"><div class="art__body hub__seo">{seo}</div></div>
-</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'))
+</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do nas.'))
     page('czarter-jachtow.html', 'Czarter jachtów Giżycko — jachty żaglowe, motorowe i houseboaty | Jachty Mazury',
          re.sub(r'<[^>]+>', '', intro[0] if intro else h1)[:155], body, 'czarter-jachtow.html', f'<script type="application/ld+json">{ld}</script>')
 
@@ -367,7 +387,7 @@ def filmy_page():
     <div class="slot slot--wide" data-slot="filmy-youtube"><i data-lucide="play" class="lucide" aria-hidden="true"></i>
       <p><b>Filmy z kanału YouTube</b>Lista filmów pojawi się tu automatycznie po podpięciu kanału.</p></div>
   </div>
-</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'))
+</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do nas.'))
     page('filmy-szkoleniowe.html', 'Filmy szkoleniowe | Jachty Mazury', 'Praktyczne porady, manewry, trasy i życie na jachcie — filmy szkoleniowe Jachty Mazury.', body, 'filmy-szkoleniowe.html')
 
 def news_card(a, big=False):
@@ -375,12 +395,21 @@ def news_card(a, big=False):
             f'<span class="nc__k micro">{pl_date(a.get("date", "")) or "Poradnik"}</span><span class="nc__t">{esc(a["h1"])}</span><span class="nc__l">{esc(a["lead"])}</span>'
             f'<span class="nc__go">Czytaj więcej <i data-lucide="arrow-right" class="lucide"></i></span></a>')
 
+# Aktualności to osobna lista (_a/news.json) — wpisy z ART należą do poradnika (uwagi klientki 29.09).
+# Na razie pusta: strona pokazuje komunikat, a układ listy (A1) pojawi się przy pierwszym wpisie.
+NEWS = json.load(open('_a/news.json')) if os.path.exists('_a/news.json') else []
+def news_row(a):
+    return (f'<article class="nr"><a class="nr__ph" href="{a["slug"]}.html" tabindex="-1" aria-hidden="true">{pic("art-" + a["slug"], a["h1"], "(min-width:1024px) 34vw, 100vw")}</a>'
+            f'<div class="nr__b"><p class="micro nr__d">{pl_date(a.get("date", ""))}</p><h2 class="h3 nr__t"><a href="{a["slug"]}.html">{esc(a["h1"])}</a></h2>'
+            f'<p class="nr__l">{esc(a["lead"])}</p><a class="nr__go u u--on" href="{a["slug"]}.html">Czytaj dalej →</a></div></article>')
+
 def news_page():
-    body = (phead([('poradnik.html', 'Wiedza'), ('aktualnosci.html', 'Aktualności')], 'Wiedza', 'Aktualności',
-                  'Najnowsze wpisy z działu Wiedza.')
-     + f'<section class="psec"><div class="wrap"><div class="ncs">{"".join(news_card(a) for a in sorted(ART, key=lambda a: a.get("date", ""), reverse=True))}</div></div></section>'
-     + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'))
-    page('aktualnosci.html', 'Aktualności | Jachty Mazury', 'Najnowsze wpisy Jachty Mazury: poradniki, trasy i informacje z mariny w Giżycku.', body, 'aktualnosci.html')
+    rows = ''.join(news_row(a) for a in sorted(NEWS, key=lambda a: a.get('date', ''), reverse=True))
+    empty = ('<div class="nr__empty"><p><b>Na razie nie ma aktualności.</b> Praktyczne informacje o czarterze i trasach znajdziesz w poradniku.</p>'
+             '<a class="btn" href="poradnik.html">Przejdź do poradnika <i data-lucide="arrow-right" class="lucide"></i></a></div>')
+    body = (phero([('aktualnosci.html', 'Aktualności')], 'Aktualności', '', pic('port', 'Marina Stranda w Giżycku', '100vw', True), '50% 55%')
+     + f'<section class="psec"><div class="wrap"><div class="nrs">{rows or empty}</div></div></section>')
+    page('aktualnosci.html', 'Aktualności | Jachty Mazury', 'Aktualności Jachty Mazury z mariny Stranda w Giżycku.', body, 'aktualnosci.html')
 
 # ---------------------------------------------------------------- strona główna (wizualizacje -2/-3 wg wyboru klientki)
 def model_card(m):
@@ -390,7 +419,14 @@ def model_card(m):
             f'<span class="rc__tag">{"Jacht żaglowy" if kind == "sail" else "Jacht motorowy"}</span></figure>'
             f'<span class="rc__b"><span class="rc__t">{esc(m)}</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span>'
             f'<span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> {mj} os.</span>'
-            f'<span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> {sp.get("Zamykane kabiny", "–")} kab.</span></span></span></a>')
+            f'<span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> {sp.get("Zamykane kabiny", "–")} kab.</span>'
+            + (f'<span class="rc__eng"><i data-lucide="cog" class="lucide" aria-hidden="true"></i> silnik {esc(eng)}</span>' if (eng := _engine(u[0])) else '')
+            + '</span></span></a>')
+
+def _engine(slug):   # typ silnika z tabeli jednostki, bez mocy
+    for ic, k, v in unit_facts(slug):
+        if k == 'Silnik': return v.split(' · ')[0]
+    return ''
 
 def home_page():
     ms = []
@@ -402,14 +438,12 @@ def home_page():
     icons = [('calendar-days', 'Szybka rezerwacja', 'Sprawdź dostępność i zarezerwuj w kilka minut.'),
              ('sailboat', 'Sprawdzone jachty', 'Komfortowe i świetnie wyposażone.'),
              ('map', 'Lokalna wiedza', 'Doradzimy najlepsze trasy i miejsca.'),
-             ('heart', 'Wsparcie na każdym etapie', 'Jesteśmy blisko – przed, w trakcie i po rejsie.')]
+             ('heart', 'Wsparcie na każdym etapie', 'Jesteśmy dostępni – przed, w trakcie i po rejsie.')]
     body = f'''<section class="hh">
   <figure class="hh__ph">{pic("fl-a30", "Antila 30 pod żaglami na jeziorze", "100vw", True) if "fl-a30" in WS else '<picture><source type="image/webp" srcset="assets/img/r/fl-a30-600.webp 600w, assets/img/r/fl-a30-1280.webp 1280w" sizes="100vw"><img src="assets/img/r/fl-a30-1280.jpg" srcset="assets/img/r/fl-a30-600.jpg 600w, assets/img/r/fl-a30-1280.jpg 1280w" sizes="100vw" width="1280" height="960" alt="Antila 30 pod żaglami na jeziorze" fetchpriority="high" decoding="async"></picture>'}</figure>
   <div class="hh__shade" aria-hidden="true"></div>
   <div class="wrap hh__in">
-    <h1 class="micro hh__eye">Czarter jachtów Mazury</h1>
-    <p class="hh__h">Mazury w&nbsp;najlepszym wydaniu</p>
-    <p class="hh__lead">Wolność. Przygoda. Niezapomniane chwile.</p>
+    <h1 class="hh__h"><span class="sr">Czarter jachtów Mazury — </span>Mazury w&nbsp;najlepszym wydaniu</h1>
     <a class="btn btn--lg hh__btn" href="#rezerwuj" data-open-modal>Sprawdź dostępność i zarezerwuj online <i data-lucide="arrow-right" class="lucide"></i></a>
   </div>
 </section>
@@ -437,15 +471,14 @@ def home_page():
 </section>
 <section class="psec news">
   <div class="wrap">
-    <div class="sech"><h2 class="h2">Aktualności</h2><div class="sech__a"><a class="u u--on" href="aktualnosci.html">Zobacz wszystkie aktualności →</a></div></div>
+    <div class="sech"><h2 class="h2">Z poradnika czarterowego</h2><div class="sech__a"><a class="u u--on" href="poradnik.html">Wszystkie artykuły →</a></div></div>
     <div class="ncs">{''.join(news_card(a) for a in sorted(ART, key=lambda a: a.get("date", ""), reverse=True)[:3])}</div>
   </div>
 </section>
 <section class="psec psec--sand ab">
   <div class="wrap g12">
     <div class="c5 ab__t">
-      <p class="micro muted">O nas</p>
-      <h2 class="h2">Ludzie. Pasja. Mazury.</h2>
+      <h2 class="h2 ab__h">O nas</h2>
       <p class="ab__lead">Od <strong>ponad 10&nbsp;lat</strong> oferujemy czarter jachtów na Mazurach, zapewniając bezpieczny i spokojny wypoczynek na wodzie. Stawiamy na jakość techniczną, niezawodność i realny komfort załogi.</p>
       <p>Nasza flota to starannie przygotowane jachty żaglowe, motorowe i houseboaty, regularnie serwisowane i w pełni wyposażone. Zapewniamy szkolenie przed rejsem, pomoc w planowaniu trasy oraz wsparcie techniczne na Szlaku Wielkich Jezior Mazurskich.</p>
     </div>
@@ -468,26 +501,9 @@ def home_page():
       <li><i data-lucide="mail" class="lucide" aria-hidden="true"></i><a href="mailto:{MAIL}">{MAIL}</a></li>
     </ul>
   </div>
-</section>
-<div class="bk" id="rezerwuj-okno" role="dialog" aria-modal="true" aria-labelledby="bk-h" hidden>
-  <div class="bk__bg" data-close-modal></div>
-  <div class="bk__p">
-    <button class="bk__x" type="button" data-close-modal aria-label="Zamknij"><i data-lucide="x" class="lucide"></i></button>
-    <p class="micro muted">Rezerwacja online</p><h2 class="h3" id="bk-h">Sprawdź dostępność</h2>
-    <div class="slot" data-slot="okno-rezerwacji"><i data-lucide="calendar-days" class="lucide" aria-hidden="true"></i><p><b>Okno rezerwacji</b>Tu wyświetli się kalendarz z systemu rezerwacji.</p></div>
-    <div class="bk__a"><a class="btn" href="czarter-jachtow.html">Zobacz jachty</a><a class="btn btn--outline" href="{TEL_H}"><i data-lucide="phone" class="lucide"></i> {TEL}</a></div>
-  </div>
-</div>'''
+</section>'''
     js = '''<script>
 (function(){
- var m=document.getElementById('rezerwuj-okno'),last=null;
- function open(e){if(e)e.preventDefault();last=document.activeElement;m.hidden=false;document.body.classList.add('lb-open');m.querySelector('.bk__x').focus()}
- function close(){m.hidden=true;document.body.classList.remove('lb-open');if(last)last.focus()}
- [].forEach.call(document.querySelectorAll('[data-open-modal],a[href$="#rezerwuj"]'),function(a){a.addEventListener('click',open)});
- [].forEach.call(m.querySelectorAll('[data-close-modal]'),function(b){b.addEventListener('click',close)});
- m.addEventListener('keydown',function(e){if(e.key==='Escape')close();if(e.key!=='Tab')return;var f=[].slice.call(m.querySelectorAll('a,button')),a=f[0],z=f[f.length-1];
-  if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}});
- if(location.hash==='#rezerwuj')setTimeout(open,200);
  var t=document.getElementById('rec-t');
  [].forEach.call(document.querySelectorAll('.rec__nav'),function(b){b.addEventListener('click',function(){var c=t.querySelector('.rc');t.scrollBy({left:+b.dataset.dir*(c?c.getBoundingClientRect().width+20:300),behavior:'smooth'})})});
 })();
@@ -499,7 +515,7 @@ def home_page():
 for u in SAIL + MOTOR: unit_page(u)
 for m in models(SAIL + MOTOR):
     if has_model_page(m): model_page(m)
-hub_page(); filmy_page(); news_page(); home_page()
+hub_page(); filmy_page(); home_page()
 
 # ---------------------------------------------------------------- /houseboat-mazury/ (treść 1:1 z obecnej strony)
 def houseboat_page():
@@ -524,22 +540,26 @@ def houseboat_page():
     items = ''.join(f'<details class="faq__i"><summary>{esc(qq)}</summary><div class="faq__a"><p>{aa}</p></div></details>' for qq, aa in faq)
     ld = json.dumps({'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
         {'@type': 'Question', 'name': qq, 'acceptedAnswer': {'@type': 'Answer', 'text': re.sub(r'<[^>]+>', '', aa)}} for qq, aa in faq]}, ensure_ascii=False)
-    body = (phead([('czarter-jachtow.html', 'Czarter jachtów'), ('houseboat-mazury.html', 'Houseboaty')], 'Czarter bez patentu · Giżycko', esc(h1), intro[0] if intro else '')
-     + f'''<section class="psec">
-  <div class="wrap"><div class="art__body">{"".join(f"<p>{p}</p>" for p in intro[1:])}{parts}</div></div>
-</section>
-<section class="psec fleet psec--sand">
+    half = (len(faq) + 1) // 2
+    col = lambda part: ''.join(f'<details class="faq__i"><summary>{esc(qq)}</summary><div class="faq__a"><p>{aa}</p></div></details>' for qq, aa in part)
+    ms = [m for m in models(MOTOR) if m != 'Stillo 31']
+    img = gpic('futura-860-eufemia', *GAL['futura-860-eufemia'][0], '100vw', big=True, eager=True)
+    # nowy styl (HB1): strona ukryta w menu, ale z tą samą treścią i adresem (SEO)
+    body = (phero([('houseboat-mazury.html', 'Houseboaty')], esc(h1), '', img, '50% 55%')
+     + f'''<section class="psec lst">
   <div class="wrap">
-    <h2 class="h3 psec__h">Dostępne houseboaty</h2>
-    <div class="fl">
-{''.join(card(*w) for w in bez)}    </div>
+    <div class="lst__intro">{"".join(f"<p>{p}</p>" for p in intro)}</div>
+    <h2 class="h2 sec__t bez__h">Dostępne houseboaty</h2>
+    <div class="mcs">{''.join(model_card(m) for m in ms)}</div>
   </div>
 </section>
-{f"""<section class="psec"><div class="wrap faq"><h2 class="h2">Najczęściej zadawane pytania</h2><div class="faq__l">{items}</div></div></section>""" if items else ''}'''
-     + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'))
+<section class="psec psec--sand">
+  <div class="wrap"><div class="art__body hb__body">{parts}</div></div>
+</section>
+{f"""<section class="psec"><div class="wrap faq faq--wide"><h2 class="h2 sec__t">Najczęściej zadawane pytania</h2><div class="faq__cols"><div class="faq__l">{col(faq[:half])}</div><div class="faq__l">{col(faq[half:])}</div></div></div></section>""" if faq else ''}'''
+     + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do nas.'))
     page('houseboat-mazury.html', 'Houseboat Mazury', re.sub(r'<[^>]+>', '', intro[0])[:155] if intro else h1, body, 'houseboat-mazury.html',
          f'<script type="application/ld+json">{ld}</script>' if faq else '')
-houseboat_page()
 
 # ================================================================ WIZUALIZACJE 2 (25.09.2026): hub, listy, modele, Wiedza, cennik
 
@@ -596,13 +616,18 @@ def model_card(m):
     us = model_units(m); u = us[0]; sp = UNITS[u[0]]['spec']
     rows = []
     ic, v = fact(u[0], 'Silnik')
-    if v: rows.append(('cog', 'Silnik', v.split(' · ')[0]))
-    ic, v = fact(u[0], 'Ster')
-    if v: rows.append(('ship-wheel', 'Ster', v))
+    if v: rows.append((ic, 'Silnik', v.split(' · ')[0]))
+    if kind_of_model(m) == 'motor':
+        ic, v = fact(u[0], 'Ster strumieniowy')
+        if v: rows.append((ic, 'Ster strumieniowy', v))
+    else:
+        ic, v = fact(u[0], 'Ster')
+        if v: rows.append(('ship-wheel', 'Ster', v))
     mj = berths(sp.get('Liczba osób', '–'))[0]
     if mj and mj != '–': rows.append(('users', 'Miejsca', f'{mj} os.'))
-    if sp.get('Zamykane kabiny'): rows.append(('door-closed', 'Kabiny', sp['Zamykane kabiny']))
-    specs = ''.join(f'<li><i data-lucide="{i}" class="lucide" aria-hidden="true"></i><span><small>{k}</small>{esc(v)}</span></li>' for i, k, v in rows)
+    kab = sp.get('Zamykane kabiny', '')
+    if kab and kab not in ('–', '-'): rows.append(('door-closed', 'Kabiny', 'otwarte' if kab == '0' else kab))
+    specs = ''.join(f'<li>{ico(i, 22)}<span><small>{k}</small>{esc(v)}</span></li>' for i, k, v in rows)
     n = len(us)
     return (f'<article class="mc"><a class="mc__ph" href="{murl(m)}" tabindex="-1" aria-hidden="true">{pic("u-" + u[0], m, "(min-width:1024px) 24vw, (min-width:641px) 45vw, 100vw")}</a>'
             f'<div class="mc__b"><h2 class="mc__t"><a href="{murl(m)}">{esc(m)}</a></h2><p class="mc__n">{n} {"jednostka" if n == 1 else ("jednostki" if n < 5 else "jednostek")}</p>'
@@ -619,16 +644,13 @@ def list_page(kind):
     seo = [x for x in b[start:] if not (x[0] == 'p' and jednostki._txt(x[1]).startswith('Poniżej znajduje się oferta'))]
     lead_txt = SEO.get(f'{LIVE}/{name}/', {}).get('description') or ''
     img = rpic('life1', 'Antila 27 „Hiuma” w marinie', '100vw', True) if kind == 'sail' else gpic('stillo-31-star', *GAL['stillo-31-star'][0], '100vw', big=True, eager=True)
-    body = (phero([('czarter-jachtow.html', 'Czarter jachtów'), (fname, 'Jachty żaglowe' if kind == 'sail' else 'Jachty motorowe')], esc(h1), esc(lead_txt), img, '50% 60%' if kind == 'sail' else '50% 55%')
+    body = (phero([('czarter-jachtow.html', 'Czarter jachtów'), (fname, 'Jachty żaglowe' if kind == 'sail' else 'Jachty motorowe')], esc(h1), '', img, '50% 60%' if kind == 'sail' else '50% 55%')
       + f'''<section class="psec lst">
   <div class="wrap">
     {f'<div class="lst__intro">{"".join(f"<p>{inline(p)}</p>" for p in intro)}</div>' if intro else ''}
     <div class="mcs">{''.join(model_card(m) for m in models(units))}</div>
   </div>
-</section>
-<section class="psec psec--sand">
-  <div class="wrap"><div class="art__body">{seo_html(seo)}</div></div>
-</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'))
+</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do nas.'))
     page(fname, h1, lead_txt, body, fname)
 
 # ---- strona modelu wg wizualizacji „strona modelu – 2”: najpierw jednostki (do wysyłania ofert), potem opis i dane
@@ -640,6 +662,14 @@ def unit_mini(u):
             f'<div class="um__b"><h3 class="um__t"><a href="{u[0]}.html">{esc(u[2] or u[1])}</a></h3>'
             f'<p class="um__m num">{esc(sp.get("Rok produkcji", ""))}{" · od " + zl(p) + " / doba" if p else ""}</p>'
             f'<a class="btn btn--sm um__btn" href="{u[0]}.html">Zobacz szczegóły <i data-lucide="arrow-right" class="lucide"></i></a></div></article>')
+
+# ikony do punktów „Czy … to dobry wybór?” — dobór po słowach z treści punktu (treść bez zmian, ze strony modelu)
+WHY_IC = [('kabin', 'door-closed'), ('osób', 'users'), ('osoby', 'users'), ('łazienk', 'shower-head'), ('prysznic', 'shower-head'),
+          ('dynamiczn', 'gauge'), ('stabiln', 'anchor'), ('bezpiecz', 'shield-check'), ('nautyczn', 'wind'), ('przestron', 'maximize-2'),
+          ('przestrzen', 'maximize-2'), ('długości', 'maximize-2'), ('nowoczes', 'sparkles'), ('komfort', 'sofa'), ('standard', 'sofa')]
+def why_icon(t):
+    t = t.lower()
+    return next((ic for k, ic in WHY_IC if k in t), 'check')
 
 def model_page(m):
     kind = kind_of_model(m); lst, lst_name = list_of(kind); us = model_units(m)
@@ -653,15 +683,23 @@ def model_page(m):
     for tag, t in d[first_h:]:
         if tag == 'h': cur = [t, []]; cols.append(cur)
         elif cur: cur[1].append(t)
+    # MOD6: „Dlaczego warto wybrać …” z punktów sekcji „Czy … to dobry wybór?”
+    why = next((c for c in cols if 'dobry wybór' in jednostki._txt(c[0]).lower()), None)
+    pts, rest = [], []
+    if why:
+        for p_ in why[1]:
+            if '•' in p_:
+                pts += [x.strip(' ,.') for x in re.split(r'•', re.sub(r'<br[^>]*>', '', p_)) if jednostki._txt(x).strip(' ,.')]
+            elif not jednostki._txt(p_).lower().startswith('jeśli szukasz'):
+                rest.append(p_)
+    more = [c for c in cols if c is not why]
     facts = [f for f in unit_facts(us[0][0]) if f[1] != 'Rok produkcji']
-    fh = ''.join(f'<li><i data-lucide="{ic}" class="lucide" aria-hidden="true"></i><span class="uic__k">{k}</span><b>{v}</b></li>' for ic, k, v in facts)
-    brand = m.split(' ')[0]
+    fh = ''.join(f'<li>{ico(ic)}<span class="uic__k">{k}</span><b>{v}</b></li>' for ic, k, v in facts)
+    more_html = ''.join(f'<h3 class="h3">{h}</h3>{"".join(f"<p>{p}</p>" for p in pp)}' for h, pp in more)
     body = f'''<section class="uh uh--model">
   <figure class="uh__ph">{hero}</figure>
   <div class="uh__shade" aria-hidden="true"></div>
   <div class="wrap uh__in">
-    {crumbs([("czarter-jachtow.html", "Czarter jachtów"), (lst, lst_name), (murl(m), m)])}
-    <p class="micro uh__type">{esc(brand)}</p>
     <h1 class="uh__h"><span class="uh__m">{esc(m)}</span></h1>
   </div>
 </section>
@@ -673,13 +711,16 @@ def model_page(m):
 </section>
 <section class="psec mab">
   <div class="wrap mab__g">
-    <div class="mab__t"><h2 class="h2 sec__t">O modelu {esc(m)}</h2>{about}</div>
+    <div class="mab__t"><h2 class="h2 sec__t">O modelu {esc(m)}</h2>{about}
+      {f'<div class="more" id="mab-more">{more_html}</div><button class="more__btn" type="button" aria-expanded="false" aria-controls="mab-more" hidden><span>Przeczytaj całość</span> <i data-lucide="chevron-down" class="lucide"></i></button>' if more else ''}</div>
     <div class="mab__f"><h2 class="h3 sec__t">Najważniejsze informacje</h2><ul class="uic__l mab__icons num">{fh}</ul></div>
   </div>
 </section>
-{f"""<section class="psec psec--sand mwhy">
-  <div class="wrap"><div class="mwhy__g">{''.join(f'<div class="mwhy__c"><h3 class="h3">{h}</h3>{"".join(f"<p>{p}</p>" for p in pp)}</div>' for h, pp in cols)}</div></div>
-</section>""" if cols else ''}''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.')
+{f"""<section class="psec psec--sand mwhy2">
+  <div class="wrap"><h2 class="h2 sec__t">Dlaczego warto wybrać model {esc(m)}?</h2>
+    <ul class="mwhy2__l">{''.join(f'<li><span class="why__i"><i data-lucide="{why_icon(t)}" class="lucide" aria-hidden="true"></i></span><b>{t[0].upper() + t[1:]}</b></li>' for t in pts)}</ul>
+    {''.join(f'<p class="mwhy2__p">{p}</p>' for p in rest)}</div>
+</section>""" if pts else ''}''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do nas.')
     lead = re.sub(r'<[^>]+>', '', ps[0] if ps else f'{m} — czarter z Giżycka.')
     page(murl(m), f'{m} — czarter na Mazurach, Giżycko | Jachty Mazury', lead[:155], body, lst)
 
@@ -692,7 +733,7 @@ def hub_page():
     icons = ['sailboat', 'layers', 'wrench', 'receipt-text', 'map', 'life-buoy']
     def tile(href, title, desc, img):
         return (f'<a class="bt" href="{href}"><figure class="bt__ph">{img}</figure><span class="bt__b"><span class="bt__t">{title}</span>'
-                f'<span class="bt__d">{esc(desc)}</span><span class="bt__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span></span></a>')
+                f'<span class="bt__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span></span></a>')
     dz = SEO.get(f'{LIVE}/czarter-jachtow-zaglowych/', {}).get('description', ''); dm = SEO.get(f'{LIVE}/czarter-jachtow-motorowych/', {}).get('description', '')
     half = (len(faq) + 1) // 2
     col = lambda part: ''.join(f'<details class="faq__i"><summary>{esc(qq)}</summary><div class="faq__a">{aa}</div></details>' for qq, aa in part)
@@ -710,15 +751,13 @@ def hub_page():
     body = (phero([('czarter-jachtow.html', 'Czarter jachtów')], esc(h1), '', pic('art-jaki-jacht-wybrac-dla-pary-rodziny-lub-grupy', 'Jachty w marinie Stranda', '100vw', True), '50% 60%')
      + f'''<section class="psec">
   <div class="wrap">
-    <div class="sech sech--lead"><div><p class="micro muted">Wybierz typ jachtu</p><h2 class="h2">Nasze jachty na Mazurach</h2></div>
-      <div class="hub__intro">{''.join(f"<p>{p}</p>" for p in intro)}</div></div>
+    <div class="hub__intro">{''.join(f"<p>{p}</p>" for p in intro)}</div>
     <div class="bts">{tile("jachty-zaglowe.html", "Jachty żaglowe", dz, rpic("fl-a30", "Antila 30 pod żaglami", "(min-width:1024px) 45vw, 100vw"))}{tile("jachty-motorowe.html", "Jachty motorowe", dm, gpic("stillo-31-star", *GAL["stillo-31-star"][1], "(min-width:1024px) 45vw, 100vw", big=True))}</div>
-    <p class="bts__more"><a class="u u--on" href="czarter-bez-patentu.html">Czarter bez patentu →</a><a class="u u--on" href="houseboat-mazury.html">Houseboaty →</a></p>
   </div>
 </section>
 {f"""<section class="psec psec--sand why">
   <div class="wrap"><h2 class="h2 sec__t">Co zyskujesz, wybierając naszą ofertę</h2>
-    <ul class="why__l">{''.join(f'<li><span class="why__i"><i data-lucide="{icons[i % len(icons)]}" class="lucide" aria-hidden="true"></i></span><span>{esc(b[0].upper() + b[1:])}</span></li>' for i, b in enumerate(bens))}</ul></div>
+    <ul class="why__l">{''.join(f'<li><span class="why__i"><i data-lucide="{icons[i % len(icons)]}" class="lucide" aria-hidden="true"></i></span><span>{esc((b[0].upper() + b[1:]).replace(', w tym flotę jachtów żaglowych', ''))}</span></li>' for i, b in enumerate(bens))}</ul></div>
 </section>""" if bens else ''}
 <section class="psec">
   <div class="wrap faq faq--wide">
@@ -726,9 +765,7 @@ def hub_page():
     <div class="faq__cols"><div class="faq__l">{col(faq[:half])}</div><div class="faq__l">{col(faq[half:])}</div></div>
   </div>
 </section>
-<section class="psec psec--sand">
-  <div class="wrap"><div class="art__body hub__seo">{seo}</div></div>
-</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'))
+''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do nas.'))
     page('czarter-jachtow.html', 'Czarter jachtów Giżycko', re.sub(r'<[^>]+>', '', intro[0] if intro else h1)[:155], body, 'czarter-jachtow.html',
          f'<script type="application/ld+json">{ld}</script>')
 
@@ -760,14 +797,40 @@ def wiedza_page():
     <div class="sech"><h2 class="h2">Najnowsze filmy</h2><div class="sech__a"><a class="u u--on" href="filmy-szkoleniowe.html">Zobacz wszystkie filmy →</a></div></div>
     <div class="slot slot--wide" data-slot="filmy-youtube"><i data-lucide="play" class="lucide" aria-hidden="true"></i><p><b>Filmy z kanału YouTube</b>Trzy najnowsze filmy pojawią się tu automatycznie po podpięciu kanału.</p></div>
   </div>
-</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do biura.'))
+</section>''' + (f'''<section class="psec psec--sand">
+  <div class="wrap">
+    <div class="sech"><h2 class="h2">Najnowsze aktualności</h2><div class="sech__a"><a class="u u--on" href="aktualnosci.html">Wszystkie aktualności →</a></div></div>
+    <div class="nrs">{''.join(news_row(a) for a in sorted(NEWS, key=lambda a: a.get('date', ''), reverse=True)[:3])}</div>
+  </div>
+</section>''' if NEWS else ''))
     page('wiedza.html', 'Wiedza — poradnik czarterowy, filmy i aktualności | Jachty Mazury',
          'Poradnik czarterowy, filmy szkoleniowe i aktualności Jachty Mazury — wszystko, co warto wiedzieć przed rejsem po Mazurach.', body, 'wiedza.html')
 
 list_page('sail'); list_page('motor')
 for m in models(SAIL + MOTOR):
     if has_model_page(m): model_page(m)
-hub_page(); wiedza_page()
+# ---- czarter bez patentu w stylu list jachtów (uwagi klientki 29.09, BP1): hero ze zdjęciem, wstęp,
+#      trzy warunki jako ikony, karty modeli. Treść 1:1 z obecnej strony (_seo/html/czarter-bez-patentu.html).
+def bez_page():
+    b = live_blocks('czarter-bez-patentu')
+    ps = [raw for tag, raw in b[1:] if tag == 'p']
+    rules = [('gauge', 'Moc silnika', 'do 75 kW'), ('ruler', 'Długość kadłuba', 'do 13 m'), ('timer', 'Prędkość', 'do 15 km/h, ograniczona konstrukcyjnie')]
+    ms = [m for m in models(MOTOR) if m != 'Stillo 31']   # jak dotąd: motorowe poza Stillo 31
+    img = gpic('nexus-870-revo-wiktor', *GAL['nexus-870-revo-wiktor'][0], '100vw', big=True, eager=True)
+    body = (phero([('czarter-bez-patentu.html', 'Czarter bez patentu')], 'Czarter bez patentu', '', img, '50% 55%')
+      + f'''<section class="psec lst">
+  <div class="wrap">
+    <div class="lst__intro">{"".join(f"<p>{inline(p)}</p>" for p in ps[:2]).replace('houseboaty</strong>', 'houseboaty</strong> (<a class="u u--on" href="houseboat-mazury.html">zobacz houseboaty</a>)', 1)}</div>
+    <ul class="why__l why__l--3">{"".join(f'<li><span class="why__i"><i data-lucide="{i}" class="lucide" aria-hidden="true"></i></span><span><b>{k}</b> {v}</span></li>' for i, k, v in rules)}</ul>
+    <h2 class="h2 sec__t bez__h">Jachty, które poprowadzisz bez patentu</h2>
+    <div class="mcs">{''.join(model_card(m) for m in ms)}</div>
+    {f'<div class="lst__intro bez__po"><p>{inline(ps[2])}</p></div>' if len(ps) > 2 else ''}
+  </div>
+</section>''' + cta('Wybrałeś termin?', 'Sprawdź, które jachty są wolne, albo zadzwoń do nas.'))
+    page('czarter-bez-patentu.html', 'Czarter bez patentu na Mazurach — houseboaty i motorówki | Jachty Mazury',
+         'Jachty motorowe i houseboaty, które można prowadzić bez patentu: silnik do 75 kW, kadłub do 13 m, prędkość do 15 km/h.', body, 'czarter-bez-patentu.html')
+
+hub_page(); wiedza_page(); bez_page(); houseboat_page(); news_page()
 swap_head('cennik.html', phero([('cennik.html', 'Cennik')], 'Cennik czarteru jachtów 2027',
     'Cena za dobę obowiązuje przy czarterze minimum tygodniowym. Przy krótszych terminach cena ustalana jest indywidualnie.',
     pic('port', 'Stanica Wodna Stranda z lotu ptaka', '100vw', True), '50% 60%'))

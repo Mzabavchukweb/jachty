@@ -13,10 +13,13 @@
   /* menu rozwijane: kliknięcie, Esc, klawiatura */
   document.querySelectorAll('.nav .has').forEach(function(h){
     var b=h.querySelector('.nav__b');if(!b)return;
-    b.addEventListener('click',function(e){e.stopPropagation();var o=!h.classList.contains('is-open');
+    b.addEventListener('click',function(e){e.stopPropagation();h.classList.remove('no-open');var o=!h.classList.contains('is-open');
       document.querySelectorAll('.nav .has.is-open').forEach(function(x){x.classList.remove('is-open');x.querySelector('.nav__b').setAttribute('aria-expanded','false')});
       h.classList.toggle('is-open',o);b.setAttribute('aria-expanded',o)});
-    h.addEventListener('keydown',function(e){if(e.key==='Escape'){h.classList.remove('is-open');b.setAttribute('aria-expanded','false');b.focus()}});
+    h.addEventListener('keydown',function(e){if(e.key==='Escape'){h.classList.remove('is-open');h.classList.add('no-open');b.setAttribute('aria-expanded','false');b.focus()}});
+    /* po Esc menu zostaje zamknięte, dopóki kursor i fokus nie opuszczą pozycji */
+    h.addEventListener('mouseleave',function(){h.classList.remove('no-open')});
+    h.addEventListener('focusout',function(e){if(!h.contains(e.relatedTarget))h.classList.remove('no-open')});
   });
   document.addEventListener('click',function(){document.querySelectorAll('.nav .has.is-open').forEach(function(x){x.classList.remove('is-open');x.querySelector('.nav__b').setAttribute('aria-expanded','false')})});
 
@@ -35,6 +38,13 @@
       if(e.key!=='Tab')return;var f=[].slice.call(mnav.querySelectorAll('a,button'));f.unshift(burger);var a=f[0],z=f[f.length-1];
       if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}});
     mnav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+    /* rozwijane sekcje menu mobilnego (plusik) */
+    [].forEach.call(mnav.querySelectorAll('.mnav__t'),function(b){b.addEventListener('click',function(){
+      var li=b.closest('.mnav__acc'),o=b.getAttribute('aria-expanded')!=='true';
+      b.setAttribute('aria-expanded',o);li.classList.toggle('is-open',o);
+      /* rozwijana sekcja przewija się w pole widzenia, jeśli ucieka pod dolną krawędź */
+      if(o){var sub=document.getElementById(b.getAttribute('aria-controls'));setTimeout(function(){var r=sub.getBoundingClientRect(),m=mnav.getBoundingClientRect();
+        if(r.bottom>m.bottom)mnav.scrollBy({top:Math.min(r.bottom-m.bottom+16,r.top-m.top-60),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})},300)}})});
     addEventListener('resize',function(){if(innerWidth>1023&&!mnav.hidden)close()});
   }
 
@@ -63,17 +73,17 @@
     document.body.appendChild(lb);icons();
     var stage=lb.querySelector('.lb__stage'),lbN=lb.querySelector('.lb__n'),lbCap=lb.querySelector('.lb__cap'),title=(document.querySelector('.unit__h')||{}).textContent||'';
     var show=function(i){i=(i+th.length)%th.length;var p=big(i,'100vw');stage.innerHTML='';stage.appendChild(p);lbN.textContent=(i+1)+' / '+th.length;lbCap.textContent=title;setMain(i)};
-    var open=function(i,el){from=el||document.activeElement;lb.hidden=false;document.body.classList.add('lb-open');show(i);requestAnimationFrame(function(){lb.classList.add('is-open')});lb.querySelector('.lb__x').focus()};
-    var close=function(){lb.classList.remove('is-open');document.body.classList.remove('lb-open');lb.hidden=true;if(from)from.focus()};
-    th.forEach(function(b,i){b.addEventListener('click',function(){open(i,b)})});
-    var z=fig.querySelector('.ugal__zoom');if(z)z.addEventListener('click',function(){open(cur,z)});
+    var lbOpen=function(i,el){from=el||document.activeElement;lb.hidden=false;document.body.classList.add('lb-open');show(i);requestAnimationFrame(function(){lb.classList.add('is-open')});lb.querySelector('.lb__x').focus()};
+    var lbClose=function(){lb.classList.remove('is-open');document.body.classList.remove('lb-open');lb.hidden=true;if(from)from.focus()};
+    th.forEach(function(b,i){b.addEventListener('click',function(){lbOpen(i,b)})});
+    var z=fig.querySelector('.ugal__zoom');if(z)z.addEventListener('click',function(){lbOpen(cur,z)});
     [].forEach.call(document.querySelectorAll('.uh__arrow'),function(b){b.addEventListener('click',function(){setMain((cur+(+b.dataset.dir)+th.length)%th.length)})});
-    lb.querySelector('.lb__x').addEventListener('click',close);
+    lb.querySelector('.lb__x').addEventListener('click',lbClose);
     lb.querySelector('.lb__nav--prev').addEventListener('click',function(){show(cur-1)});
     lb.querySelector('.lb__nav--next').addEventListener('click',function(){show(cur+1)});
-    stage.addEventListener('click',function(e){if(e.target===stage)close()});
+    stage.addEventListener('click',function(e){if(e.target===stage)lbClose()});
     lb.addEventListener('keydown',function(e){
-      if(e.key==='Escape')return close();if(e.key==='ArrowLeft')return show(cur-1);if(e.key==='ArrowRight')return show(cur+1);
+      if(e.key==='Escape')return lbClose();if(e.key==='ArrowLeft')return show(cur-1);if(e.key==='ArrowRight')return show(cur+1);
       if(e.key==='Tab'){var f=[].slice.call(lb.querySelectorAll('button')),a=f[0],zz=f[f.length-1];
         if(e.shiftKey&&document.activeElement===a){e.preventDefault();zz.focus()}else if(!e.shiftKey&&document.activeElement===zz){e.preventDefault();a.focus()}}});
     var tx=null;stage.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
@@ -81,6 +91,30 @@
     /* duże wersje od razu do pamięci — przełączanie bez czekania */
     addEventListener('load',function(){var w=document.createElement('div');w.className='lb__warm';w.setAttribute('aria-hidden','true');th.forEach(function(_,i){w.appendChild(big(i,'100vw'))});document.body.appendChild(w)});
   }
+
+  /* okno rezerwacji (R1): harmonogram IBS ładowany przy pierwszym otwarciu; Esc, pułapka fokusu, powrót fokusu */
+  var bk=document.getElementById('rezerwuj-okno');
+  if(bk){var bkLast=null,bkF=bk.querySelector('.bk__f');
+    var bkOpen=function(e){if(e)e.preventDefault();bkLast=document.activeElement;
+      if(bkF&&!bkF.src){var u=bkF.getAttribute('data-src');try{if(location.origin&&location.origin!=='null')u+='&parentOrigin='+encodeURIComponent(location.origin)}catch(x){}bkF.src=u}
+      bk.hidden=false;document.body.classList.add('modal-open');bk.querySelector('.bk__x').focus()};
+    var bkClose=function(){bk.hidden=true;document.body.classList.remove('modal-open');if(bkLast)bkLast.focus()};
+    [].forEach.call(document.querySelectorAll('[data-open-modal],a[href$="#rezerwuj"]'),function(a){a.addEventListener('click',bkOpen)});
+    [].forEach.call(bk.querySelectorAll('[data-close-modal]'),function(b){b.addEventListener('click',bkClose)});
+    bk.addEventListener('keydown',function(e){if(e.key==='Escape')return bkClose();if(e.key!=='Tab')return;var f=[].slice.call(bk.querySelectorAll('a,button,iframe')),a=f[0],z=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}});
+    if(location.hash==='#rezerwuj')setTimeout(bkOpen,200);
+  }
+  /* karuzele z przyciskami data-car (np. „Inne jednostki” na stronie jachtu) */
+  [].forEach.call(document.querySelectorAll('[data-car]'),function(b){b.addEventListener('click',function(){var t=b.closest('section').querySelector('.car__t');if(!t)return;
+    var c=t.firstElementChild;t.scrollBy({left:+b.dataset.car*(c?c.getBoundingClientRect().width+20:300),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})})});
+  /* kalendarz IBS: adres strony dla powrotu z rezerwacji */
+  [].forEach.call(document.querySelectorAll('iframe[data-ibs]'),function(f){try{if(location.origin&&location.origin!=='null'&&f.src.indexOf('parentOrigin=')<0)f.src=f.src+'&parentOrigin='+encodeURIComponent(location.origin)}catch(e){}});
+
+  /* „Przeczytaj całość” — tekst jest w kodzie strony, zwijany dopiero skryptem */
+  [].forEach.call(document.querySelectorAll('.more__btn'),function(b){var t=document.getElementById(b.getAttribute('aria-controls')),l=b.querySelector('span');
+    if(!t)return;b.hidden=false;b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',o);t.classList.toggle('is-open',o);
+      if(l)l.textContent=o?'Zwiń':'Przeczytaj całość';if(!o)b.scrollIntoView({block:'nearest'})})});
 
   /* spacer wirtualny: ramka ładuje się dopiero po kliknięciu */
   [].forEach.call(document.querySelectorAll('.vt'),function(v){var b=v.querySelector('.vt__play');if(b)b.addEventListener('click',function(){

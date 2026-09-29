@@ -1,0 +1,136 @@
+{
+ "antila-24-4": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "antila-27-furaha": {
+  "station": null,
+  "tour": null,
+  "ibs": true,
+  "ster": "rumpel"
+ },
+ "antila-27-hiuma": {
+  "station": null,
+  "tour": null,
+  "ibs": true,
+  "ster": "rumpel"
+ },
+ "antila-27-marmolada": {
+  "station": null,
+  "tour": null,
+  "ibs": true,
+  "ster": "rumpel"
+ },
+ "antila-27-ramzesowa": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "antila-28-2-pakri": {
+  "station": null,
+  "tour": null,
+  "ibs": true,
+  "ster": "rumpel"
+ },
+ "antila-30-1-bradl": {
+  "station": null,
+  "tour": null,
+  "ibs": true,
+  "ster": "koło"
+ },
+ "antila-30-1-e-cleopatra": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "antila-30-sarema": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "antila-30-tutto-bene": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "antila-33-3-infinitum": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "antila-33-biala-perla": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "antila-33-kassari": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "antila-33-strega": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "antila-34-progresja": {
+  "station": "antila-34-progresja",
+  "tour": "https://tour.panoee.net/iframe/6a57d059fee5183c027d6b7c",
+  "ibs": true,
+  "ster": "koło"
+ },
+ "calipso-750-fire-cruiser": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "futura-860-eufemia": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "maxus-24-evo-waski": {
+  "station": null,
+  "tour": null,
+  "ibs": true,
+  "ster": "rumpel"
+ },
+ "maxus-28-prawy-hals": {
+  "station": null,
+  "tour": null,
+  "ibs": true,
+  "ster": "rumpel"
+ },
+ "nautic-880-cuba-libre": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "nautic-880-mojito": {
+  "station": null,
+  "tour": null,
+  "ibs": true
+ },
+ "nautiner-38-black-stilo": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "nexus-870-revo-bolek": {
+  "station": null,
+  "tour": null,
+  "ibs": false
+ },
+ "nexus-870-revo-wiktor": {
+  "station": null,
+  "tour": null,
+  "ibs": true
+ },
+ "stillo-31-star": {
+  "station": null,
+  "tour": null,
+  "ibs": false,
+  "uwaga": "jest w IBS (id 2135), ale kod stacji nieznany — do podania przez klientkę"
+ }
+}

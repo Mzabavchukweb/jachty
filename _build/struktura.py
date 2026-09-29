@@ -29,6 +29,7 @@ def _caps(t):   # „CENNIK CZARTERU” → „Cennik czarteru”, nazwy własne
     return t
 
 def _seo_head(s, path, data):
+    if 'http-equiv="refresh"' in s: return s   # strona przekierowująca (np. dawny „Port”) — bez meta z obecnej strony
     url = f'{LIVE}/{path}'
     s = s.replace('<html lang="pl">', f'<html lang="{(data or {}).get("lang") or "pl-PL"}">', 1)
     head = []
@@ -95,10 +96,12 @@ MADE = restructure()
 
 # mapa adresów, przekierowania i docelowa mapa strony
 rows = [('adres na obecnej stronie', 'adres w nowej stronie', 'status', 'uwagi')]
+PLAN_301 = {f'{LIVE}/port/': f'{LIVE}/kontakt/#port'}   # decyzje klientki po przebudowie (29.09)
 live_pl = sorted(u for u, r in SEO.items() if r.get('in_sitemap') and '/en/' not in u)
 new_paths = {f'{LIVE}/{p}' for p in NEWPATH.values()}
 for u in live_pl:
     r = SEO[u]
+    if u in PLAN_301: rows.append((u, PLAN_301[u], '301', 'nowe przekierowanie — decyzja klientki 29.09 (treść portu w Kontakcie)')); continue
     if r['status'] == 301: rows.append((u, r['redirect'], '301', 'przekierowanie działające na obecnej stronie — zachować'))
     elif u in new_paths: rows.append((u, u, 'ten sam adres', ''))
     else: rows.append((u, '', 'BRAK', 'do decyzji'))
@@ -114,7 +117,8 @@ for u in sorted(x for x, r in SEO.items() if '/en/' in x and r.get('in_sitemap')
 import csv
 with open('_seo/mapa-adresow.csv', 'w', newline='', encoding='utf-8') as f: csv.writer(f).writerows(rows)
 sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-for p in sorted(set(NEWPATH.values()), key=lambda p: (p.count('/'), p)): sm.append(f'<url><loc>{LIVE}/{p}</loc></url>')
+for p in sorted(set(NEWPATH.values()), key=lambda p: (p.count('/'), p)):
+    if f'{LIVE}/{p}' not in PLAN_301: sm.append(f'<url><loc>{LIVE}/{p}</loc></url>')
 sm.append('</urlset>')
 open('_seo/sitemap-docelowa.xml', 'w').write('\n'.join(sm) + '\n')
 print('  mapa adresów:', len(rows) - 1, 'wierszy')

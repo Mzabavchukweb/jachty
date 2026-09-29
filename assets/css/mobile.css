@@ -51,9 +51,8 @@
   .mem__ini{aspect-ratio:3/2!important;font-size:2.75rem!important}
   .team__grid{row-gap:var(--s4)!important}
 
-  /* menu mobilne w dwóch kolumnach — wszystko pod ręką bez przewijania */
+  /* menu mobilne: jedna kolumna, rozbudowane sekcje rozwijane plusikiem (uwagi klientki 29.09) */
   .mnav__in{padding:var(--s2) var(--gutter) var(--s3);gap:var(--s3)}
-  .mnav__l{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--s2)}
   .mnav__l a{min-height:50px;font-size:1.125rem;line-height:1.2}
   .mnav__l a[aria-current]::after{width:5px;height:5px;margin-left:8px;flex:none}
   .mnav__cta{grid-template-columns:1fr 1fr;gap:8px}
@@ -127,7 +126,6 @@
 
 /* menu mobilne: kolumny nie mogą rozpychać ekranu; na wąskich telefonach mniejszy krój */
 @media(max-width:640px){
-  .mnav__l{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   .mnav__l li{min-width:0}
   .mnav__l a{white-space:normal;overflow-wrap:anywhere;min-height:46px;font-size:1.0625rem}
   .mnav__cta{grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -140,3 +138,30 @@
   .mnav__cta .btn .lucide{display:none}
   .mnav__meta{font-size:.75rem}
 }
+
+/* menu mobilne — rozwijane sekcje (uwagi klientki 29.09)
+   poziom 1: krój szeryfowy, pełny rozmiar; poziom 2: bezszeryfowy, półgruby; poziom 3 (modele): dwie kolumny.
+   Plusik zmienia się w minus; sekcja rozwija się płynnie; zwinięta nie przyjmuje fokusu (visibility). */
+.mnav__l{display:block}
+.mnav__l>li>a,.mnav__l>li>.mnav__row>a{font-family:var(--f-display);font-weight:500;font-size:1.3125rem!important;min-height:54px!important;line-height:1.2}
+.mnav__row{display:flex;align-items:center;gap:12px}
+.mnav__row>a{flex:1;min-width:0}
+.mnav__t{flex:none;position:relative;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);cursor:pointer;padding:0;transition:background .2s var(--ease),border-color .2s var(--ease)}
+.mnav__t:hover{border-color:var(--ink)}
+.mnav__t:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.mnav__pm{position:relative;width:14px;height:14px}
+.mnav__pm::before,.mnav__pm::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:currentColor;border-radius:2px;transition:transform .25s var(--ease)}
+.mnav__pm::after{transform:rotate(90deg)}
+.mnav__t[aria-expanded="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.mnav__t[aria-expanded="true"] .mnav__pm::after{transform:rotate(0deg)}
+.mnav__sub{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .28s var(--ease),visibility 0s linear .28s}
+.mnav__acc.is-open>.mnav__sub{grid-template-rows:1fr;visibility:visible;transition:grid-template-rows .28s var(--ease),visibility 0s}
+.mnav__subl{min-height:0;overflow:hidden;list-style:none;margin:0;padding:0}
+.mnav__subl li{border-bottom:0!important}
+.mnav__subl--2{padding:2px 0 12px 14px!important;margin-left:2px!important;border-left:2px solid var(--sand)}
+.mnav__subl--2 a{font-family:var(--f-body)!important;font-weight:600;font-size:1.0625rem!important;min-height:46px!important;color:var(--ink)}
+.mnav__subl--2 .mnav__t{width:40px;height:40px;border-radius:10px}
+.mnav__subl--3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:12px;padding:0 0 10px 12px!important}
+.mnav__subl--3 a{font-weight:400!important;font-size:.9688rem!important;min-height:42px!important;color:var(--ink-80)}
+.mnav__subl a[aria-current]{color:var(--deep)!important}
+@media(prefers-reduced-motion:reduce){.mnav__sub,.mnav__acc.is-open>.mnav__sub,.mnav__pm::before,.mnav__pm::after,.mnav__t{transition:none}}

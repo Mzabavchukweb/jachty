@@ -223,7 +223,7 @@ html.js .fleet__grp.reveal.in .fli{opacity:1;transform:none}
 .head--dark.is-scrolled .head__logo--mono,body.mnav-open .head--dark .head__logo--mono{display:none}
 .head--dark.is-scrolled .head__logo--color,body.mnav-open .head--dark .head__logo--color{display:block}
 body:not(.mnav-open) .head--dark:not(.is-scrolled){background:var(--ink);border-bottom-color:rgba(255,255,255,.14);color:#fff}
-body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav>a,body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav__b{color:#fff}
+body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav>a,body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav__a,body:not(.mnav-open) .head--dark:not(.is-scrolled) .nav__b{color:#fff}
 body:not(.mnav-open) .head--dark:not(.is-scrolled) .head__lang{color:rgba(255,255,255,.75)}
 body:not(.mnav-open) .head--dark:not(.is-scrolled) .head__lang [aria-current]{color:#fff}
 body:not(.mnav-open) .head--dark:not(.is-scrolled) .head__lang a:not([aria-current]){color:#fff}
@@ -709,20 +709,22 @@ body.lb-open .callfab{display:none!important}
 @media(prefers-reduced-motion:reduce){.lb{transition:none}}
 
 /* ===================== PRZEBUDOWA WG UWAG KLIENTKI ===================== */
-/* mega menu „Czarter jachtów” */
-.nav .has--mega .mm{min-width:0;width:min(800px,calc(100vw - 48px));padding:20px 26px 24px;left:-26px}
-.mm__top{display:flex;flex-wrap:wrap;gap:8px 28px;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--line)}
-.nav .mm a{display:inline;padding:0;background:none!important;white-space:normal}
-.nav .mm a:hover{text-decoration:underline;text-underline-offset:3px}
-.nav .mm__top a{font-weight:600}
-.mm__cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-.nav .mm__h{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-display);font-size:1.25rem;font-weight:500;margin-bottom:8px}
-.nav .has .mm__h .lucide{width:16px;height:16px;transform:none!important}
-.mm__l{list-style:none;margin:0;padding:0;display:grid}
-.mm__l li{display:grid;grid-template-columns:128px 1fr;gap:12px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--line)}
-.nav .mm__m{font-weight:600}
-.mm__us{display:flex;flex-wrap:wrap;gap:2px 12px}
-.nav .mm__u{font-weight:400!important;font-size:.875rem;color:var(--ink-80)!important}
+/* menu główne (uwagi klientki 29.09): pozycja jest linkiem do strony, strzałka obok ją rozwija;
+   „Czarter jachtów” rozwija się kaskadowo jak na obecnej stronie — typy jachtów, przy nich modele */
+.nav .has{display:inline-flex;align-items:center;gap:0}
+.nav .nav__b{width:30px;height:40px;justify-content:center;margin-right:-8px;cursor:pointer;color:inherit}
+.nav .nav__b .lucide{width:16px;height:16px}
+.nav .has.is-cur>.nav__a{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+.nav .menu{border-radius:14px;padding:8px}
+.nav .menu a{border-radius:9px;padding:10px 14px}
+.nav .has:hover .menu--fly,.nav .has:focus-within .menu--fly,.nav .has.is-open .menu--fly{display:none}
+.nav .sub{position:relative}
+.nav .sub::after{content:"";position:absolute;top:0;bottom:0;left:100%;width:12px}
+.nav .menu .sub__a{display:flex;justify-content:space-between;align-items:center;gap:22px}
+.nav .has .sub .lucide{width:15px;height:15px;transform:none}
+.nav .sub:hover>.sub__a,.nav .sub:focus-within>.sub__a{background:var(--sand)}
+.nav .menu--fly{top:-8px;left:calc(100% + 10px);min-width:190px}
+.nav .has .sub:hover>.menu--fly,.nav .has .sub:focus-within>.menu--fly{display:block}
 /* stopka wg wizualizacji -2 */
 .foot__g{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.3fr;gap:40px}
 .foot__brand p{max-width:34ch;color:rgba(252,249,244,.82);margin-top:14px}
@@ -1357,3 +1359,260 @@ html:not(.js) .udesc2__btn{display:none}
 .ucta .ucta__pdf{background:transparent;border-color:rgba(255,255,255,.7);color:#fff}
 .ucta .ucta__pdf:hover{background:#fff;color:var(--ink)}
 @media(max-width:640px){.uav__pdf{width:100%;justify-content:center}.ucta__a{width:100%}.ucta__a .btn{flex:1 1 100%;justify-content:center}}
+
+/* ===================== ZAOKRĄGLENIA (uwagi klientki 29.09, zrzuty 1–3) =====================
+   Jedna skala na całej stronie: przyciski i pola 10px, karty i panele 16px, duże kafle 20px,
+   plakietki 6px. Zdjęcia w kartach przycina sama karta (overflow:hidden). Zdjęcia na całą
+   szerokość ekranu (hero, tła sekcji) zostają proste. */
+:root{--r-s:6px;--r-btn:10px;--r-card:16px;--r-big:20px}
+.btn,.hh__btn,.kt__btn,.wk__btn,.loc__btn,.ucta__btn,.ucta__pdf,.rec__nav,.uh__arrow,.usl__nav,.ustrip__nav,.ucal__nav,.bk__x,.burger,.head__lang a{border-radius:var(--r-btn)}
+.input,.kf input:not([type=checkbox]):not([type=radio]),.kf select,.kf textarea,.uform input:not([type=checkbox]):not([type=radio]),.uform select,.uform textarea{border-radius:var(--r-btn)}
+.kf__opt span,.chip{border-radius:999px}
+.ptag,.rc__tag,.berth{border-radius:var(--r-s)}
+.rc__go,.gd__go,.nc__go .lucide,.wk__i,.bt__go{border-radius:var(--r-s)}
+/* karty */
+.rc,.mc,.nc,.sale,.wk,.gd__a,.cmob,.udet__i,.faq__i,.slot,.ctab{border-radius:var(--r-card);overflow:hidden}
+.faq__i,.udet__i,.cmob{overflow:visible}
+.faq__i>summary,.cmob>summary{border-radius:var(--r-card)}
+/* panele wysunięte nad zdjęcia i formularze */
+.hi__l,.loc__bar,.kf,.bk__p{border-radius:var(--r-card)}
+/* duże kafle i zdjęcia w treści */
+.kt__i,.bt,.art__img,.ugal__main,.usl,.port__big,.gfeat__ph,.mem__ini,.fli__ph,.sale__ph,.ue__img img{border-radius:var(--r-big);overflow:hidden}
+.mem__ini{border-radius:var(--r-card)}
+.ugal__thumbs button,.ugal__thumbs picture,.ugal__thumbs img{border-radius:var(--r-btn);overflow:hidden}
+.callfab{border-radius:999px}
+
+/* pływające przyciski kontaktu nad telefonem: WhatsApp i Messenger (uwagi klientki 29.09) */
+.fabs{position:fixed;right:calc(var(--gutter) + 6px);bottom:calc(var(--gutter) + 72px);z-index:70;display:grid;gap:10px;transition:bottom var(--dur) var(--ease)}
+.fabx{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;box-shadow:0 6px 18px rgba(48,64,68,.3);transition:transform var(--dur) var(--ease)}
+.fabx img{display:block}
+.fabx--wa{background:#25D366}
+.fabx--ms{background:#0866FF}
+.fabx:hover{transform:scale(1.06)}
+.fabx:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+body:has(.mobilebar.is-on) .fabs{bottom:calc(88px + var(--s2) + 72px)}
+body.modal-open .fabs,body.mnav-open .fabs,body.lb-open .fabs,body:has(.konh) .fabs{display:none}
+/* stopka: ikony serwisów zamiast napisów */
+.foot__soc{display:flex;gap:10px;margin-top:18px}
+.foot .soc{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid rgba(252,249,244,.35);transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.foot .soc:hover{background:rgba(252,249,244,.12);border-color:#fff}
+.foot .soc img{display:block;opacity:.95}
+@media(max-width:767px){.fabs{right:calc(var(--gutter) + 8px);bottom:calc(var(--gutter) + 68px);gap:8px}.fabx{width:44px;height:44px}.fabx img{width:22px;height:22px}}
+
+/* formularze: kolumny siatki mogą się zwęzić poniżej szerokości zawartości (bez tego na telefonach
+   o gęstości 3× formularz jachtu rozpychał stronę o ~20 px w bok) */
+.kf{grid-template-columns:minmax(0,1fr)}
+.kf__row{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kf__f{min-width:0}
+.kf__f input,.kf__f textarea,.kf__f select{min-width:0;width:100%;max-width:100%;box-sizing:border-box}
+@media(max-width:767px){.kf__row{grid-template-columns:minmax(0,1fr)}.kf__opts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* ikony parametrów na stronie modelu: kolumny mogą się zwęzić, a wartości zawijają (inaczej na telefonie wystawały poza ekran) */
+.uic__l>li{grid-template-columns:minmax(0,1fr)!important;min-width:0}
+.uic__l>li b,.uic__l>li span{min-width:0;white-space:normal!important;overflow-wrap:anywhere}
+/* karty jednostek na stronie modelu: kolumny nie rozpychają ekranu; karty zaokrąglone jak pozostałe */
+.ums{grid-template-columns:repeat(auto-fill,minmax(min(210px,100%),1fr))}
+@media(max-width:767px){.ums{grid-template-columns:repeat(2,minmax(0,1fr))}.um,.um__b{min-width:0}.um__btn{white-space:normal;text-align:center}}
+.um{border-radius:var(--r-card);overflow:hidden}
+/* nagłówek na laptopach 1024–1199 px: pozycje menu w jednej linii, logo nieściśnięte */
+.nav a,.nav .nav__a{white-space:nowrap}
+.head__bar>a:first-child{flex:none}
+@media(min-width:1024px) and (max-width:1279px){
+  .head .head__bar{column-gap:18px}
+  .nav{gap:14px}
+  .nav a,.nav .nav__a{font-size:.90625rem}
+  .nav .nav__b{width:24px;margin-right:-4px}
+  .head__bar .head__logo{height:34px;width:auto}
+  .head__bar>.btn{padding-inline:14px;font-size:.90625rem}
+}
+}
+/* Esc zamyka rozwinięte menu także wtedy, gdy trzyma je fokus lub kursor */
+.nav .has.no-open .menu{display:none!important}
+@media(min-width:1024px) and (max-width:1119px){
+  .head .head__bar{column-gap:14px}
+  .nav{gap:12px}
+  .head__bar .head__logo{height:30px}
+}
+
+/* ===================== JEDNA SZEROKOŚĆ TREŚCI (uwagi klientki 29.09, zadanie G2) =====================
+   Każda sekcja trzyma się tej samej kolumny co nagłówek, kafle i listy (.wrap). Dłuższe teksty wstępne
+   rozciągają się na całą szerokość, ale na desktopie w dwóch kolumnach — krawędzie równe z kaflami,
+   a linia tekstu nadal czytelna (~75 znaków). */
+.faq--wide{max-width:calc(var(--wrap) + 2*var(--gutter))}
+.hub__intro,.lst__intro{max-width:none}
+@media(min-width:1024px){
+  .hub__intro,.lst__intro{column-count:2;column-gap:32px}
+  .hub__intro p:first-child,.lst__intro p:first-child{margin-top:0}
+}
+.hub__intro{margin:0 0 36px}
+.hub__intro p{margin:0 0 12px;line-height:1.7;color:var(--ink)}
+/* przyciski w karcie jachtu na liście: obok siebie tylko wtedy, gdy każdy ma miejsce na tekst
+   z pełnym wcięciem; w wąskiej kolumnie przechodzą jeden pod drugi (tekst nie dotyka ramki) */
+.fli__act:not(:has(>.btn:only-child)){grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr))!important}
+.fli__act .btn{white-space:nowrap;padding-inline:16px}
+/* „Zobacz szczegóły” w wąskich kartach jednostek: jedna linia, pełne wcięcie; strzałka dopiero, gdy jest miejsce */
+@media(max-width:767px){.um__btn{padding-inline:12px!important;font-size:.875rem!important;white-space:nowrap!important}}
+@media(max-width:480px){.um__btn .lucide{display:none}}
+/* wartość długości nie łamie się między liczbą a jednostką */
+.meas__hd b{white-space:nowrap}
+.meas__hd{gap:12px}
+.fli__spec dd{white-space:nowrap}
+
+/* ===================== STRONA GŁÓWNA (uwagi klientki 29.09) ===================== */
+/* H1: w hero tylko tytuł i przycisk, po lewej stronie */
+.hh__in{justify-items:start;text-align:left}
+.hh__h{margin:0 0 28px}
+.hh__shade{background:linear-gradient(90deg,rgba(24,36,40,.62) 0%,rgba(24,36,40,.25) 48%,rgba(24,36,40,0) 70%),linear-gradient(0deg,rgba(24,36,40,.55),rgba(24,36,40,0) 55%)}
+/* H3: typ silnika na karcie polecanego jachtu */
+.rc__m{flex-wrap:wrap;row-gap:4px}
+/* H6: „O nas” jako właściwy nagłówek sekcji */
+.ab__h{font-size:clamp(2.5rem,4.4vw,3.5rem);margin:0 0 20px}
+/* H4: filmy i poradnik — w kolumnie treści, z odstępem, niższe (wcześniej od krawędzi do krawędzi, 440 px) */
+.kt{gap:24px;max-width:calc(var(--wrap) + 2*var(--gutter));margin-inline:auto;padding-inline:var(--gutter)}
+.kt__i{min-height:320px}
+.kt__b{padding:36px;gap:10px}
+.kt__t{font-size:1.875rem}
+.kt__play{width:60px;height:60px;margin-bottom:6px}
+.kt__play .lucide{width:26px;height:26px}
+@media(max-width:767px){.kt{gap:16px}.kt__i{min-height:280px}.kt__b{padding:24px}.kt__t{font-size:1.5rem}}
+/* H4: niższe kafle — mocniejsze przyciemnienie pod tekstem (kontrast AA na jasnych fragmentach zdjęć) */
+.kt__i::after{background:linear-gradient(0deg,rgba(18,26,29,.92) 0%,rgba(18,26,29,.7) 45%,rgba(18,26,29,.3) 100%)}
+.kt__t,.kt__d{text-shadow:0 1px 14px rgba(0,0,0,.35)}
+/* H10: falka w stopce po prawej, jak na wizualizacji (raster, dekoracja bez treści) */
+.foot{position:relative;overflow:hidden}
+.foot>.wrap{position:relative;z-index:1}
+.foot::after{content:"";position:absolute;z-index:0;right:max(var(--gutter),calc((100% - var(--wrap)) / 2));bottom:84px;width:min(520px,48vw);aspect-ratio:1040/160;
+  background:url(../img/deco/fala-stopka.png) no-repeat center/contain;pointer-events:none;opacity:.85}
+@media(max-width:767px){.foot::after{width:70vw;bottom:auto;top:24px;right:-8vw;opacity:.5}}
+/* WhatsApp i Messenger: przy lewej krawędzi, na połowie wysokości ekranu (prośba 29.09) — zakładki przyklejone
+   do krawędzi, nie zasłaniają treści ani telefonu w prawym dolnym rogu */
+.fabs{left:0;right:auto;top:50%;bottom:auto;transform:translateY(-50%);gap:6px}
+.fabx{width:46px;height:48px;border-radius:0 14px 14px 0;box-shadow:0 6px 18px rgba(48,64,68,.25)}
+.fabx img{margin-left:-2px}
+.fabx:hover{transform:translateX(3px)}
+body:has(.mobilebar.is-on) .fabs{bottom:auto}
+@media(max-width:767px){.fabs{left:0;right:auto;bottom:auto;gap:6px}.fabx{width:40px;height:44px}.fabx img{width:22px;height:22px}}
+@media(prefers-reduced-motion:reduce){.fabx{transition:none}}
+@media(max-width:767px){.fabx{width:32px;height:44px;border-radius:0 12px 12px 0}.fabx img{width:20px;height:20px;margin-left:-3px}}
+/* karty modeli na listach: przyciski „Zobacz jacht” w jednej linii w całym rzędzie, nawet gdy parametr zajmuje dwie linie */
+.mc__b{grid-template-rows:auto auto 1fr auto;height:100%}
+.mc__s{align-content:start}
+.mc__btn{align-self:end}
+/* czarter bez patentu (BP1) */
+.why__l--3{grid-template-columns:repeat(3,minmax(0,1fr));margin:8px 0 48px}
+.why__l--3 b{display:block;font-weight:600;color:var(--ink)}
+.bez__h{margin:0 0 24px}
+.bez__po{margin:40px 0 0}
+@media(max-width:767px){.why__l--3{grid-template-columns:1fr}}
+/* houseboaty (HB1): tekst SEO w kolumnie treści, na desktopie w dwóch łamach */
+.hb__body{max-width:none;margin:0}
+.hb__body h2{margin:32px 0 10px}.hb__body h2:first-child{margin-top:0}
+@media(min-width:1024px){.hb__body{column-count:2;column-gap:32px}.hb__body h2{break-after:avoid;break-inside:avoid}}
+
+/* ===================== STRONA MODELU (uwagi klientki 29.09) ===================== */
+/* MOD4: pełen opis modelu pod „O modelu”, zwinięty do „Przeczytaj całość” (bez JS widoczny w całości) */
+.more h3{margin:28px 0 8px}
+.more p{margin:0 0 12px;line-height:1.7}
+html.js .more:not(.is-open){display:none}
+.more__btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:0;border:0;background:none;color:var(--deep);font:inherit;font-weight:600;cursor:pointer;min-height:44px}
+.more__btn .lucide{width:18px;height:18px;transition:transform var(--dur) var(--ease)}
+.more__btn[aria-expanded="true"] .lucide{transform:rotate(180deg)}
+.more__btn:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+/* MOD5: najważniejsze informacje w siatce 5×2 z liniami, jak na wizualizacji; wartości łamią się tylko między słowami */
+.mab__icons{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:0!important;padding:0!important;border-top:1px solid var(--line)}
+.mab__icons>li{padding:18px 8px!important;border-bottom:1px solid var(--line);gap:4px!important}
+.mab__icons>li:not(:nth-child(5n+1)){border-left:1px solid var(--line)}
+.mab__icons .lucide{width:28px!important;height:28px!important;margin-bottom:6px!important}
+.mab__icons .uic__k{font-size:.75rem;color:var(--ink-80);line-height:1.3}
+.mab__icons>li b{font-size:.9375rem;line-height:1.3;overflow-wrap:normal!important;word-break:normal;hyphens:manual}
+@media(max-width:767px){
+  .mab__icons{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .mab__icons>li:not(:nth-child(5n+1)){border-left:0}
+  .mab__icons>li:not(:nth-child(3n+1)){border-left:1px solid var(--line)}
+}
+/* MOD6: „Dlaczego warto wybrać …” — punkty z opisu modelu jako ikony */
+.mwhy2__l{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:0}
+.mwhy2__l li{display:grid;align-content:start;gap:14px;padding:8px 24px 8px 0}
+.mwhy2__l li+li{border-left:1px solid rgba(48,64,68,.16);padding-left:24px}
+.mwhy2__l .why__i{width:60px;height:60px}
+.mwhy2__l .why__i .lucide{width:28px;height:28px}
+.mwhy2__l b{font-family:var(--f-display);font-weight:500;font-size:1.25rem;line-height:1.25;color:var(--ink)}
+.mwhy2__p{max-width:none;margin:12px 0 0;color:var(--ink)}
+@media(max-width:767px){.mwhy2__l{grid-template-columns:1fr 1fr;row-gap:24px}.mwhy2__l li,.mwhy2__l li+li{border-left:0;padding:0}}
+.uic__l.mab__icons{display:grid!important}
+/* MOD2: sam tytuł modelu przy dolnej krawędzi zdjęcia */
+.uh--model .uh__h{margin-top:auto}
+
+/* ===================== STRONA JACHTU (uwagi klientki 29.09) ===================== */
+.ico{display:block;width:30px;height:30px;object-fit:contain}
+.uic__l .ico,.mab__icons .ico{margin:0 auto 8px}
+.mc__s .ico{width:22px;height:22px;margin:0}
+/* J6: wyposażenie i warunki rezerwacji pod opisem, obok siebie; dane techniczne zwinięte pod nimi */
+.udet2__g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.udet2__c{background:#fff;border:1px solid rgba(48,64,68,.1);border-radius:var(--r-card);padding:28px 32px}
+.udet2__c .h3{margin:0 0 16px}
+.udet2__spec{margin-top:24px}
+@media(max-width:767px){.udet2__g{grid-template-columns:1fr}.udet2__c{padding:22px 20px}}
+/* J4: kalendarz rezerwacji IBS na całą szerokość, pod nim zapytanie */
+.ibs{border-radius:var(--r-card);overflow:hidden;background:#fff;border:1px solid rgba(48,64,68,.1)}
+.ibs iframe{display:block;width:100%;height:620px;border:0}
+@media(max-width:1023px){.ibs iframe{height:800px}}
+@media(max-width:767px){.ibs iframe{height:760px}}
+.uav__ask{margin-top:56px;row-gap:24px}
+/* J8: inne jednostki w karuzeli */
+.urel .rec__t{scroll-snap-type:x mandatory}
+.udet2__c{padding:24px 28px}
+.udet2__c summary .h3{margin:0}
+.udet2__c[open] summary{margin-bottom:16px}
+.vt__play{border-radius:var(--r-btn)}
+.vt{border-radius:var(--r-big);overflow:hidden}
+
+/* ===================== AKTUALNOŚCI (A1): lista — zdjęcie po lewej, tytuł i fragment po prawej ===================== */
+.nrs{display:grid;gap:28px}
+.nr{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px;align-items:center;background:#fff;border:1px solid rgba(48,64,68,.1);border-radius:var(--r-card);overflow:hidden}
+.nr__ph{display:block;aspect-ratio:16/10;overflow:hidden}
+.nr__ph img{display:block;width:100%;height:100%;object-fit:cover}
+.nr__b{display:grid;gap:10px;padding:24px 32px 24px 0}
+.nr__t{margin:0}.nr__t a{color:var(--ink)}
+.nr__l{margin:0;color:var(--ink-80)}
+.nr__go{justify-self:start;font-weight:600}
+.nr__empty{display:grid;gap:18px;justify-items:start;padding:40px;background:#fff;border:1px solid rgba(48,64,68,.1);border-radius:var(--r-card)}
+.nr__empty p{margin:0;max-width:60ch}
+@media(max-width:767px){.nr{grid-template-columns:1fr;gap:0}.nr__b{padding:20px}.nr__empty{padding:24px}}
+
+/* ===================== CENNIK (uwagi klientki 29.09) ===================== */
+/* CN2: daty w nagłówku zawsze na tej samej wysokości — dwie linie na datę, pod nią „za dobę/okres”, plakietka na dole */
+.cen thead th{vertical-align:top}
+.cen thead th .num{display:block;min-height:2.5em;line-height:1.25}
+.cen thead th small{display:block;margin-top:2px}
+.cen thead th .ptag{margin-top:6px}
+/* CN3: zdjęcie i nazwa jachtu jako link do strony modelu */
+.cen__a{display:block;color:var(--ink);border-radius:var(--r-s)}
+.cen__a:hover span span:last-child{text-decoration:underline;text-underline-offset:3px}
+.cen__a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.cmob__lnk{justify-content:flex-start!important;border-bottom:0!important}
+.cmob__lnk a{font-weight:600}
+
+/* ===================== KONTAKT (uwagi klientki 29.09) ===================== */
+/* K1: formularz w całości na ciemnym tle */
+.phead.konh{--over:0px;background:var(--ink);padding-bottom:var(--s6)}
+.konh .kf{border-radius:var(--r-big)}
+/* K3: port pod formularzem — treść dawnej zakładki „Port” */
+.kond{background:var(--paper)}
+.kond .g12{align-items:start;row-gap:32px}
+.kond__img{border-radius:var(--r-big);overflow:hidden;margin:0}
+.kond__t .dl{margin:18px 0 24px}
+.kond__h{margin:48px 0 16px}
+.amen{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px}
+.amen li{display:flex;align-items:center;gap:10px;padding:14px 16px;background:#fff;border:1px solid rgba(48,64,68,.1);border-radius:var(--r-btn)}
+.amen li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--wave)}
+.kf a:not(.btn){color:var(--deep)!important}   /* link w białej karcie formularza nie dziedziczy bieli z ciemnej sekcji */
+
+/* R1: okno rezerwacji z harmonogramem IBS */
+.bk__p--ibs{width:min(1280px,100%);height:calc(100vh - 48px);height:calc(100dvh - 48px);grid-template-rows:auto minmax(0,1fr) auto;padding:20px 24px;gap:14px}
+.bk__hd{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.bk__hd .h3{margin:0}
+.bk__p--ibs .bk__x{position:static;flex:none}
+.bk__f{width:100%;height:100%;border:0;border-radius:var(--r-btn);background:#fff}
+.bk__alt{margin:0;font-size:.9375rem;color:var(--ink-80)}
+body.modal-open{overflow:hidden}
+@media(max-width:767px){.bk{padding:8px}.bk__p--ibs{height:calc(100dvh - 16px);padding:14px}}
