@@ -765,10 +765,14 @@ def patch(fname, cur, photo=False, own_booking=False, dark=False):
     s = s[:a] + h + s2
     fa = s.index('<footer'); fb = s.index('</footer>', fa) + 9
     s = s[:fa] + FOOT.replace(' id="kontakt"', '' if not photo else ' id="kontakt"') + s[fb:]
+    if 'assets/css/pages.css' not in s:   # style stopki, menu, pływających przycisków i okna rezerwacji — wspólne ze stronami z generatora
+        s = re.sub(r'(<link rel="stylesheet" href="assets/css/system\.css[^"]*">)', r'\1\n<link rel="stylesheet" href="assets/css/pages.css">', s, count=1)
     if dark and 'assets/css/head-dark.css' not in s:
         s = s.replace('<link rel="stylesheet" href="assets/css/system.css">', '<link rel="stylesheet" href="assets/css/system.css">\n<link rel="stylesheet" href="assets/css/head-dark.css">', 1)
     if 'assets/css/mobile.css' not in s:
         s = s.replace('</head>', '<link rel="stylesheet" href="assets/css/mobile.css">\n</head>', 1)
+    if 'class="fabs"' not in s:   # WhatsApp, Messenger i telefon — ten sam zestaw co na stronach z generatora
+        s = re.sub(r'<a class="callfab".*?</a>', lambda m: CALL, s, count=1, flags=re.S) if 'class="callfab"' in s else s.replace('</body>', CALL + '\n</body>', 1)
     if 'id="rezerwuj-okno"' not in s:
         s = s.replace('</body>', BOOK + '\n</body>', 1)   # R1: wspólne okno rezerwacji
     if 'assets/js/site.js' not in s:
