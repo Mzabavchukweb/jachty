@@ -1404,3 +1404,11 @@ body.modal-open{overflow:hidden}
 @media(max-width:640px){.fe--min .fe__body{grid-template-columns:1fr;gap:16px}}
 /* pas znaków w stopce: mniejszy, obok opisu (nadal czytelny — znaki muszą być rozpoznawalne) */
 .foot .ue__img{max-width:440px;flex:0 1 440px;padding:10px 14px;border-radius:var(--r-s)}
+
+/* ikony parametrów w jednym kolorze (uwaga klientki 30.09): konturowe Lucide w tym samym niebieskim co ikony z jej grafiki */
+.uic__l .lucide,.mab__icons .lucide,.mc__s .lucide,.rc__m .lucide{color:var(--deep)!important}
+.ico--s{display:inline-block;width:16px;height:16px;vertical-align:-3px;margin:0}
+/* strona modelu: stały zestaw 10 pól — pełna siatka 5×2 z liniami */
+.mab__icons>li:nth-child(5n){border-right:1px solid var(--line)}
+.mab__icons>li:nth-child(5n+1){border-left:1px solid var(--line)}
+@media(max-width:767px){.mab__icons>li:nth-child(5n){border-right:0}.mab__icons>li:nth-child(5n+1){border-left:0}}

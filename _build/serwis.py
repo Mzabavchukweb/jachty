@@ -31,7 +31,8 @@ def unit_facts(slug):
     add('move-horizontal', 'Szerokość', spec_val('Szerokość', sp.get('Szerokość', '')))
     add('waves', 'Zanurzenie', spec_val('Zanurzenie', sp.get('Zanurzenie', '')))
     add('bed-double', 'Miejsca do spania', berths(sp.get('Liczba osób', '–'))[0] if sp.get('Liczba osób') else '')
-    add('door-closed', 'Kabiny', 'otwarte' if sp.get('Zamykane kabiny', '') == '0' else sp.get('Zamykane kabiny', ''))
+    kab = IBS.get(slug, {}).get('kabiny') or sp.get('Zamykane kabiny', '')   # IBS uzupełnia brak w tabeli (np. Nautic 880)
+    add('door-closed', 'Kabiny', 'otwarte' if kab == '0' else kab)
     if 'wc morskie' in eq or 'toaleta morska' in eq: add('bath', 'Toaleta', 'morska')
     elif 'chemiczn' in eq: add('bath', 'Toaleta', 'chemiczna')
     if 'prysznic' in eq: add('shower-head', 'Prysznic', 'z ciepłą wodą' if 'ciepłą wodą' in eq else 'tak')
@@ -74,7 +75,7 @@ def unit_card(w):
     eng = _engine(s2)
     meta = (f'<span><i data-lucide="users" class="lucide" aria-hidden="true"></i> {mj} os.</span>' if mj and mj != '–' else '')
     meta += (f'<span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> {esc(kab)}{" kab." if kab != "otwarte" else ""}</span>' if kab and kab not in ('–', '-') else '')
-    meta += (f'<span class="rc__eng"><i data-lucide="cog" class="lucide" aria-hidden="true"></i> silnik {esc(eng)}</span>' if eng else '')
+    meta += (f'<span class="rc__eng">{_engine_ico(s2)} silnik {esc(eng)}</span>' if eng else '')
     return (f'<a class="rc" href="{s2}.html"><figure class="rc__ph">{ph}<span class="rc__tag">{"Jacht żaglowy" if KIND[s2] == "sail" else "Jacht motorowy"}</span></figure>'
             f'<span class="rc__b"><span class="rc__t">{esc(uname(w))}</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span>'
             f'<span class="rc__m num">{meta}</span></span></a>')
@@ -405,6 +406,8 @@ def news_card(a, big=False):
 # Aktualności to osobna lista (_a/news.json) — wpisy z ART należą do poradnika (uwagi klientki 29.09).
 # Na razie pusta: strona pokazuje komunikat, a układ listy (A1) pojawi się przy pierwszym wpisie.
 NEWS = json.load(open('_a/news.json')) if os.path.exists('_a/news.json') else []
+NEWS_EMPTY = ('<div class="nr__empty"><p><b>Na razie nie ma aktualności.</b> Praktyczne informacje o czarterze i trasach znajdziesz w poradniku.</p>'
+              '<a class="btn" href="poradnik.html">Przejdź do poradnika <i data-lucide="arrow-right" class="lucide"></i></a></div>')
 def news_row(a):
     return (f'<article class="nr"><a class="nr__ph" href="{a["slug"]}.html" tabindex="-1" aria-hidden="true">{pic("art-" + a["slug"], a["h1"], "(min-width:1024px) 34vw, 100vw")}</a>'
             f'<div class="nr__b"><p class="micro nr__d">{pl_date(a.get("date", ""))}</p><h2 class="h3 nr__t"><a href="{a["slug"]}.html">{esc(a["h1"])}</a></h2>'
@@ -427,8 +430,13 @@ def model_card(m):
             f'<span class="rc__b"><span class="rc__t">{esc(m)}</span><span class="rc__go" aria-hidden="true"><i data-lucide="arrow-right" class="lucide"></i></span>'
             f'<span class="rc__m num"><span><i data-lucide="users" class="lucide" aria-hidden="true"></i> {mj} os.</span>'
             f'<span><i data-lucide="door-closed" class="lucide" aria-hidden="true"></i> {sp.get("Zamykane kabiny", "–")} kab.</span>'
-            + (f'<span class="rc__eng"><i data-lucide="cog" class="lucide" aria-hidden="true"></i> silnik {esc(eng)}</span>' if (eng := _engine(u[0])) else '')
+            + (f'<span class="rc__eng">{_engine_ico(u[0])} silnik {esc(eng)}</span>' if (eng := _engine(u[0])) else '')
             + '</span></span></a>')
+
+def _engine_ico(slug):   # ta sama ikona silnika co na stronach modeli i jachtów
+    ic = next((ic for ic, k, v in unit_facts(slug) if k == 'Silnik'), 'cog')
+    return (f'<img class="ico ico--s" src="assets/img/ikony/{ic[4:]}.png" width="16" height="16" alt="" aria-hidden="true">'
+            if ic.startswith('img:') else f'<i data-lucide="{ic}" class="lucide" aria-hidden="true"></i>')
 
 def _engine(slug):   # typ silnika z tabeli jednostki, bez mocy
     for ic, k, v in unit_facts(slug):
@@ -478,8 +486,8 @@ def home_page():
 </section>
 <section class="psec news">
   <div class="wrap">
-    <div class="sech"><h2 class="h2">Z poradnika czarterowego</h2><div class="sech__a"><a class="u u--on" href="poradnik.html">Wszystkie artykuły →</a></div></div>
-    <div class="ncs">{''.join(news_card(a) for a in sorted(ART, key=lambda a: a.get("date", ""), reverse=True)[:3])}</div>
+    <div class="sech"><h2 class="h2">Aktualności</h2><div class="sech__a"><a class="u u--on" href="aktualnosci.html">Wszystkie aktualności →</a></div></div>
+    {f'<div class="nrs">{"".join(news_row(a) for a in sorted(NEWS, key=lambda a: a.get("date", ""), reverse=True)[:3])}</div>' if NEWS else NEWS_EMPTY}
   </div>
 </section>
 <section class="psec psec--sand ab">
@@ -632,8 +640,8 @@ def model_card(m):
         if v: rows.append(('ship-wheel', 'Ster', v))
     mj = berths(sp.get('Liczba osób', '–'))[0]
     if mj and mj != '–': rows.append(('users', 'Miejsca', f'{mj} os.'))
-    kab = sp.get('Zamykane kabiny', '')
-    if kab and kab not in ('–', '-'): rows.append(('door-closed', 'Kabiny', 'otwarte' if kab == '0' else kab))
+    kab = next((v for w in us for ic_, k, v in unit_facts(w[0]) if k == 'Kabiny'), '')
+    if kab: rows.append(('door-closed', 'Kabiny', kab))
     specs = ''.join(f'<li>{ico(i, 22)}<span><small>{k}</small>{esc(v)}</span></li>' for i, k, v in rows)
     n = len(us)
     return (f'<article class="mc"><a class="mc__ph" href="{murl(m)}" tabindex="-1" aria-hidden="true">{pic("u-" + u[0], m, "(min-width:1024px) 24vw, (min-width:641px) 45vw, 100vw")}</a>'
@@ -701,8 +709,21 @@ def model_page(m):
                 pts += [x.strip(' ,.') for x in re.split(r'•', re.sub(r'<br[^>]*>', '', p_)) if jednostki._txt(x).strip(' ,.')]
             elif not re.match(r'jeśli (szukasz|zależy)', jednostki._txt(p_).lower()):
                 rest.append(p_)
+    if not pts and m == 'Antila 27':   # zgoda klientki 30.09: punkty z innego modelu, klientka je potem zredaguje
+        src_ = model_extract('Antila 30') or []
+        take = False
+        for tg, t in src_:
+            if tg == 'h': take = 'dobry wybór' in jednostki._txt(t).lower(); continue
+            if take and '•' in t: pts += [x.strip(' ,.') for x in re.split(r'•', re.sub(r'<br[^>]*>', '', t)) if jednostki._txt(x).strip(' ,.')]
     more = [c for c in cols if c is not why]
-    facts = [f for f in unit_facts(us[0][0]) if f[1] != 'Rok produkcji']
+    MODEL_FIELDS = [('move-vertical', 'Długość'), ('move-horizontal', 'Szerokość'), ('waves', 'Zanurzenie'), ('bed-double', 'Miejsca do spania'),
+                    ('door-closed', 'Kabiny'), ('bath', 'Toaleta'), ('shower-head', 'Prysznic'), ('ship-wheel', 'Ster'),
+                    ('img:silnik-stacjonarny', 'Silnik'), ('img:ster-strumieniowy', 'Ster strumieniowy')]
+    got = {}
+    for u in us:   # pierwsza jednostka modelu, która podaje daną wartość
+        for ic, k, v in unit_facts(u[0]):
+            got.setdefault(k, (ic, v))
+    facts = [(got[k][0], k, got[k][1]) if k in got else (ic, k, '–') for ic, k in MODEL_FIELDS]
     fh = ''.join(f'<li>{ico(ic)}<span class="uic__k">{k}</span><b>{v}</b></li>' for ic, k, v in facts)
     def body_html(items):   # akapity i listy w kolejności z obecnej strony
         o, lst = '', False
@@ -813,12 +834,12 @@ def wiedza_page():
     <div class="sech"><h2 class="h2">Najnowsze filmy</h2><div class="sech__a"><a class="u u--on" href="filmy-szkoleniowe.html">Zobacz wszystkie filmy →</a></div></div>
     <div class="slot slot--wide" data-slot="filmy-youtube"><i data-lucide="play" class="lucide" aria-hidden="true"></i><p><b>Filmy z kanału YouTube</b>Trzy najnowsze filmy pojawią się tu automatycznie po podpięciu kanału.</p></div>
   </div>
-</section>''' + (f'''<section class="psec psec--sand">
+</section>''' + f'''<section class="psec psec--sand">
   <div class="wrap">
     <div class="sech"><h2 class="h2">Najnowsze aktualności</h2><div class="sech__a"><a class="u u--on" href="aktualnosci.html">Wszystkie aktualności →</a></div></div>
-    <div class="nrs">{''.join(news_row(a) for a in sorted(NEWS, key=lambda a: a.get('date', ''), reverse=True)[:3])}</div>
+    {f'<div class="nrs">{"".join(news_row(a) for a in sorted(NEWS, key=lambda a: a.get("date", ""), reverse=True)[:3])}</div>' if NEWS else NEWS_EMPTY}
   </div>
-</section>''' if NEWS else ''))
+</section>''')
     page('wiedza.html', 'Wiedza — poradnik czarterowy, filmy i aktualności | Jachty Mazury',
          'Poradnik czarterowy, filmy szkoleniowe i aktualności Jachty Mazury — wszystko, co warto wiedzieć przed rejsem po Mazurach.', body, 'wiedza.html')
 

@@ -110,7 +110,8 @@
  "nautic-880-mojito": {
   "station": null,
   "tour": null,
-  "ibs": true
+  "ibs": true,
+  "kabiny": "2"
  },
  "nautiner-38-black-stilo": {
   "station": null,
@@ -128,9 +129,9 @@
   "ibs": true
  },
  "stillo-31-star": {
-  "station": null,
+  "station": "stillo-31-star",
   "tour": null,
   "ibs": false,
-  "uwaga": "jest w IBS (id 2135), ale kod stacji nieznany — do podania przez klientkę"
+  "uwaga": "kod od klientki 30.09; IBS (beta) jeszcze go nie rozpoznaje — włączyć ibs:true, gdy zacznie odpowiadać"
  }
 }

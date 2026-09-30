@@ -21,8 +21,8 @@ PIN = 'https://maps.app.goo.gl/tr9a722sVFmJB8iD6'   # pinezka firmy w Mapach Goo
 GREV = 'https://share.google/dC6VqBSRLYOjmESdY'   # profil firmy w Google (link od klienta)
 FB = 'https://www.facebook.com/jachtymazury/'
 IG = 'https://www.instagram.com/jachtymazury.pl/'
-YT = 'https://www.youtube.com/channel/UCGulH1SMSyk0Ihr2HQ8rfRA'
-WA = 'https://wa.me/48511420100'   # DO POTWIERDZENIA: czy WhatsApp jest pod numerem biura (zadanie G4)
+YT = 'https://www.youtube.com/@jachtymazury'   # kanał firmy (link z obecnej strony prowadził do nieistniejącego kanału)
+WA = 'https://wa.me/48511420100'   # numer potwierdzony przez klientkę 30.09
 MSG = 'https://m.me/jachtymazury'  # Messenger strony facebook.com/jachtymazury
 
 # poprawki tabel, w których brakowało jednej wartości (uzupełnione z opisu na tej samej stronie jednostki)
