@@ -1412,3 +1412,5 @@ body.modal-open{overflow:hidden}
 .mab__icons>li:nth-child(5n){border-right:1px solid var(--line)}
 .mab__icons>li:nth-child(5n+1){border-left:1px solid var(--line)}
 @media(max-width:767px){.mab__icons>li:nth-child(5n){border-right:0}.mab__icons>li:nth-child(5n+1){border-left:0}}
+/* stopka: sam znak UE (decyzja klientki 30.09) */
+.foot .ue__img{max-width:220px;flex:0 0 220px;padding:8px 10px}

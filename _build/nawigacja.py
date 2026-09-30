@@ -80,8 +80,8 @@ def mnav(cur):
 
 UE = '''<div class="ue">
       <a class="ue__img" href="fundusze-europejskie.html" aria-label="Fundusze Europejskie — szczegóły dofinansowania">
-        <picture><source type="image/webp" srcset="assets/img/r/ue-logotypy-630.webp 630w, assets/img/r/ue-logotypy-1260.webp 1260w, assets/img/r/ue-logotypy-1890.webp 1890w" sizes="(min-width:768px) 560px, 100vw">
-        <img src="assets/img/r/ue-logotypy-630.png" srcset="assets/img/r/ue-logotypy-630.png 630w, assets/img/r/ue-logotypy-1260.png 1260w, assets/img/r/ue-logotypy-1890.png 1890w" sizes="(min-width:768px) 560px, 100vw" width="630" height="57" alt="Fundusze Europejskie dla Warmii i Mazur, Rzeczpospolita Polska, Dofinansowane przez Unię Europejską, Warmia Mazury" decoding="async"></picture>
+        <picture><source type="image/webp" srcset="assets/img/r/ue-znak-280.webp 280w, assets/img/r/ue-znak-560.webp 560w" sizes="220px">
+        <img src="assets/img/r/ue-znak-280.png" srcset="assets/img/r/ue-znak-280.png 280w, assets/img/r/ue-znak-560.png 560w" sizes="220px" width="280" height="87" alt="Dofinansowane przez Unię Europejską" decoding="async"></picture>
       </a>
       <p class="ue__txt">Projekt dofinansowany ze środków Unii Europejskiej. <a class="u u--on" href="fundusze-europejskie.html">Szczegóły dofinansowania →</a></p>
     </div>'''
